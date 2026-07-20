@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oakville Suzuki Music | Private &amp; Group Music Lessons for Children</title>
+<meta name="description" content="Oakville Suzuki Music offers Suzuki-method violin, cello, piano and more for children starting at age 4, taught by qualified, experienced instructors.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,450;0,9..144,600;1,9..144,400;1,9..144,500&family=Work+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FBF6EE;
+    --paper:#F2E9D8;
+    --ink:#221D18;
+    --ink-soft:#5B5148;
+    --coral:#E8683F;
+    --coral-dark:#C24E2A;
+    --green:#0FA05F;
+    --green-dark:#0B7A48;
+    --navy:#173350;
+    --navy-dark:#0D1F33;
+    --line: rgba(34,29,24,0.12);
+    --radius: 4px;
+    --maxw: 1180px;
+    --header-h: 97px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth; scroll-padding-top:var(--header-h); height:100%;}
+  body{
+    margin:0;
+    min-height:100%;
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Work Sans', sans-serif;
+    font-weight:400;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{
+    font-family:'Fraunces', serif;
+    font-weight:450;
+    line-height:1.08;
+    margin:0 0 0.4em;
+    color:var(--ink);
+    letter-spacing:-0.01em;
+  }
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+  .eyebrow{
+    font-family:'Space Mono', monospace;
+    font-size:0.72rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--coral-dark);
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:14px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:22px;height:1px;background:var(--coral-dark);display:inline-block;
+  }
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    padding:14px 30px;
+    border-radius:999px;
+    font-family:'Work Sans', sans-serif;
+    font-weight:600;
+    font-size:0.95rem;
+    cursor:pointer;
+    border:1.5px solid transparent;
+    transition: transform .18s ease, box-shadow .18s ease, background .18s ease, color .18s ease;
+  }
+  .btn-primary{background:var(--coral); color:#fff;}
+  .btn-primary:hover{background:var(--coral-dark); transform:translateY(-2px); box-shadow:0 10px 24px rgba(200,78,42,0.28);}
+  .btn-ghost{background:transparent;border-color:rgba(255,255,255,0.55); color:#fff;}
+  .btn-ghost:hover{background:rgba(255,255,255,0.14); transform:translateY(-2px);}
+  .btn-outline{background:transparent;border-color:var(--ink); color:var(--ink);}
+  .btn-outline:hover{background:var(--ink); color:var(--cream);}
+  .btn-navy{background:var(--navy); color:#fff;}
+  .btn-navy:hover{background:var(--navy-dark); transform:translateY(-2px); box-shadow:0 10px 24px rgba(13,31,51,0.35);}
+
+  /* ---------- HEADER / NAV ---------- */
+  header{
+    position:sticky; top:0; z-index:500;
+    background:rgba(251,246,238,0.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:var(--maxw); margin:0 auto; padding:14px 28px;
+    display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:24px;
+  }
+  .brand{display:flex; align-items:center; gap:12px; justify-self:start;}
+  .brand img{height:68px; width:auto; border-radius:8px;}
+  nav.primary{display:flex; align-items:center; justify-content:center; gap:2px;}
+  nav.primary > a, .has-drop > button{
+    font-size:0.86rem; font-weight:500; padding:10px 14px; border-radius:999px;
+    background:none; border:none; font-family:'Work Sans',sans-serif; cursor:pointer; color:var(--ink);
+    transition: background .15s ease, color .15s ease;
+  }
+  nav.primary > a:hover, .has-drop > button:hover{background:var(--paper);}
+  .has-drop{position:relative;}
+  .has-drop > button{display:flex; align-items:center; gap:6px;}
+  .dropdown{
+    position:absolute; top:110%; left:0; min-width:210px;
+    background:#fff; border:1px solid var(--line); border-radius:10px;
+    box-shadow:0 18px 40px rgba(20,15,10,0.14);
+    padding:8px; opacity:0; visibility:hidden; transform:translateY(6px);
+    transition:all .16s ease;
+  }
+  .has-drop:hover .dropdown, .has-drop.open .dropdown{opacity:1; visibility:visible; transform:translateY(0);}
+  .dropdown a{display:block; padding:10px 12px; border-radius:6px; font-size:0.85rem;}
+  .dropdown a:hover{background:var(--paper); color:var(--coral-dark);}
+  .nav-cta{display:flex; align-items:center; gap:10px; justify-self:end;}
+  .nav-cta .btn{padding:10px 20px; font-size:0.82rem;}
+  .lock-pill{
+    display:inline-flex; align-items:center; gap:6px; padding:9px 16px;
+    border-radius:var(--radius); background:var(--navy); color:#fff; font-size:0.8rem; font-weight:600;
+  }
+  .hamburger{display:none; background:none; border:none; cursor:pointer; padding:6px;}
+  .hamburger span{display:block; width:24px; height:2px; background:var(--ink); margin:5px 0;}
+
+  /* ---------- HERO ---------- */
+  .hero-card{
+    width:100%; margin:0; padding:0;
+    height:calc(100vh - var(--header-h));
+    height:calc(100dvh - var(--header-h));
+    min-height:480px;
+    display:flex; flex-direction:column;
+  }
+  .hero-card-inner{
+    overflow:hidden;
+    flex:1 1 auto;
+    display:flex; flex-direction:column;
+    min-height:0;
+  }
+  .hero{position:relative; flex:1 1 auto; min-height:0; display:flex; align-items:flex-end; overflow:hidden; color:#fff;}
+  .hero-slides{position:absolute; inset:0; z-index:0;}
+  .hero-slide{
+    position:absolute; inset:0; background-size:cover; background-position:center;
+    opacity:0; transition:opacity 1.4s ease;
+    filter:grayscale(35%) contrast(1.05);
+  }
+  .hero-slide.active{opacity:1;}
+  .hero-slide::after{content:""; position:absolute; inset:0; background:
+     linear-gradient(90deg, rgba(13,31,51,0.65) 0%, rgba(13,31,51,0.35) 35%, rgba(13,31,51,0) 70%);
+  }
+  /* Local hero images: place your files in an "Images" folder next to this HTML file,
+     named exactly as below (or edit the filenames to match your own). */
+  .hero-slide:nth-child(1){background-image:url('Images/hero-1.png');}
+  .hero-slide:nth-child(2){background-image:url('Images/hero-2.png');}
+  .hero-slide:nth-child(3){background-image:url('Images/hero-3.png');}
+  .hero-content{position:relative; z-index:2; padding:64px 48px; max-width:640px;}
+  .hero h1{font-size:clamp(2.4rem, 5.4vw, 4rem); color:#fff; margin-bottom:22px;}
+  .hero p.lead{font-size:1.28rem; max-width:620px; color:rgba(255,255,255,0.92); margin-bottom:0;}
+  .hero p.lead + p.lead{margin-top:14px;}
+  .hero-actions{
+    background:#fff;
+    padding:30px 48px;
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:20px;
+    flex-shrink:0;
+  }
+  .hero-ctas{display:flex; flex-wrap:wrap; gap:16px;}
+  .hero-note{font-family:'Space Mono',monospace; font-size:0.72rem; letter-spacing:0.08em; color:var(--ink-soft);}
+
+  /* ---------- GENERIC SECTION ---------- */
+  section{padding:104px 0;}
+  section.tight{padding:84px 0;}
+  .section-head{max-width:640px; margin-bottom:56px;}
+  .section-head p{color:var(--ink-soft); font-size:1.05rem;}
+  .bg-paper{background:var(--paper);}
+  .bg-navy{background:var(--navy); color:#fff;}
+  .bg-navy h1,.bg-navy h2,.bg-navy h3{color:#fff;}
+  .bg-navy p{color:rgba(255,255,255,0.78);}
+  .bg-ink{background:var(--ink-dark, #191510); color:#fff;}
+
+  /* string divider */
+  .string-divider{width:100%; overflow:hidden; line-height:0;}
+  .string-divider svg{width:100%; height:34px; display:block;}
+
+  /* placeholder image */
+  .ph{position:relative; overflow:hidden; border-radius:var(--radius); background:var(--paper);}
+  .ph img{width:100%; height:100%; object-fit:cover; filter:grayscale(20%) contrast(1.05);}
+  .ph::after{content:""; position:absolute; inset:0; background:linear-gradient(160deg, rgba(232,104,63,0.28), rgba(23,51,80,0.32)); mix-blend-mode:multiply;}
+  .ph-tag{position:absolute; bottom:10px; left:10px; z-index:2; background:rgba(13,31,51,0.75); color:#fff; font-family:'Space Mono',monospace; font-size:0.62rem; letter-spacing:0.06em; padding:5px 9px; border-radius:4px; text-transform:uppercase;}
+
+  /* ---------- CHECK US OUT ---------- */
+  .strip{display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center; margin-bottom:88px;}
+  .strip:last-child{margin-bottom:0;}
+  .strip.reverse .strip-media{order:2;}
+  .strip-media .ph{aspect-ratio:4/3;}
+  .strip-text .eyebrow{margin-bottom:10px;}
+  .video-card{position:relative; aspect-ratio:16/10;}
+  .play-btn{
+    position:absolute; inset:0; margin:auto; width:74px; height:74px; border-radius:50%;
+    background:rgba(255,255,255,0.92); display:flex; align-items:center; justify-content:center; z-index:3;
+    box-shadow:0 12px 30px rgba(0,0,0,0.25);
+  }
+  .play-btn::before{content:""; border-style:solid; border-width:11px 0 11px 18px; border-color:transparent transparent transparent var(--coral-dark); margin-left:4px;}
+
+  /* ---------- ACCORDION ---------- */
+  .accordion{border-top:1px solid var(--line);}
+  .acc-item{border-bottom:1px solid var(--line);}
+  .acc-head{
+    width:100%; text-align:left; background:none; border:none; cursor:pointer;
+    display:flex; justify-content:space-between; align-items:center; gap:20px;
+    padding:24px 4px; font-family:'Fraunces',serif; font-size:1.15rem; color:var(--ink);
+  }
+  .acc-head .plus{font-family:'Space Mono',monospace; font-size:1.1rem; color:var(--coral-dark); transition:transform .2s ease;}
+  .acc-item.open .plus{transform:rotate(45deg);}
+  .acc-body{max-height:0; overflow:hidden; transition:max-height .3s ease;}
+  .acc-body-inner{padding:0 4px 26px; color:var(--ink-soft); max-width:760px;}
+  .acc-body-inner ul{padding-left:18px; margin:10px 0;}
+  .info-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-bottom:60px;}
+  .info-card{background:#fff; border:1px solid var(--line); border-radius:10px; padding:28px;}
+  .info-card .eyebrow{margin-bottom:12px;}
+  .info-card h3{font-size:1.15rem;}
+  .info-card p{color:var(--ink-soft); font-size:0.94rem; margin:0;}
+
+  /* ---------- TEACHERS ---------- */
+  .teacher-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:36px;}
+  .teacher-card .ph{aspect-ratio:3/4; margin-bottom:18px;}
+  .teacher-card h3{font-size:1.2rem; margin-bottom:2px;}
+  .teacher-card .instr{font-family:'Space Mono',monospace; font-size:0.72rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--coral-dark); display:block; margin-bottom:12px;}
+  .teacher-card p{font-size:0.92rem; color:var(--ink-soft);}
+
+  /* ---------- SUZUKI EDITORIAL ---------- */
+  .editorial{display:grid; grid-template-columns:0.9fr 1.1fr; gap:72px; align-items:start;}
+  .editorial .ph{aspect-ratio:3/4;}
+  .editorial-copy p{margin-bottom:18px; color:var(--ink-soft);}
+  .video-row{display:grid; grid-template-columns:repeat(2,1fr); gap:22px; margin-top:34px;}
+  .video-thumb{position:relative; cursor:pointer; border:none; padding:0; background:none; display:block; width:100%; text-align:left;}
+  .video-thumb .ph{aspect-ratio:16/10;}
+  .video-thumb .ph img{transition:transform .4s ease, filter .3s ease;}
+  .video-thumb:hover .ph img{transform:scale(1.04); filter:grayscale(0%) contrast(1.05);}
+  .play-circle{
+    position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); z-index:3;
+    width:62px; height:62px; border-radius:50%; background:rgba(232,104,63,0.92);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 10px 26px rgba(13,31,51,0.35);
+    transition: transform .2s ease, background .2s ease;
+  }
+  .video-thumb:hover .play-circle{transform:translate(-50%,-50%) scale(1.08); background:var(--coral-dark);}
+  .play-circle svg{width:20px; height:20px; margin-left:3px;}
+  .video-thumb span.vlabel{display:block; margin-top:10px; font-family:'Space Mono',monospace; font-size:0.68rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-soft); text-align:center;}
+
+  /* ---------- VIDEO MODAL ---------- */
+  .video-modal-overlay{
+    position:fixed; inset:0; z-index:2000; background:rgba(13,31,51,0.88);
+    display:none; align-items:center; justify-content:center; padding:32px;
+  }
+  .video-modal-overlay.open{display:flex;}
+  .video-modal-box{position:relative; width:100%; max-width:960px;}
+  .video-modal-box video{width:100%; max-height:78vh; border-radius:10px; background:#000; display:block;}
+  .video-modal-close{
+    position:absolute; top:-46px; right:0; background:none; border:none; cursor:pointer;
+    color:#fff; font-size:1.6rem; line-height:1; padding:6px 10px;
+  }
+  .video-modal-close:hover{color:var(--coral);}
+
+  /* ---------- SUZUKI vs RCM ---------- */
+  .rcm-intro{display:grid; grid-template-columns:1.35fr 1fr; gap:56px; align-items:start; margin-bottom:60px;}
+  .rcm-intro .rcm-copy p{color:var(--ink-soft); margin-bottom:16px;}
+  .rcm-intro .rcm-media .ph{aspect-ratio:3/4; position:sticky; top:100px;}
+  @media(max-width:900px){ .rcm-intro{grid-template-columns:1fr;} .rcm-intro .rcm-media{order:-1;} .rcm-intro .rcm-media .ph{aspect-ratio:16/9; position:static;} }
+  .table-scroll{overflow-x:auto; margin-top:22px; border:1px solid var(--line); border-radius:10px;}
+  table.rcm-table{width:100%; border-collapse:collapse; min-width:520px; font-size:0.92rem;}
+  table.rcm-table th, table.rcm-table td{padding:14px 18px; text-align:left; border-bottom:1px solid var(--line); vertical-align:top;}
+  table.rcm-table thead th{
+    font-family:'Space Mono',monospace; font-size:0.7rem; letter-spacing:0.06em; text-transform:uppercase;
+    color:var(--coral-dark); background:var(--paper); white-space:nowrap;
+  }
+  table.rcm-table tbody th{font-weight:600; white-space:nowrap; background:#fff;}
+  table.rcm-table tbody td{color:var(--ink-soft);}
+  table.rcm-table tbody tr:last-child td, table.rcm-table tbody tr:last-child th{border-bottom:none;}
+  .compare{display:grid; grid-template-columns:1fr 1fr; border:1px solid var(--line); border-radius:14px; overflow:hidden;}
+  .compare > div{padding:44px;}
+  .compare .col-a{background:#fff; border-right:1px solid var(--line);}
+  .compare .col-b{background:var(--navy); color:#fff;}
+  .compare .col-b h3{color:#fff;}
+  .compare .col-b p, .compare .col-b li{color:rgba(255,255,255,0.82);}
+  .compare h3{font-size:1.3rem; margin-bottom:16px;}
+  .compare ul{padding-left:18px; margin:16px 0;}
+  .compare li{margin-bottom:8px;}
+  @media(max-width:820px){ .compare{grid-template-columns:1fr;} .compare .col-a{border-right:none; border-bottom:1px solid var(--line);} }
+
+  /* ---------- EVENTS ---------- */
+  .events-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:28px;}
+  .event-card{background:#fff; border:1px solid var(--line); border-radius:12px; overflow:hidden; display:flex; flex-direction:column;}
+  .event-card .ph{aspect-ratio:16/10; border-radius:0;}
+  .event-card-body{padding:26px 26px 30px; display:flex; flex-direction:column; gap:14px; flex:1;}
+  .event-card-body h3{font-size:1.2rem;}
+  .event-card-body p{color:var(--ink-soft); font-size:0.92rem; margin:0; flex:1;}
+  .trophy-strip{display:grid; grid-template-columns:repeat(4,1fr); gap:20px; margin-top:60px;}
+  .trophy-item .ph{aspect-ratio:1/1; margin-bottom:12px;}
+  .trophy-item h4{font-size:0.98rem; margin-bottom:2px;}
+  .trophy-item span{font-family:'Space Mono',monospace; font-size:0.68rem; color:var(--ink-soft); text-transform:uppercase; letter-spacing:0.05em;}
+
+  /* ---------- MEMBERS PORTAL ---------- */
+  .portal-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px; margin-top:50px;}
+  .portal-card{
+    background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.16); border-radius:12px;
+    padding:28px; position:relative;
+  }
+  .portal-card .lock{
+    width:34px; height:34px; border-radius:50%; background:rgba(232,104,63,0.18); border:1px solid var(--coral);
+    display:flex; align-items:center; justify-content:center; margin-bottom:18px; font-size:0.9rem;
+  }
+  .portal-card h3{font-size:1.05rem; color:#fff; margin-bottom:8px;}
+  .portal-card p{font-size:0.88rem; color:rgba(255,255,255,0.68); margin:0;}
+  .login-box{
+    background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.18); border-radius:14px;
+    padding:40px; max-width:420px;
+  }
+  .login-box input{
+    width:100%; padding:13px 14px; margin-bottom:14px; border-radius:8px; border:1px solid rgba(255,255,255,0.25);
+    background:rgba(255,255,255,0.08); color:#fff; font-family:'Work Sans',sans-serif; font-size:0.92rem;
+  }
+  .login-box input::placeholder{color:rgba(255,255,255,0.5);}
+  .login-box .btn{width:100%;}
+  .members-top{display:grid; grid-template-columns:1fr 1fr; gap:70px; align-items:start;}
+
+  /* ---------- CONTACT ---------- */
+  .contact-grid{display:grid; grid-template-columns:1fr 1fr; gap:60px;}
+  .form-row{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  .field{margin-bottom:18px;}
+  .field label{display:block; font-size:0.78rem; font-family:'Space Mono',monospace; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:8px;}
+  .field input, .field textarea{
+    width:100%; padding:14px 16px; border:1px solid var(--line); border-radius:8px; background:#fff;
+    font-family:'Work Sans',sans-serif; font-size:0.95rem; color:var(--ink);
+  }
+  .field textarea{min-height:130px; resize:vertical;}
+  .map-embed{border-radius:10px; overflow:hidden; border:1px solid var(--line); aspect-ratio:4/3; margin-bottom:24px;}
+  .map-embed iframe{width:100%; height:100%; border:0;}
+  .contact-detail{display:flex; gap:14px; margin-bottom:16px; align-items:flex-start;}
+  .contact-detail .k{font-family:'Space Mono',monospace; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.06em; color:var(--coral-dark); min-width:64px; padding-top:2px;}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--ink); color:rgba(255,255,255,0.75); padding:60px 0 30px;}
+  .footer-top{display:flex; justify-content:space-between; align-items:flex-start; gap:40px; flex-wrap:wrap; padding-bottom:40px; border-bottom:1px solid rgba(255,255,255,0.12); margin-bottom:26px;}
+  .footer-brand{display:flex; align-items:center; gap:14px;}
+  .footer-brand img{height:50px; border-radius:8px;}
+  .footer-cols{display:flex; gap:64px; flex-wrap:wrap;}
+  .footer-col h4{color:#fff; font-size:0.78rem; font-family:'Space Mono',monospace; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:14px;}
+  .footer-col a{display:block; font-size:0.88rem; color:rgba(255,255,255,0.68); margin-bottom:10px;}
+  .footer-col a:hover{color:var(--coral);}
+  .footer-bottom{display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; font-size:0.8rem; color:rgba(255,255,255,0.5);}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media(max-width:980px){
+    nav.primary, .nav-cta .btn-outline{display:none;}
+    .hamburger{display:block;}
+    .strip, .editorial, .members-top, .contact-grid{grid-template-columns:1fr; gap:34px;}
+    .strip.reverse .strip-media{order:0;}
+    .info-grid, .teacher-grid, .events-grid, .trophy-strip, .portal-grid{grid-template-columns:repeat(2,1fr);}
+    .form-row{grid-template-columns:1fr;}
+  }
+  @media(max-width:600px){
+    .info-grid, .teacher-grid, .events-grid, .trophy-strip, .portal-grid{grid-template-columns:1fr;}
+    section{padding:72px 0;}
+    .hero-card{min-height:420px;}
+    .hero-content{padding:40px 24px;}
+    .hero-actions{padding:22px 24px;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .hero-slide{transition:none;}
+    .hero-slide:not(:first-child){display:none;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header>
+  <div class="nav-inner">
+    <a href="#home" class="brand">
+      <img src="Images/Logo-OSM.png" alt="Oakville Suzuki Music logo">
+    </a>
+
+    <nav class="primary">
+      <a href="#home">Home</a>
+      <a href="#check-us-out">Check Us Out!</a>
+      <a href="#information">Information</a>
+      <a href="#teachers">Our Teachers</a>
+      <a href="#suzuki">What Is Suzuki?</a>
+      <a href="#suzuki-rcm">Suzuki &amp; RCM</a>
+      <div class="has-drop">
+        <button type="button">Events <span aria-hidden="true">▾</span></button>
+        <div class="dropdown">
+          <a href="#registration">Event Registration</a>
+          <a href="#calendar">Event Calendar</a>
+          <a href="#trophy-wall">Trophy Wall</a>
+        </div>
+      </div>
+      <a href="#contact">Contact Us</a>
+    </nav>
+
+    <div class="nav-cta">
+      <a href="#members" class="lock-pill">🔒 Member Portal</a>
+      <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <!-- mobile menu -->
+  <nav id="mobileNav" style="display:none; flex-direction:column; padding:10px 28px 22px; border-top:1px solid var(--line);">
+    <a href="#home" style="padding:12px 0;">Home</a>
+    <a href="#check-us-out" style="padding:12px 0;">Check Us Out!</a>
+    <a href="#information" style="padding:12px 0;">Information</a>
+    <a href="#teachers" style="padding:12px 0;">Our Teachers</a>
+    <a href="#suzuki" style="padding:12px 0;">What Is Suzuki?</a>
+    <a href="#suzuki-rcm" style="padding:12px 0;">Suzuki &amp; RCM</a>
+    <a href="#registration" style="padding:12px 0;">Event Registration</a>
+    <a href="#calendar" style="padding:12px 0;">Event Calendar</a>
+    <a href="#trophy-wall" style="padding:12px 0;">Trophy Wall</a>
+    <a href="#members" style="padding:12px 0;">Member Portal</a>
+    <a href="#contact" style="padding:12px 0;">Contact Us</a>
+  </nav>
+</header>
+
+<!-- ============ HOME ============ -->
+<section id="home" style="padding:0;">
+  <div class="hero-card">
+    <div class="hero-card-inner">
+      <div class="hero">
+        <div class="hero-slides">
+          <div class="hero-slide"></div>
+          <div class="hero-slide"></div>
+          <div class="hero-slide"></div>
+        </div>
+        <div class="hero-content">
+          <span class="eyebrow" style="color:#fff;"><span style="width:22px;height:1px;background:#fff;display:inline-block;"></span>Welcome to OSM!</span>
+          <h1>Experienced teachers, one child at a time.</h1>
+          <p class="lead">Music lessons that keep the whole child in mind, with qualified and experienced teachers, fostering a love of music and building lifelong skills one child at a time.</p>
+          <p class="lead">Students start as young as age 4</p>
+        </div>
+      </div>
+      <div class="hero-actions">
+        <div class="hero-ctas">
+          <a href="#check-us-out" class="btn btn-primary">Check Us Out!</a>
+          <a href="#members" class="btn btn-outline">OSM Member Portal</a>
+        </div>
+        <span class="hero-note">Private &amp; group lessons in violin, cello, piano &amp; more — Oakville, Ontario</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="string-divider">
+  <svg viewBox="0 0 1200 34" preserveAspectRatio="none"><path d="M0 17 Q 150 2, 300 17 T 600 17 T 900 17 T 1200 17" fill="none" stroke="rgba(34,29,24,0.18)" stroke-width="1.5"/></svg>
+</div>
+
+<!-- ============ CHECK US OUT ============ -->
+<section id="check-us-out">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Check Us Out!</span>
+      <h2>An engaging, welcoming introduction to OSM</h2>
+      <p>Get a feel for what a lesson, a group class, and a recital day actually look like before you ever step through the door.</p>
+    </div>
+
+    <div class="strip">
+      <div class="strip-media">
+        <div class="ph video-card">
+          <img src="https://picsum.photos/seed/osm-video-thumb/900/560" alt="Placeholder — video of a group class in session">
+          <div class="ph-tag">Video placeholder</div>
+          <div class="play-btn"></div>
+        </div>
+      </div>
+      <div class="strip-text">
+        <span class="eyebrow">Meet the studio</span>
+        <h3>A group class in full swing</h3>
+        <p>Watch a typical Thursday evening group class — students of similar levels playing side by side, building confidence, rhythm, and friendships together. This is where the Suzuki philosophy comes alive: children learning from children, encouraged by teachers who know every name.</p>
+        <a href="#information" class="btn btn-outline">See Information</a>
+      </div>
+    </div>
+
+    <div class="strip reverse">
+      <div class="strip-media">
+        <div class="ph">
+          <img src="https://picsum.photos/seed/osm-smiling-student/900/700" alt="Placeholder — smiling student holding their instrument">
+          <div class="ph-tag">Photo placeholder</div>
+        </div>
+      </div>
+      <div class="strip-text">
+        <span class="eyebrow">Our culture</span>
+        <h3>A community built around encouragement</h3>
+        <p>Parents, teachers, and students work as a team. Lessons are structured, repertoire is shared across levels, and every recital is a chance to celebrate how far a child has come — never a competition against anyone but their earlier self.</p>
+        <a href="#suzuki" class="btn btn-outline">What Is Suzuki?</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="string-divider">
+  <svg viewBox="0 0 1200 34" preserveAspectRatio="none"><path d="M0 17 Q 150 32, 300 17 T 600 17 T 900 17 T 1200 17" fill="none" stroke="rgba(34,29,24,0.18)" stroke-width="1.5"/></svg>
+</div>
+
+<!-- ============ INFORMATION ============ -->
+<section id="information" class="bg-paper">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Information</span>
+      <h2>Schedules, pricing, location &amp; term dates</h2>
+      <p>Everything a prospective family needs to plan around — organized so it's easy to scan, and easy to keep current.</p>
+    </div>
+
+    <div class="info-grid">
+      <div class="info-card">
+        <span class="eyebrow" style="margin-bottom:8px;">Location</span>
+        <h3>Studios &amp; group class venue</h3>
+        <p>Private lessons take place across partner studios in Oakville; group classes are held at a central community venue. Exact addresses are confirmed at registration.</p>
+      </div>
+      <div class="info-card">
+        <span class="eyebrow" style="margin-bottom:8px;">Term dates</span>
+        <h3>Fall / Winter / Spring terms</h3>
+        <p>The teaching year runs in three terms with a summer camp session in July. A printable term calendar is shared with families each September.</p>
+      </div>
+      <div class="info-card">
+        <span class="eyebrow" style="margin-bottom:8px;">Ages</span>
+        <h3>Starting as young as 4</h3>
+        <p>Early Childhood Music welcomes the youngest musicians; private instruction typically begins around age 4, with no upper age limit.</p>
+      </div>
+    </div>
+
+    <!-- REPLACE WITH REAL SITE COPY: paste exact schedule / pricing / term-date text from the live OSM site here -->
+    <div class="accordion">
+      <div class="acc-item open">
+        <button class="acc-head">Weekly schedule &amp; lesson formats <span class="plus">+</span></button>
+        <div class="acc-body">
+          <div class="acc-body-inner">
+            <p>Private lessons are booked directly with each teacher and scheduled around school hours. Group classes run on a fixed weekly or bi-weekly night depending on instrument:</p>
+            <ul>
+              <li>Violin group classes — weekly, weekday evenings</li>
+              <li>Cello group classes — every second week, evenings</li>
+              <li>Piano, viola &amp; guitar — grouped play arranged as numbers allow</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head">Tuition &amp; fees <span class="plus">+</span></button>
+        <div class="acc-body">
+          <div class="acc-body-inner">
+            <p>Tuition covers private lesson time with your chosen teacher plus enrolment in the group class program. Registration fees, materials, and optional enhanced lesson lengths are billed separately. A current fee schedule is issued at the start of each teaching year.</p>
+          </div>
+        </div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head">Location &amp; getting there <span class="plus">+</span></button>
+        <div class="acc-body">
+          <div class="acc-body-inner">
+            <p>Studios are located across Oakville, ON, chosen for easy access from most neighbourhoods. Group classes and recitals are held at a central community centre with on-site parking.</p>
+          </div>
+        </div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head">Registration &amp; term dates <span class="plus">+</span></button>
+        <div class="acc-body">
+          <div class="acc-body-inner">
+            <p>New family registration opens each spring for the following September, with rolling admission as spots allow. Returning students re-register each June through the Member Portal.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ OUR TEACHERS ============ -->
+<section id="teachers">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Our Teachers</span>
+      <h2>Professional, prestigious, and genuinely warm</h2>
+      <p>Every OSM teacher is a trained musician and a trained Suzuki educator — each brings their own specialty and their own teaching voice.</p>
+    </div>
+
+    <!-- REPEATER LAYOUT — duplicate .teacher-card for each instructor; replace names, photos & bios -->
+    <div class="teacher-grid">
+      <div class="teacher-card">
+        <div class="ph"><img src="Gallery/Headshot-Bethany.jpg" alt="Placeholder headshot"><div class="ph-tag">Headshot</div></div>
+        <h3>Bethany Goluboff</h3>
+        <span class="instr">Violin</span>
+        <p>Bethany started with the Suzuki method at age 4 and came from a musical family.   She has a B.M. and M.M. in Violin Performance, and a B.A. in Music Education as well as completing Suzuki teacher training (all 10) .  
+ She played with the Québec Symphony for two years, and was Concert Master of the Sudbury Symphony for three years. 
+Bethany has been teaching violin for 26 years with some of her students have winning the Gold Award for RCM, some going into the Taylor Academy as well as music study in university.</p>
+      </div>
+      <div class="teacher-card">
+        <div class="ph"><img src="Gallery/Headshot-Michelle.jpg" alt="Placeholder headshot"><div class="ph-tag">Headshot</div></div>
+        <h3>Michelle Coon</h3>
+        <span class="instr">Flute and Theory</span>
+        <p>Michelle has taught and performed in the Oakville and surrounding area for more than 30 years and has experience teaching all ages and levels of flute and theory. She has a YouTube channel to help theory students "Theory in a Nutshell" and has also started a Podcast "Hidden Gems in the History of Music".  Michelle's music degree is in both Performance and Music History from Queen's University. She received her Suzuki training at the Great Lakes Suzuki Institute and is an RCM Certified teacher for all levels of Flute, Theory, Harmony and Music History.  Michelle's students have won Gold Medals for RCM exams, competed in festivals at the Provincial level,  won school music awards and have gone on to music at the post secondary level including Masters and PhD degrees in music. Michelle loves to share her passion for the flute and music and believes in fostering a supportive community in her studio. She believes that each child is unique and teaches with that in mind helping them to achieve excellence in their musical journey.</p>
+      </div>
+      <div class="teacher-card">
+        <div class="ph"><img src="Gallery/Headshot-Hana.jpg" alt="Placeholder headshot"><div class="ph-tag">Headshot</div></div>
+        <h3>Hana Gurtlova</h3>
+        <span class="instr">Piano</span>
+        <p>Blends Suzuki listening-based learning with RCM exam preparation for families pursuing both tracks.</p>
+      </div>
+      <div class="teacher-card">
+        <div class="ph"><img src="Gallery/fdd4c3_b432182e435c4063a17dbce60dc26217~mv2.avif" alt="Placeholder headshot"><div class="ph-tag">Headshot</div></div>
+        <h3>Angela Lee</h3>
+        <span class="instr">Flute</span>
+        <p>Angela Sojung Lee is a dedicated flutist, educator, and performer with over 10 years of teaching experience. She holds a Master of Music in Performance and Literature from Western University and a Bachelor of Music in Performance from Queen's University. Angela has extensive teaching experience working with students of all ages and skill levels in both private and institutional settings. As a Flute Instructor and Supervisor at the CFLTC Music Training Centre, she provided structured instruction, mentorship, and performance guidance to developing musicians. Her teaching philosophy emphasizes strong technical foundations, musical artistry, discipline, and confidence-building within a supportive and engaging learning environment. As an active performer, her performance experience spans orchestral, chamber, wind ensemble, and ceremonial settings, including concerts, military events, and community performances. Angela is passionate about inspiring students to reach their full potential while cultivating a lifelong appreciation for music. She strives to create a positive learning environment where students can grow both technically and artistically.</p>
+      </div>
+      <div class="teacher-card">
+        <div class="ph"><img src="https://picsum.photos/seed/osm-teacher-5/500/644" alt="Placeholder headshot"><div class="ph-tag">Headshot</div></div>
+        <h3>[Teacher Name]</h3>
+        <span class="instr">Guitar</span>
+        <p>Introduces classical guitar technique through songs children already love, building reading skills gradually.</p>
+      </div>
+      <div class="teacher-card">
+        <div class="ph"><img src="https://picsum.photos/seed/osm-teacher-6/500/645" alt="Placeholder headshot"><div class="ph-tag">Headshot</div></div>
+        <h3>[Teacher Name]</h3>
+        <span class="instr">Viola &amp; Double Bass</span>
+        <p>A specialist in low strings, helping late-starters and instrument-switchers find their footing quickly.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHAT IS SUZUKI ============ -->
+<section id="suzuki" class="bg-paper">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">What Is Suzuki?</span>
+      <h2>The Suzuki method, developed by Shinichi Suzuki, emphasizing learning music in a nurturing environment and teaching the “whole” child.</h2>
+    </div>
+
+    <div class="editorial">
+      <div>
+        <div class="ph"><img src="https://picsum.photos/seed/osm-suzuki-portrait/640/820" alt="Placeholder — historical portrait of Dr. Shinichi Suzuki"><div class="ph-tag">Est. historical portrait</div></div>
+      </div>
+      <div class="editorial-copy">
+        <p>This approach to music pedagogy is based on the belief that every child can learn to play an instrument when provided with proper encouragement and a nurturing environment. Suzuki believed that learning an instrument was akin to learning a language. Using this “Mother tongue” approach, whereby children learn to speak by listening to the language spoken to, and around them, students listen to their music as well as learn by ear to begin.</p>
+        <p>Listening to music is an essential part of the learning process as is parental involvement , practice and repetition, learning in small steps, review and group classes.</p>
+        <p>Group classes are important as they foster community, problem solving, cooperation, self esteem and reinforce techniques learned in private lessons.</p>
+
+        <h3 style="margin-top:34px; font-size:1.3rem;">Jean Grieve</h3>
+        <p>Jean Grieve has been the driving force behind the Suzuki method in Oakville for decades.</p>
+        <p>I was able to sit down with her as she shared some memories, and her thoughts on the Suzuki methodology. Here are some excerpts. </p>
+        <div class="video-row">
+          <button type="button" class="video-thumb" data-video="Videos/suzuki-triangle.mp4" data-title="The Suzuki Triangle: Parent, Teacher, Student">
+            <div class="ph">
+              <img src="https://picsum.photos/seed/osm-triangle-parent/700/438" alt="Placeholder — video thumbnail, the Suzuki triangle of parent, teacher and student">
+              <div class="play-circle"><svg viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></div>
+            </div>
+            <span class="vlabel">The Suzuki Triangle</span>
+          </button>
+          <button type="button" class="video-thumb" data-video="Videos/jean-grieve-interview.mp4" data-title="Jean Grieve on Decades of Suzuki Teaching">
+            <div class="ph">
+              <img src="https://picsum.photos/seed/osm-triangle-student/700/439" alt="Placeholder — video thumbnail, interview with Jean Grieve">
+              <div class="play-circle"><svg viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></div>
+            </div>
+            <span class="vlabel">Jean Grieve, In Her Own Words</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SUZUKI & RCM ============ -->
+<section id="suzuki-rcm">
+  <div class="wrap">
+    <div class="rcm-intro">
+      <div class="rcm-copy">
+        <span class="eyebrow">Suzuki &amp; RCM</span>
+        <h2>How does Suzuki fit with the Royal Conservatory of Music (RCM)?</h2>
+        <p><strong>Perfectly well!</strong></p>
+        <p>There is a sense out there that at some point it's time to "stop Suzuki and go to RCM," which is a misunderstanding of what exactly each thing is. Suzuki is a methodology for teaching music and the RCM is a Certificate Program. They are not mutually exclusive.</p>
+        <p>Many OSM students have taken their Practical (instrumental) exams and written Theory exams. There have been many OSM students who have received Silver or Gold medals from the RCM, meaning they received the highest mark of that session in their level and instrument.</p>
+        <p>Students can benefit from exams for various reasons. Some students only do one or two exams during their journey, others do more, and for some students exams are not helpful for them — it really depends on the student. RCM practical exams have several components including repertoire, etudes/studies, scales, ear training and sight reading.</p>
+        <p>From Level 5 RCM onwards, there is a Theory Rudiments co-requisite, and from Level 9 there are two co-requisites, Harmony and History. These co-requisites are necessary to obtain the official RCM Certificate. Students can receive external High School Credits through RCM exams — the RCM worked with the Provincial governments to secure this designation. Level 7 (practical and theory) equals a Grade 11 credit and Level 8 (practical and theory) equals a Grade 12 external credit. The Practical exam grade and Theory exam grade are weighted equally in the determination of the final grade.</p>
+        <p>Many pieces in the Suzuki Books are found in the RCM Syllabi.</p>
+      </div>
+      <div class="rcm-media">
+        <div class="ph">
+          <img src="Gallery/pianoplayer.avif" alt="Placeholder — Suzuki and RCM">
+          <div class="ph-tag">Placeholder image</div>
+        </div>
+      </div>
+    </div>
+
+    <span class="eyebrow">Appendix A</span>
+    <div class="compare">
+      <div class="col-a">
+        <h3>The Suzuki Method</h3>
+        <ul>
+          <li>A methodology and philosophy, including the Suzuki triangle of parent, teacher and student</li>
+          <li>Progressive repertoire — building blocks, step-by-step sequential work</li>
+          <li>Teachers must have Suzuki teacher training, are encouraged to continue professional development, and must be a member in good standing with the SAA</li>
+          <li>Group lessons are essential</li>
+          <li>Serves beginner to advanced students</li>
+          <li>Has a series of books based on a step-by-step progression of development</li>
+          <li>No official certification program</li>
+          <li>Has a central association (the SAA) with branches all over the world, running annual institutes taught by certified teacher trainers</li>
+          <li>Taught as a methodology in post-secondary institutions — a Master's degree in Suzuki pedagogy is possible</li>
+        </ul>
+      </div>
+      <div class="col-b">
+        <h3>Royal Conservatory of Music (RCM)</h3>
+        <ul>
+          <li>No specific methodology</li>
+          <li>Progressive repertoire in groupings of skill level</li>
+          <li>Anyone can teach with an RCM exam as the goal — no equivalent teacher-training requirement</li>
+          <li>Group lessons are not applicable</li>
+          <li>Serves beginner to advanced students</li>
+          <li>Has a series of level books grouped by era-based listings</li>
+          <li>Main role is certification, including external high school credits</li>
+          <li>Has a central location (Toronto) and services all of Canada and the US</li>
+          <li>Has an "RCM Certified Teacher" designation based on number of students sent to exams and their marks; not applicable to post-secondary Suzuki study</li>
+        </ul>
+      </div>
+    </div>
+
+    <p style="max-width:760px; margin-top:34px; color:var(--ink-soft);">Many OSM teachers use Suzuki repertoire as the technical and musical foundation in early years, then layer in RCM sight-reading, theory, and exam preparation once a student is reading fluently — giving families the best of a listening-based start and a nationally recognized credential later on.</p>
+
+    <div class="accordion" style="margin-top:70px;">
+      <div class="acc-item">
+        <button type="button" class="acc-head"><span>Appendix B — Suzuki violin repertoire found in the RCM syllabus</span><span class="plus">+</span></button>
+        <div class="acc-body">
+          <div class="acc-body-inner" style="max-width:none;">
+            <p>Many pieces from the Suzuki Violin books also appear in the RCM syllabus. Here is the cross-reference by RCM level (Cello, Flute &amp; Piano cross-references are also on file with the studio).</p>
+            <div class="table-scroll">
+              <table class="rcm-table">
+                <thead>
+                  <tr><th>RCM Level</th><th>Suzuki Violin Repertoire</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th>Prep</th><td>Book 1: Go Tell Aunt Rhody, May Song, O Come Little Children, Song of the Wind, Allegro</td></tr>
+                  <tr><th>1</th><td>Book 1: Andantino, Minuet 1 (Bach), Allegretto, Happy Farmer, Allegretto</td></tr>
+                  <tr><th>2</th><td>Book 2: Minuet in G Major, Gavotte (attr. Lully), Waltz, Two Grenadiers (Schumann), Witches Dance. Book 3: Minuet, Gavotte (Becker), Gavotte (Martini)</td></tr>
+                  <tr><th>3</th><td>Book 3: Gavotte (Gossec)</td></tr>
+                  <tr><th>4</th><td>Book 3: Gavotte in g minor, Humoresque (Dvorak)</td></tr>
+                  <tr><th>5</th><td>Book 3: Bourree, Concerto #2 mvt 3 (Seitz), Concerto #5 mvt 1 or 3 (Seitz)</td></tr>
+                  <tr><th>6</th><td>Book 4: Concerto in a minor mvt 1 or 3 (Vivaldi), Perpetual Mobile. Book 6: Gavotte (Rameau), Sonata #3 F Major (Handel)</td></tr>
+                  <tr><th>7</th><td>Book 5: Concerto in g minor mvt 1 (Vivaldi). Book 6: La Folia, Allegro (Fiocco). Book 8: Sonata in g minor (Eccles)</td></tr>
+                  <tr><th>8</th><td>Book 6: Sonata #4 D Major (Handel). Book 7: Concerto in a minor Mvt 1 (Bach), Sonata #1 A Major Mvts 1, 2 and 4 (Handel)</td></tr>
+                  <tr><th>9</th><td>Book 7: #1 Carnival of Venice (Genin). Book 8: #2 Fantasie (Faure), Sonata e minor Mvts 1 and 2 (Veracini)</td></tr>
+                  <tr><th>10</th><td>N/A</td></tr>
+                  <tr><th>ARCT</th><td>Book 9: Concerto #5 A Major (Mozart). Book 10: Concerto #4 D Major (Mozart)</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p style="margin-top:16px; font-size:0.85rem;">Note: at Level 3, the source syllabus lists this piece as "Book 1: Gavotte (Gossec)" — it appears in Book 3 in most current Suzuki Violin editions; families should confirm the specific edition with their teacher.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="string-divider">
+  <svg viewBox="0 0 1200 34" preserveAspectRatio="none"><path d="M0 17 Q 150 2, 300 17 T 600 17 T 900 17 T 1200 17" fill="none" stroke="rgba(34,29,24,0.18)" stroke-width="1.5"/></svg>
+</div>
+
+<!-- ============ EVENTS ============ -->
+<section id="events" class="bg-paper">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Events</span>
+      <h2>Registrations, calendars &amp; celebrations</h2>
+      <p>Each event area below will connect to its own specialized service — a scheduling app, a live calendar feed, and an ever-growing celebration wall.</p>
+    </div>
+
+    <div class="events-grid">
+      <div class="event-card" id="registration">
+        <div class="ph"><img src="https://picsum.photos/seed/osm-event-registration/700/440" alt="Placeholder — workshop registration"><div class="ph-tag">Registration</div></div>
+        <div class="event-card-body">
+          <h3>Event Registration</h3>
+          <p>Sign up for upcoming workshops, masterclasses, and recitals through a simple, secure form. This block links out to a dedicated registration &amp; ticketing service.</p>
+          <a href="#" class="btn btn-outline" style="align-self:flex-start;">Open Registration →</a>
+        </div>
+      </div>
+
+      <div class="event-card" id="calendar">
+        <div class="ph"><img src="https://picsum.photos/seed/osm-event-calendar/700/441" alt="Placeholder — event calendar"><div class="ph-tag">Calendar</div></div>
+        <div class="event-card-body">
+          <h3>Event Calendar</h3>
+          <p>A live, always-current calendar of recitals, group class dates, and studio closures — embedded directly from our shared scheduling calendar.</p>
+          <a href="#" class="btn btn-outline" style="align-self:flex-start;">View Full Calendar →</a>
+        </div>
+      </div>
+
+      <div class="event-card" id="trophy-wall">
+        <div class="ph"><img src="https://picsum.photos/seed/osm-trophy-wall/700/442" alt="Placeholder — trophy wall"><div class="ph-tag">Trophy Wall</div></div>
+        <div class="event-card-body">
+          <h3>Trophy Wall</h3>
+          <p>A celebration of book graduations, exam successes, and recital milestones — updated after every performance season.</p>
+          <a href="#" class="btn btn-outline" style="align-self:flex-start;">See All Achievements →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="trophy-strip">
+      <div class="trophy-item"><div class="ph"><img src="https://picsum.photos/seed/osm-trophy-1/300/300" alt="Placeholder — student with certificate"></div><h4>[Student Name]</h4><span>Book 3 graduation</span></div>
+      <div class="trophy-item"><div class="ph"><img src="https://picsum.photos/seed/osm-trophy-2/300/301" alt="Placeholder — student with certificate"></div><h4>[Student Name]</h4><span>RCM Level 4 — honours</span></div>
+      <div class="trophy-item"><div class="ph"><img src="https://picsum.photos/seed/osm-trophy-3/300/302" alt="Placeholder — student with certificate"></div><h4>[Student Name]</h4><span>Recital soloist</span></div>
+      <div class="trophy-item"><div class="ph"><img src="https://picsum.photos/seed/osm-trophy-4/300/303" alt="Placeholder — student with certificate"></div><h4>[Student Name]</h4><span>Book 6 graduation</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MEMBERS ONLY PORTAL ============ -->
+<section id="members" class="bg-navy">
+  <div class="wrap">
+    <div class="members-top">
+      <div>
+        <span class="eyebrow" style="color:var(--coral);">OSM Members Only</span>
+        <h2>The Member Portal</h2>
+        <p>This entire area is gated behind Wix Member Login. Once signed in, current OSM families can reach group class schedules, private administration contact, registration forms, teaching resources, and sheet music — all in one place.</p>
+
+        <div class="portal-grid">
+          <div class="portal-card"><div class="lock">🔒</div><h3>Group Classes</h3><p>Schedules, group assignments &amp; repertoire lists.</p></div>
+          <div class="portal-card"><div class="lock">🔒</div><h3>Contact (Members)</h3><p>A direct, private line to studio administration.</p></div>
+          <div class="portal-card"><div class="lock">🔒</div><h3>Register</h3><p>Internal re-registration forms for returning students.</p></div>
+          <div class="portal-card"><div class="lock">🔒</div><h3>Hidden Treasures</h3><p>A resource library of downloads, videos &amp; audio tracks.</p></div>
+          <div class="portal-card"><div class="lock">🔒</div><h3>Ask a Teacher!</h3><p>A Q&amp;A submission form and studio bulletin board.</p></div>
+          <div class="portal-card"><div class="lock">🔒</div><h3>Open Sheet Music</h3><p>A digital library of downloadable PDF scores.</p></div>
+        </div>
+      </div>
+
+      <div class="login-box">
+        <span class="eyebrow" style="color:var(--coral);">Sign in</span>
+        <h3 style="color:#fff; margin-bottom:22px;">Access the Member Portal</h3>
+        <input type="email" placeholder="Email address">
+        <input type="password" placeholder="Password">
+        <button type="button" class="btn btn-primary">Log In</button>
+        <p style="margin-top:16px; font-size:0.82rem; color:rgba(255,255,255,0.6);">Not a member yet? Speak with the registrar during enrolment to receive your login. <em>Connect this form to your Wix Members Area app.</em></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT US ============ -->
+<section id="contact">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Contact Us</span>
+      <h2>We'd love to hear from you</h2>
+      <p>Questions about lessons, schedules, or getting started? Reach out any time.</p>
+    </div>
+
+    <div class="contact-grid">
+      <div>
+        <div class="map-embed">
+          <iframe src="https://maps.google.com/maps?q=Oakville%2C%20Ontario%2C%20Canada&z=12&output=embed" loading="lazy" title="Map placeholder — Oakville, Ontario"></iframe>
+        </div>
+        <div class="contact-detail"><span class="k">Email</span><span>info@oakvillesuzukimusic.ca</span></div>
+        <div class="contact-detail"><span class="k">Phone</span><span>(905) 000-0000</span></div>
+        <div class="contact-detail"><span class="k">Location</span><span>Oakville, Ontario, Canada</span></div>
+      </div>
+
+      <form onsubmit="return false;">
+        <div class="form-row">
+          <div class="field"><label for="c-name">Name</label><input id="c-name" type="text" placeholder="Your full name"></div>
+          <div class="field"><label for="c-email">Email</label><input id="c-email" type="email" placeholder="you@example.com"></div>
+        </div>
+        <div class="field"><label for="c-phone">Phone</label><input id="c-phone" type="tel" placeholder="(optional)"></div>
+        <div class="field"><label for="c-msg">Message</label><textarea id="c-msg" placeholder="Tell us a bit about your child and what you're looking for..."></textarea></div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Send Message</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="images/osm-logo.jpg" alt="Oakville Suzuki Music logo">
+        <div>
+          <div style="font-family:'Fraunces',serif; font-size:1.05rem; color:#fff;">Oakville Suzuki Music</div>
+          <div style="font-size:0.82rem; color:rgba(255,255,255,0.55);">Oakville, Ontario, Canada</div>
+        </div>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <a href="#check-us-out">Check Us Out!</a>
+          <a href="#information">Information</a>
+          <a href="#teachers">Our Teachers</a>
+          <a href="#suzuki">What Is Suzuki?</a>
+        </div>
+        <div class="footer-col">
+          <h4>Events</h4>
+          <a href="#registration">Registration</a>
+          <a href="#calendar">Calendar</a>
+          <a href="#trophy-wall">Trophy Wall</a>
+        </div>
+        <div class="footer-col">
+          <h4>Studio</h4>
+          <a href="#members">Member Portal</a>
+          <a href="#contact">Contact Us</a>
+          <a href="#">Policies and By-Laws</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Oakville Suzuki Music. All rights reserved.</span>
+      <a href="#">Policies and By-Laws</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ VIDEO POPUP MODAL ============ -->
+<div class="video-modal-overlay" id="videoModal">
+  <div class="video-modal-box">
+    <button type="button" class="video-modal-close" id="videoModalClose" aria-label="Close video">&times;</button>
+    <video id="videoModalPlayer" controls playsinline></video>
+  </div>
+</div>
+
+<script>
+  // hero image slider — cycles the .active class across .hero-slide elements
+  const heroSlides = document.querySelectorAll('.hero-slide');
+  if(heroSlides.length){
+    let heroIndex = 0;
+    heroSlides[0].classList.add('active');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(!reducedMotion && heroSlides.length > 1){
+      setInterval(() => {
+        heroSlides[heroIndex].classList.remove('active');
+        heroIndex = (heroIndex + 1) % heroSlides.length;
+        heroSlides[heroIndex].classList.add('active');
+      }, 5000);
+    }
+  }
+
+  // keep hero area sized to exactly fill the viewport below the sticky header
+  const siteHeader = document.querySelector('header');
+  function syncHeaderHeight(){
+    document.documentElement.style.setProperty('--header-h', siteHeader.offsetHeight + 'px');
+  }
+  syncHeaderHeight();
+  window.addEventListener('load', syncHeaderHeight);
+  window.addEventListener('resize', syncHeaderHeight);
+  window.addEventListener('orientationchange', syncHeaderHeight);
+  if('ResizeObserver' in window){
+    new ResizeObserver(syncHeaderHeight).observe(siteHeader);
+  }
+
+  // mobile menu toggle
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  const mobileNav = document.getElementById('mobileNav');
+  hamburgerBtn.addEventListener('click', () => {
+    mobileNav.style.display = mobileNav.style.display === 'flex' ? 'none' : 'flex';
+  });
+  mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileNav.style.display = 'none'));
+
+  // accordion
+  document.querySelectorAll('.acc-item').forEach(item => {
+    const head = item.querySelector('.acc-head');
+    const body = item.querySelector('.acc-body');
+    if(item.classList.contains('open')){ body.style.maxHeight = body.scrollHeight + 'px'; }
+    head.addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.acc-item.open').forEach(openItem => {
+        if(openItem !== item){
+          openItem.classList.remove('open');
+          openItem.querySelector('.acc-body').style.maxHeight = null;
+        }
+      });
+      item.classList.toggle('open', !isOpen);
+      body.style.maxHeight = !isOpen ? body.scrollHeight + 'px' : null;
+    });
+  });
+
+  // events dropdown on mobile tap
+  document.querySelectorAll('.has-drop > button').forEach(btn => {
+    btn.addEventListener('click', () => btn.parentElement.classList.toggle('open'));
+  });
+
+  // video popup modal
+  const videoModal = document.getElementById('videoModal');
+  const videoPlayer = document.getElementById('videoModalPlayer');
+  const videoClose = document.getElementById('videoModalClose');
+
+  function openVideoModal(src, title){
+    videoPlayer.src = src;
+    videoPlayer.setAttribute('aria-label', title || 'Video');
+    videoModal.classList.add('open');
+    videoPlayer.play().catch(() => {});
+  }
+  function closeVideoModal(){
+    videoModal.classList.remove('open');
+    videoPlayer.pause();
+    videoPlayer.removeAttribute('src');
+    videoPlayer.load();
+  }
+
+  document.querySelectorAll('.video-thumb').forEach(btn => {
+    btn.addEventListener('click', () => openVideoModal(btn.dataset.video, btn.dataset.title));
+  });
+  videoClose.addEventListener('click', closeVideoModal);
+  videoModal.addEventListener('click', (e) => { if(e.target === videoModal) closeVideoModal(); });
+  document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeVideoModal(); });
+
+</script>
+</body>
+</html>
