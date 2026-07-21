@@ -17,17 +17,21 @@
     --ink-soft:#5B5148;
     --coral:#E8683F;
     --coral-dark:#C24E2A;
-    --green:#0FA05F;
-    --green-dark:#0B7A48;
-    --navy:#173350;
-    --navy-dark:#0D1F33;
+    --green:#00A868;
+    --green-dark:#00754A;
+    --green-soft: rgba(0,168,104,0.14);
+    --navy:var(--green-dark);
+    --navy-dark:#00532F;
     --line: rgba(34,29,24,0.12);
     --radius: 4px;
     --maxw: 1180px;
     --header-h: 97px;
   }
   *{box-sizing:border-box;}
-  html{scroll-behavior:smooth; scroll-padding-top:var(--header-h); height:100%;}
+  html{
+    scroll-behavior:smooth; scroll-padding-top:var(--header-h); height:100%;
+    -webkit-text-size-adjust:100%; text-size-adjust:100%;
+  }
   body{
     margin:0;
     min-height:100%;
@@ -37,7 +41,18 @@
     font-weight:400;
     line-height:1.6;
     -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    -webkit-tap-highlight-color:transparent;
   }
+  /* Normalize form controls & buttons so they render the same way instead
+     of picking up each browser's own default skin (Safari/Firefox in
+     particular style these quite differently out of the box). */
+  button, input, textarea, select{
+    font-family:inherit; font-size:100%; color:inherit;
+    -webkit-appearance:none; -moz-appearance:none; appearance:none;
+    border-radius:0;
+  }
+  button{background:none; border:none; cursor:pointer;}
   h1,h2,h3,h4{
     font-family:'Fraunces', serif;
     font-weight:450;
@@ -48,6 +63,10 @@
   }
   a{color:inherit;text-decoration:none;}
   img{max-width:100%;display:block;}
+  a:focus-visible, button:focus-visible, .btn:focus-visible{outline:2px solid var(--green); outline-offset:3px; border-radius:4px;}
+  .field input:focus, .field textarea:focus, .login-box input:focus{
+    outline:none; border-color:var(--green); box-shadow:0 0 0 3px var(--green-soft);
+  }
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
   .eyebrow{
     font-family:'Space Mono', monospace;
@@ -85,12 +104,13 @@
   .btn-outline{background:transparent;border-color:var(--ink); color:var(--ink);}
   .btn-outline:hover{background:var(--ink); color:var(--cream);}
   .btn-navy{background:var(--navy); color:#fff;}
-  .btn-navy:hover{background:var(--navy-dark); transform:translateY(-2px); box-shadow:0 10px 24px rgba(13,31,51,0.35);}
+  .btn-navy:hover{background:var(--navy-dark); transform:translateY(-2px); box-shadow:0 10px 24px rgba(0,117,74,0.35);}
 
   /* ---------- HEADER / NAV ---------- */
   header{
     position:sticky; top:0; z-index:500;
     background:rgba(251,246,238,0.92);
+    -webkit-backdrop-filter:blur(10px);
     backdrop-filter:blur(10px);
     border-bottom:1px solid var(--line);
   }
@@ -99,14 +119,14 @@
     display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:24px;
   }
   .brand{display:flex; align-items:center; gap:12px; justify-self:start;}
-  .brand img{height:68px; width:auto; border-radius:8px;}
+  .brand img{height:96px; width:auto; border-radius:8px;}
   nav.primary{display:flex; align-items:center; justify-content:center; gap:2px;}
   nav.primary > a, .has-drop > button{
     font-size:0.86rem; font-weight:500; padding:10px 14px; border-radius:999px;
     background:none; border:none; font-family:'Work Sans',sans-serif; cursor:pointer; color:var(--ink);
     transition: background .15s ease, color .15s ease;
   }
-  nav.primary > a:hover, .has-drop > button:hover{background:var(--paper);}
+  nav.primary > a:hover, .has-drop > button:hover{background:var(--paper); color:var(--green-dark);}
   .has-drop{position:relative;}
   .has-drop > button{display:flex; align-items:center; gap:6px;}
   .dropdown{
@@ -131,36 +151,48 @@
   /* ---------- HERO ---------- */
   .hero-card{
     width:100%; margin:0; padding:0;
+    /* Fills the viewport below the header (so image + punchline + button
+       row all sit on screen with no scrolling). min-height is only a
+       safety floor for very short windows — kept modest on purpose so it
+       doesn't push the button row below the fold. */
     height:calc(100vh - var(--header-h));
     height:calc(100dvh - var(--header-h));
-    min-height:480px;
+    min-height:520px;
     display:flex; flex-direction:column;
   }
   .hero-card-inner{
-    overflow:hidden;
     flex:1 1 auto;
     display:flex; flex-direction:column;
-    min-height:0;
   }
-  .hero{position:relative; flex:1 1 auto; min-height:0; display:flex; align-items:flex-end; overflow:hidden; color:#fff; background:var(--navy);}
+  /* No min-height:0 / overflow:hidden here: that combination is what let
+     this box shrink shorter than its own text content and crop the top
+     of the heading/eyebrow right under the navbar. Leaving the flex item
+     at its default min-height (auto) means it can never be sized smaller
+     than the text needs, so nothing gets cut off. The slide background
+     (absolute, inset:0) still covers whatever height the box ends up at,
+     so the full-bleed slider look is unaffected. */
+  .hero{position:relative; flex:1 1 auto; display:flex; align-items:flex-end; overflow:hidden; color:#fff; background:var(--navy);}
   .hero-slides{position:absolute; inset:0; z-index:0; background:var(--navy);}
   .hero-slide{
     position:absolute; inset:0; width:100%; height:100%;
     background-size:cover; background-position:center; background-repeat:no-repeat;
     background-color:var(--navy);
-    opacity:0; transition:opacity 1.4s ease;
+    opacity:0; z-index:0;
+    transition:opacity 2.6s ease-in-out;
     filter:grayscale(35%) contrast(1.05);
+    will-change:opacity;
+    -webkit-backface-visibility:hidden; backface-visibility:hidden;
   }
-  .hero-slide.active{opacity:1;}
+  .hero-slide.active{opacity:1; z-index:1;}
   .hero-overlay{
     position:absolute; inset:0; z-index:1; pointer-events:none;
-    background:linear-gradient(90deg, rgba(13,31,51,0.65) 0%, rgba(13,31,51,0.35) 35%, rgba(13,31,51,0) 70%);
+    background:linear-gradient(90deg, rgba(0,117,74,0.65) 0%, rgba(0,117,74,0.35) 35%, rgba(0,117,74,0) 70%);
   }
   /* Hero slide images are generated from the HERO_IMAGES list in the script
      at the bottom of this file — just add/remove/reorder filenames in that
      list (they're loaded from the Images folder) and the slider handles the
      rest automatically, no matter how many images are listed. */
-  .hero-content{position:relative; z-index:2; padding:64px 48px; max-width:640px;}
+  .hero-content{position:relative; z-index:2; padding:36px 48px; max-width:640px;}
   .hero-dots{
     position:absolute; z-index:2; left:0; right:0; bottom:22px;
     display:flex; justify-content:center; align-items:center; gap:10px;
@@ -173,13 +205,13 @@
   }
   .hero-dot:hover{background:rgba(255,255,255,0.7);}
   .hero-dot.active{background:#fff; transform:scale(1.2);}
-  .hero h1{font-size:clamp(2.4rem, 5.4vw, 4rem); color:#fff; margin-bottom:22px;}
-  .hero p.lead{font-size:1.28rem; max-width:620px; color:rgba(255,255,255,0.92); margin-bottom:0;}
-  .hero p.lead + p.lead{margin-top:14px;}
+  .hero h1{font-size:clamp(1.9rem, 3.6vw, 3rem); color:#fff; margin-bottom:14px;}
+  .hero p.lead{font-size:1.05rem; max-width:620px; color:rgba(255,255,255,0.92); margin-bottom:0;}
+  .hero p.lead + p.lead{margin-top:6px;}
   .hero-actions{
     background:#fff;
-    padding:30px 48px;
-    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:20px;
+    padding:20px 48px;
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;
     flex-shrink:0;
   }
   .hero-ctas{display:flex; flex-wrap:wrap; gap:16px;}
@@ -207,8 +239,8 @@
   /* placeholder image */
   .ph{position:relative; overflow:hidden; border-radius:var(--radius); background:var(--paper);}
   .ph img{width:100%; height:100%; object-fit:cover; filter:grayscale(20%) contrast(1.05);}
-  .ph::after{content:""; position:absolute; inset:0; background:linear-gradient(160deg, rgba(232,104,63,0.28), rgba(23,51,80,0.32)); mix-blend-mode:multiply;}
-  .ph-tag{position:absolute; bottom:10px; left:10px; z-index:2; background:rgba(13,31,51,0.75); color:#fff; font-family:'Space Mono',monospace; font-size:0.62rem; letter-spacing:0.06em; padding:5px 9px; border-radius:4px; text-transform:uppercase;}
+  .ph::after{content:""; position:absolute; inset:0; background:linear-gradient(160deg, rgba(232,104,63,0.28), rgba(0,117,74,0.32)); mix-blend-mode:multiply;}
+  .ph-tag{position:absolute; bottom:10px; left:10px; z-index:2; background:rgba(0,117,74,0.75); color:#fff; font-family:'Space Mono',monospace; font-size:0.62rem; letter-spacing:0.06em; padding:5px 9px; border-radius:4px; text-transform:uppercase;}
 
   /* ---------- CHECK US OUT ---------- */
   .strip{display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center; margin-bottom:88px;}
@@ -263,7 +295,7 @@
     position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); z-index:3;
     width:62px; height:62px; border-radius:50%; background:rgba(232,104,63,0.92);
     display:flex; align-items:center; justify-content:center;
-    box-shadow:0 10px 26px rgba(13,31,51,0.35);
+    box-shadow:0 10px 26px rgba(0,117,74,0.35);
     transition: transform .2s ease, background .2s ease;
   }
   .video-thumb:hover .play-circle{transform:translate(-50%,-50%) scale(1.08); background:var(--coral-dark);}
@@ -272,7 +304,7 @@
 
   /* ---------- VIDEO MODAL ---------- */
   .video-modal-overlay{
-    position:fixed; inset:0; z-index:2000; background:rgba(13,31,51,0.88);
+    position:fixed; inset:0; z-index:2000; background:rgba(0,117,74,0.88);
     display:none; align-items:center; justify-content:center; padding:32px;
   }
   .video-modal-overlay.open{display:flex;}
@@ -309,6 +341,11 @@
   .compare ul{padding-left:18px; margin:16px 0;}
   .compare li{margin-bottom:8px;}
   @media(max-width:820px){ .compare{grid-template-columns:1fr;} .compare .col-a{border-right:none; border-bottom:1px solid var(--line);} }
+  #suzuki-rcm .eyebrow{color:var(--green-dark);}
+  #suzuki-rcm .eyebrow::before{background:var(--green-dark);}
+  #suzuki-rcm table.rcm-table thead th{color:var(--green-dark); background:var(--green-soft);}
+  #suzuki-rcm .acc-head .plus{color:var(--green-dark);}
+  #suzuki-rcm .compare .col-a{border-top:4px solid var(--coral);}
 
   /* ---------- EVENTS ---------- */
   .events-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:28px;}
@@ -369,7 +406,7 @@
   .footer-cols{display:flex; gap:64px; flex-wrap:wrap;}
   .footer-col h4{color:#fff; font-size:0.78rem; font-family:'Space Mono',monospace; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:14px;}
   .footer-col a{display:block; font-size:0.88rem; color:rgba(255,255,255,0.68); margin-bottom:10px;}
-  .footer-col a:hover{color:var(--coral);}
+  .footer-col a:hover{color:var(--green);}
   .footer-bottom{display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; font-size:0.8rem; color:rgba(255,255,255,0.5);}
 
   /* ---------- RESPONSIVE ---------- */
@@ -384,9 +421,9 @@
   @media(max-width:600px){
     .info-grid, .teacher-grid, .events-grid, .trophy-strip, .portal-grid{grid-template-columns:1fr;}
     section{padding:30px 0 72px;}
-    .hero-card{min-height:420px;}
-    .hero-content{padding:40px 24px;}
-    .hero-actions{padding:22px 24px;}
+    .hero-content{padding:28px 24px;}
+    .hero-actions{padding:16px 24px;}
+    .hero-card{min-height:440px;}
   }
   @media (prefers-reduced-motion: reduce){
     .hero-slide{transition:none;}
@@ -453,15 +490,19 @@
         <div class="hero-dots" id="heroDots"></div>
         <div class="hero-content">
           <span class="eyebrow" style="color:#fff;"><span style="width:22px;height:1px;background:#fff;display:inline-block;"></span>Welcome to OSM!</span>
-          <h1>Experienced teachers, one child at a time.</h1>
+          <h1>Experienced teachers, <span style="color:var(--coral);">one child at a time.</span></h1>
           <p class="lead">Music lessons that keep the whole child in mind, with qualified and experienced teachers, fostering a love of music and building lifelong skills one child at a time.</p>
-          <p class="lead">Students start as young as age 4</p>
+          <p class="lead"><strong>Students start as young as age 4</strong></p>
         </div>
       </div>
       <div class="hero-actions">
         <div class="hero-ctas">
           <a href="#check-us-out" class="btn btn-primary">Check Us Out!</a>
           <a href="#members" class="btn btn-outline">OSM Member Portal</a>
+          <!-- Events to Come: href is set from EVENTS_CALENDAR_URL near the
+               top of the script at the bottom of this file — edit the URL
+               there (not here) once the external calendar is ready. -->
+          <a href="#" id="eventsToComeBtn" class="btn btn-navy" target="_blank" rel="noopener">Events to Come</a>
         </div>
         <span class="hero-note">Private &amp; group lessons in violin, cello, piano &amp; more — Oakville, Ontario</span>
       </div>
@@ -470,7 +511,7 @@
 </section>
 
 <div class="string-divider">
-  <svg viewBox="0 0 1200 34" preserveAspectRatio="none"><path d="M0 17 Q 150 2, 300 17 T 600 17 T 900 17 T 1200 17" fill="none" stroke="rgba(34,29,24,0.18)" stroke-width="1.5"/></svg>
+  <svg viewBox="0 0 1200 34" preserveAspectRatio="none"><path d="M0 17 Q 150 2, 300 17 T 600 17 T 900 17 T 1200 17" fill="none" stroke="rgba(0,168,104,0.3)" stroke-width="1.5"/></svg>
 </div>
 
 <!-- ============ CHECK US OUT ============ -->
@@ -516,7 +557,7 @@
 </section>
 
 <div class="string-divider">
-  <svg viewBox="0 0 1200 34" preserveAspectRatio="none"><path d="M0 17 Q 150 32, 300 17 T 600 17 T 900 17 T 1200 17" fill="none" stroke="rgba(34,29,24,0.18)" stroke-width="1.5"/></svg>
+  <svg viewBox="0 0 1200 34" preserveAspectRatio="none"><path d="M0 17 Q 150 32, 300 17 T 600 17 T 900 17 T 1200 17" fill="none" stroke="rgba(0,168,104,0.3)" stroke-width="1.5"/></svg>
 </div>
 
 <!-- ============ INFORMATION ============ -->
@@ -775,7 +816,7 @@ Bethany has been teaching violin for 26 years with some of her students have win
 </section>
 
 <div class="string-divider">
-  <svg viewBox="0 0 1200 34" preserveAspectRatio="none"><path d="M0 17 Q 150 2, 300 17 T 600 17 T 900 17 T 1200 17" fill="none" stroke="rgba(34,29,24,0.18)" stroke-width="1.5"/></svg>
+  <svg viewBox="0 0 1200 34" preserveAspectRatio="none"><path d="M0 17 Q 150 2, 300 17 T 600 17 T 900 17 T 1200 17" fill="none" stroke="rgba(0,168,104,0.3)" stroke-width="1.5"/></svg>
 </div>
 
 <!-- ============ EVENTS ============ -->
@@ -946,13 +987,31 @@ Bethany has been teaching violin for 26 years with some of her students have win
   // background-image divs (not <img> tags) so a missing/broken
   // file just shows the navy background instead of a broken-image
   // icon, and the slide count never shrinks or breaks rotation.
+  //
+  // `position` controls which part of the photo stays visible once
+  // the banner crops it to fit (it's the CSS background-position
+  // value). If a photo's main subject is getting cropped out, just
+  // nudge this per image — e.g. 'center top' to favor the top of
+  // the shot, 'center 30%' to favor a bit above center, etc.
   // ============================================================
   const HERO_IMAGES = [
-    'Images/hero-1.jpg',
-    'Images/hero-2.jpg',
-    'Images/hero-3.jpg'
+    { src: 'Images/hero-1.jpg', position: 'center' },
+    { src: 'Images/hero-2.jpg', position: 'center' },
+    { src: 'Images/hero-3.jpg', position: 'center' }
   ];
-  const HERO_ROTATE_MS = 6000; // time each slide stays on screen before rotating
+  const HERO_ROTATE_MS = 7500; // time each slide stays on screen before the next one starts fading in
+
+  // ============================================================
+  // "EVENTS TO COME" BUTTON — EXTERNAL CALENDAR LINK
+  // Replace this with your live calendar link once it's ready, e.g:
+  //   'https://cal.com/oakville-suzuki-music'
+  //   'https://calendar.google.com/calendar/u/0/embed?src=your-calendar-id'
+  // That's the only line that needs to change — the button in the HTML
+  // already points at #eventsToComeBtn and will pick this URL up below.
+  // ============================================================
+  const EVENTS_CALENDAR_URL = 'https://cal.com/oakville-suzuki-music';
+  const eventsToComeBtn = document.getElementById('eventsToComeBtn');
+  if(eventsToComeBtn) eventsToComeBtn.href = EVENTS_CALENDAR_URL;
 
   (function initHeroSlider(){
     const container = document.getElementById('heroSlides');
@@ -964,10 +1023,11 @@ Bethany has been teaching violin for 26 years with some of her students have win
     let current = 0;
     let timer = null;
 
-    HERO_IMAGES.forEach((src) => {
+    HERO_IMAGES.forEach((img) => {
       const slide = document.createElement('div');
       slide.className = 'hero-slide';
-      slide.style.backgroundImage = `url("${src}")`;
+      slide.style.backgroundImage = `url("${img.src}")`;
+      slide.style.backgroundPosition = img.position || 'center';
       container.appendChild(slide);
       slideEls.push(slide);
     });
@@ -1015,6 +1075,9 @@ Bethany has been teaching violin for 26 years with some of her students have win
   window.addEventListener('load', syncHeaderHeight);
   window.addEventListener('resize', syncHeaderHeight);
   window.addEventListener('orientationchange', syncHeaderHeight);
+  if(document.fonts && document.fonts.ready){
+    document.fonts.ready.then(syncHeaderHeight);
+  }
   if('ResizeObserver' in window){
     new ResizeObserver(syncHeaderHeight).observe(siteHeader);
   }
