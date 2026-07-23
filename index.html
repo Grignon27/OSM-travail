@@ -121,24 +121,12 @@
   .brand{display:flex; align-items:center; gap:12px; justify-self:start;}
   .brand img{height:96px; width:auto; border-radius:8px;}
   nav.primary{display:flex; align-items:center; justify-content:center; gap:2px;}
-  nav.primary > a, .has-drop > button{
+  nav.primary > a{
     font-size:0.86rem; font-weight:500; padding:10px 14px; border-radius:999px;
     background:none; border:none; font-family:'Work Sans',sans-serif; cursor:pointer; color:var(--ink);
     transition: background .15s ease, color .15s ease;
   }
-  nav.primary > a:hover, .has-drop > button:hover{background:var(--paper); color:var(--green-dark);}
-  .has-drop{position:relative;}
-  .has-drop > button{display:flex; align-items:center; gap:6px;}
-  .dropdown{
-    position:absolute; top:110%; left:0; min-width:210px;
-    background:#fff; border:1px solid var(--line); border-radius:10px;
-    box-shadow:0 18px 40px rgba(20,15,10,0.14);
-    padding:8px; opacity:0; visibility:hidden; transform:translateY(6px);
-    transition:all .16s ease;
-  }
-  .has-drop:hover .dropdown, .has-drop.open .dropdown{opacity:1; visibility:visible; transform:translateY(0);}
-  .dropdown a{display:block; padding:10px 12px; border-radius:6px; font-size:0.85rem;}
-  .dropdown a:hover{background:var(--paper); color:var(--coral-dark);}
+  nav.primary > a:hover{background:var(--paper); color:var(--green-dark);}
   .nav-cta{display:flex; align-items:center; gap:10px; justify-self:end;}
   .nav-cta .btn{padding:10px 20px; font-size:0.82rem;}
   .lock-pill{
@@ -281,6 +269,34 @@
   .teacher-card h3{font-size:1.2rem; margin-bottom:2px;}
   .teacher-card .instr{font-family:'Space Mono',monospace; font-size:0.72rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--coral-dark); display:block; margin-bottom:12px;}
   .teacher-card p{font-size:0.92rem; color:var(--ink-soft);}
+  .teacher-card .bio-clamp{
+    display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:4; overflow:hidden;
+  }
+  .teacher-card .bio-readmore{
+    display:inline-block; margin-top:8px; background:none; border:none; padding:0; cursor:pointer;
+    font-family:'Space Mono',monospace; font-size:0.72rem; letter-spacing:0.06em; text-transform:uppercase;
+    color:var(--coral-dark); text-decoration:underline; text-underline-offset:3px;
+  }
+  .teacher-card .bio-readmore:hover{color:var(--coral);}
+
+  /* ---------- TEACHER BIO MODAL ---------- */
+  .bio-modal-overlay{
+    position:fixed; inset:0; z-index:2000; background:rgba(0,117,74,0.88);
+    display:none; align-items:center; justify-content:center; padding:32px;
+  }
+  .bio-modal-overlay.open{display:flex;}
+  .bio-modal-box{
+    position:relative; width:100%; max-width:640px; max-height:82vh; overflow-y:auto;
+    background:var(--cream); border-radius:12px; padding:40px;
+  }
+  .bio-modal-box h3{font-size:1.4rem; margin-bottom:2px; color:var(--ink);}
+  .bio-modal-box .instr{font-family:'Space Mono',monospace; font-size:0.72rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--coral-dark); display:block; margin-bottom:18px;}
+  .bio-modal-box p{font-size:0.96rem; color:var(--ink-soft); white-space:pre-line;}
+  .bio-modal-close{
+    position:absolute; top:-46px; right:0; background:none; border:none; cursor:pointer;
+    color:#fff; font-size:1.6rem; line-height:1; padding:6px 10px;
+  }
+  .bio-modal-close:hover{color:var(--coral);}
 
   /* ---------- SUZUKI EDITORIAL ---------- */
   .editorial{display:grid; grid-template-columns:0.9fr 1.1fr; gap:72px; align-items:start;}
@@ -316,6 +332,50 @@
   }
   .video-modal-close:hover{color:var(--coral);}
 
+  /* ---------- LEGAL LINKS + MODAL ---------- */
+  .legal-links{
+    display:flex; flex-wrap:wrap; justify-content:center; gap:10px 34px;
+    margin-top:56px; padding-top:28px; border-top:1px solid var(--line);
+  }
+  .legal-link{
+    background:none; border:none; cursor:pointer; padding:6px 4px;
+    font-family:'Space Mono',monospace; font-size:0.76rem; letter-spacing:0.06em;
+    text-transform:uppercase; color:var(--ink-soft); text-decoration:underline;
+    text-underline-offset:4px; text-decoration-color:var(--line);
+    transition:color .15s ease, text-decoration-color .15s ease;
+  }
+  .legal-link:hover{color:var(--coral-dark); text-decoration-color:var(--coral-dark);}
+  .legal-modal-overlay{
+    position:fixed; inset:0; z-index:2000; background:rgba(20,15,10,0.6);
+    display:none; align-items:center; justify-content:center; padding:24px;
+  }
+  .legal-modal-overlay.open{display:flex;}
+  .legal-modal-box{
+    position:relative; width:100%; max-width:760px; max-height:86vh;
+    background:var(--paper,#fff); border-radius:14px; box-shadow:0 24px 60px rgba(20,15,10,0.28);
+    display:flex; flex-direction:column; overflow:hidden;
+  }
+  .legal-modal-header{
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+    padding:22px 26px; border-bottom:1px solid var(--line); background:#fff;
+  }
+  .legal-modal-header h3{font-family:'Fraunces',serif; font-size:1.3rem; color:var(--ink); margin:0;}
+  .legal-modal-close{
+    background:none; border:none; cursor:pointer; color:var(--ink-soft);
+    font-size:1.6rem; line-height:1; padding:4px 8px; flex-shrink:0;
+  }
+  .legal-modal-close:hover{color:var(--coral-dark);}
+  .legal-modal-body{
+    padding:24px 26px 32px; overflow-y:auto; color:var(--ink-soft);
+    font-size:0.92rem; line-height:1.7;
+  }
+  .legal-modal-body h4{
+    font-family:'Fraunces',serif; font-size:1.05rem; color:var(--ink);
+    margin:22px 0 10px;
+  }
+  .legal-modal-body h4:first-child{margin-top:0;}
+  .legal-modal-body p{margin-bottom:12px;}
+
   /* ---------- SUZUKI vs RCM ---------- */
   .rcm-intro{display:grid; grid-template-columns:1.35fr 1fr; gap:56px; align-items:start; margin-bottom:60px;}
   .rcm-intro .rcm-copy p{color:var(--ink-soft); margin-bottom:16px;}
@@ -346,6 +406,75 @@
   #suzuki-rcm table.rcm-table thead th{color:var(--green-dark); background:var(--green-soft);}
   #suzuki-rcm .acc-head .plus{color:var(--green-dark);}
   #suzuki-rcm .compare .col-a{border-top:4px solid var(--coral);}
+
+  /* ---------- COLOR ACCENT UTILITIES ----------
+     Used across the non-home, non-members pages (Check Us Out, Information,
+     Our Teachers, What Is Suzuki, Suzuki & RCM, Events, Contact) to keep the
+     coral/green brand palette present as more than just buttons & links. */
+  .accent-coral{color:var(--coral-dark) !important;}
+  .accent-green{color:var(--green-dark) !important;}
+  .accent-box{
+    border-radius:12px; padding:26px 30px; margin:26px 0;
+    border-left:4px solid var(--coral);
+    background:rgba(232,104,63,0.07);
+  }
+  .accent-box.green{border-left-color:var(--green); background:var(--green-soft);}
+  .accent-box p{margin:0;}
+  .accent-box p + p{margin-top:10px;}
+  .accent-box strong{color:var(--coral-dark);}
+  .accent-box.green strong{color:var(--green-dark);}
+  .accent-tag{
+    display:inline-block; font-family:'Space Mono',monospace; font-size:0.68rem;
+    letter-spacing:0.06em; text-transform:uppercase; padding:5px 11px; border-radius:999px;
+    background:rgba(232,104,63,0.14); color:var(--coral-dark); margin-bottom:10px;
+  }
+  .accent-tag.green{background:var(--green-soft); color:var(--green-dark);}
+
+  /* ---------- CHECK US OUT: color accents ---------- */
+  #check-us-out .strip:first-of-type h3{color:var(--green-dark);}
+  #check-us-out .strip.reverse h3{color:var(--coral-dark);}
+  #check-us-out .strip-media .ph-tag{background:rgba(0,117,74,0.75);}
+  #check-us-out .strip.reverse .strip-media .ph-tag{background:rgba(232,104,63,0.82);}
+
+  /* ---------- INFORMATION: color accents ---------- */
+  #information .info-card:nth-child(1){border-top:4px solid var(--green);}
+  #information .info-card:nth-child(2){border-top:4px solid var(--coral);}
+  #information .info-card:nth-child(3){border-top:4px solid var(--green-dark);}
+  #information .info-card:nth-child(1) h3{color:var(--green-dark);}
+  #information .info-card:nth-child(2) h3{color:var(--coral-dark);}
+  #information .info-card:nth-child(3) h3{color:var(--green-dark);}
+  #information .acc-head .plus{color:var(--green-dark);}
+
+  /* ---------- OUR TEACHERS: color accents ---------- */
+  #teachers .eyebrow{color:var(--green-dark);}
+  #teachers .eyebrow::before{background:var(--green-dark);}
+  #teachers .teacher-card{border-top:3px solid var(--coral);}
+  #teachers .teacher-card:nth-child(even){border-top-color:var(--green);}
+  #teachers .teacher-card h3{color:var(--ink);}
+  #teachers .teacher-card .instr{color:var(--green-dark);}
+  #teachers .teacher-card:nth-child(odd) .instr{color:var(--coral-dark);}
+
+  /* ---------- WHAT IS SUZUKI: color accents ---------- */
+  #suzuki .eyebrow{color:var(--green-dark);}
+  #suzuki .eyebrow::before{background:var(--green-dark);}
+  #suzuki .editorial-copy h3{color:var(--coral-dark);}
+  .suzuki-photos{display:grid; grid-template-columns:1fr; gap:16px;}
+  .suzuki-photos .ph{aspect-ratio:4/3;}
+  .suzuki-photos .ph-tag{background:rgba(0,117,74,0.75);}
+  .suzuki-photos .ph:last-child .ph-tag{background:rgba(232,104,63,0.82);}
+
+  /* ---------- EVENTS: color accents ---------- */
+  #events .event-card{border-top:4px solid var(--coral);}
+  #events .event-card:nth-child(2){border-top-color:var(--green);}
+  #events .event-card:nth-child(3){border-top-color:var(--coral-dark);}
+  #events .event-card-body h3{color:var(--ink);}
+  #events .event-card:nth-child(2) .event-card-body h3{color:var(--green-dark);}
+  #events .trophy-item span{color:var(--green-dark); font-weight:600;}
+
+  /* ---------- CONTACT: color accents ---------- */
+  #contact .contact-detail .k{color:var(--green-dark);}
+  #contact .map-embed{border-top:4px solid var(--coral);}
+  #contact .field label{color:var(--green-dark);}
 
   /* ---------- EVENTS ---------- */
   .events-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:28px;}
@@ -446,14 +575,7 @@
       <a href="#teachers">Our Teachers</a>
       <a href="#suzuki">What Is Suzuki?</a>
       <a href="#suzuki-rcm">Suzuki &amp; RCM</a>
-      <div class="has-drop">
-        <button type="button">Events <span aria-hidden="true">▾</span></button>
-        <div class="dropdown">
-          <a href="#registration">Event Registration</a>
-          <a href="#calendar">Event Calendar</a>
-          <a href="#trophy-wall">Trophy Wall</a>
-        </div>
-      </div>
+      <a href="#events">Events</a>
       <a href="#contact">Contact Us</a>
     </nav>
 
@@ -472,9 +594,7 @@
     <a href="#teachers" style="padding:12px 0;">Our Teachers</a>
     <a href="#suzuki" style="padding:12px 0;">What Is Suzuki?</a>
     <a href="#suzuki-rcm" style="padding:12px 0;">Suzuki &amp; RCM</a>
-    <a href="#registration" style="padding:12px 0;">Event Registration</a>
-    <a href="#calendar" style="padding:12px 0;">Event Calendar</a>
-    <a href="#trophy-wall" style="padding:12px 0;">Trophy Wall</a>
+    <a href="#events" style="padding:12px 0;">Events</a>
     <a href="#members" style="padding:12px 0;">Member Portal</a>
     <a href="#contact" style="padding:12px 0;">Contact Us</a>
   </nav>
@@ -490,7 +610,7 @@
         <div class="hero-dots" id="heroDots"></div>
         <div class="hero-content">
           <span class="eyebrow" style="color:#fff;"><span style="width:22px;height:1px;background:#fff;display:inline-block;"></span>Welcome to OSM!</span>
-          <h1>Experienced teachers, <span style="color:var(--coral);">one child at a time.</span></h1>
+          <h1>Experienced teachers, <span style="color:var(--coral);">With the Love of Music.</span></h1>
           <p class="lead">Music lessons that keep the whole child in mind, with qualified and experienced teachers, fostering a love of music and building lifelong skills one child at a time.</p>
           <p class="lead"><strong>Students start as young as age 4</strong></p>
         </div>
@@ -504,7 +624,6 @@
                there (not here) once the external calendar is ready. -->
           <a href="#" id="eventsToComeBtn" class="btn btn-navy" target="_blank" rel="noopener">Events to Come</a>
         </div>
-        <span class="hero-note">Private &amp; group lessons in violin, cello, piano &amp; more — Oakville, Ontario</span>
       </div>
     </div>
   </div>
@@ -519,8 +638,10 @@
   <div class="wrap">
     <div class="section-head">
       <span class="eyebrow">Check Us Out!</span>
-      <h2>An engaging, welcoming introduction to OSM</h2>
-      <p>Get a feel for what a lesson, a group class, and a recital day actually look like before you ever step through the door.</p>
+      <h2>Our Mission</h2>
+      <div class="accent-box green">
+        <p>The OSM fosters community and excellence in musicianship using the Suzuki Methodology of teaching in a nurturing environment with emphasis on the individual child and their needs.</p>
+      </div>
     </div>
 
     <div class="strip">
@@ -532,10 +653,10 @@
         </div>
       </div>
       <div class="strip-text">
-        <span class="eyebrow">Meet the studio</span>
-        <h3>A group class in full swing</h3>
-        <p>Watch a typical Thursday evening group class — students of similar levels playing side by side, building confidence, rhythm, and friendships together. This is where the Suzuki philosophy comes alive: children learning from children, encouraged by teachers who know every name.</p>
-        <a href="#information" class="btn btn-outline">See Information</a>
+        <span class="eyebrow">The studio</span>
+        <h3>Meet Our Teachers</h3>
+        <p>Our teachers have University Music degrees as well as Suzuki training and are committed to nurturing every student's musical journey.</p>
+        <a href="#information" class="btn btn-outline">Meet Our Teachers</a>
       </div>
     </div>
 
@@ -548,7 +669,7 @@
       </div>
       <div class="strip-text">
         <span class="eyebrow">Our culture</span>
-        <h3>A community built around encouragement</h3>
+        <h3>What is Suzuki ?</h3>
         <p>Parents, teachers, and students work as a team. Lessons are structured, repertoire is shared across levels, and every recital is a chance to celebrate how far a child has come — never a competition against anyone but their earlier self.</p>
         <a href="#suzuki" class="btn btn-outline">What Is Suzuki?</a>
       </div>
@@ -565,24 +686,24 @@
   <div class="wrap">
     <div class="section-head">
       <span class="eyebrow">Information</span>
-      <h2>Schedules, pricing, location &amp; term dates</h2>
-      <p>Everything a prospective family needs to plan around — organized so it's easy to scan, and easy to keep current.</p>
+      <h2>What we offers</h2>
+      <p>Private lessons, Group Classes, Membership privilege and a whole repository of exclusive resources that will help your child success as a young musician</p>
     </div>
 
     <div class="info-grid">
       <div class="info-card">
-        <span class="eyebrow" style="margin-bottom:8px;">Location</span>
-        <h3>Studios &amp; group class venue</h3>
+        <span class="eyebrow" style="margin-bottom:8px;">Group</span>
+        <h3>GROUP CLASSES</h3>
         <p>Private lessons take place across partner studios in Oakville; group classes are held at a central community venue. Exact addresses are confirmed at registration.</p>
       </div>
       <div class="info-card">
-        <span class="eyebrow" style="margin-bottom:8px;">Term dates</span>
-        <h3>Fall / Winter / Spring terms</h3>
+        <span class="eyebrow" style="margin-bottom:8px;">Private</span>
+        <h3>PRIVATE LESSONS</h3>
         <p>The teaching year runs in three terms with a summer camp session in July. A printable term calendar is shared with families each September.</p>
       </div>
       <div class="info-card">
-        <span class="eyebrow" style="margin-bottom:8px;">Ages</span>
-        <h3>Starting as young as 4</h3>
+        <span class="eyebrow" style="margin-bottom:8px;">Resources</span>
+        <h3>GENERAL RESOURCES</h3>
         <p>Early Childhood Music welcomes the youngest musicians; private instruction typically begins around age 4, with no upper age limit.</p>
       </div>
     </div>
@@ -596,6 +717,7 @@
             <p>Private lessons are booked directly with each teacher and scheduled around school hours. Group classes run on a fixed weekly or bi-weekly night depending on instrument:</p>
             <ul>
               <li>Violin group classes — weekly, weekday evenings</li>
+              <li>Flute group classes — weekly, weekday evenings</li>
               <li>Cello group classes — every second week, evenings</li>
               <li>Piano, viola &amp; guitar — grouped play arranged as numbers allow</li>
             </ul>
@@ -645,39 +767,45 @@
         <div class="ph"><img src="Gallery/Headshot-Bethany.jpg" alt="Placeholder headshot"><div class="ph-tag">Headshot</div></div>
         <h3>Bethany Goluboff</h3>
         <span class="instr">Violin</span>
-        <p>Bethany started with the Suzuki method at age 4 and came from a musical family.   She has a B.M. and M.M. in Violin Performance, and a B.A. in Music Education as well as completing Suzuki teacher training (all 10) .  
+        <p class="bio-clamp">Bethany started with the Suzuki method at age 4 and came from a musical family.   She has a B.M. and M.M. in Violin Performance, and a B.A. in Music Education as well as completing Suzuki teacher training (all 10) .  
  She played with the Québec Symphony for two years, and was Concert Master of the Sudbury Symphony for three years. 
 Bethany has been teaching violin for 26 years with some of her students have winning the Gold Award for RCM, some going into the Taylor Academy as well as music study in university.</p>
+        <button type="button" class="bio-readmore" data-bio-name="Bethany Goluboff" data-bio-instr="Violin">Read more</button>
       </div>
       <div class="teacher-card">
         <div class="ph"><img src="Gallery/Headshot-Michelle.jpg" alt="Placeholder headshot"><div class="ph-tag">Headshot</div></div>
         <h3>Michelle Coon</h3>
         <span class="instr">Flute and Theory</span>
-        <p>Michelle has taught and performed in the Oakville and surrounding area for more than 30 years and has experience teaching all ages and levels of flute and theory. She has a YouTube channel to help theory students "Theory in a Nutshell" and has also started a Podcast "Hidden Gems in the History of Music".  Michelle's music degree is in both Performance and Music History from Queen's University. She received her Suzuki training at the Great Lakes Suzuki Institute and is an RCM Certified teacher for all levels of Flute, Theory, Harmony and Music History.  Michelle's students have won Gold Medals for RCM exams, competed in festivals at the Provincial level,  won school music awards and have gone on to music at the post secondary level including Masters and PhD degrees in music. Michelle loves to share her passion for the flute and music and believes in fostering a supportive community in her studio. She believes that each child is unique and teaches with that in mind helping them to achieve excellence in their musical journey.</p>
+        <p class="bio-clamp">Michelle has taught and performed in the Oakville and surrounding area for more than 30 years and has experience teaching all ages and levels of flute and theory. She has a YouTube channel to help theory students "Theory in a Nutshell" and has also started a Podcast "Hidden Gems in the History of Music".  Michelle's music degree is in both Performance and Music History from Queen's University. She received her Suzuki training at the Great Lakes Suzuki Institute and is an RCM Certified teacher for all levels of Flute, Theory, Harmony and Music History.  Michelle's students have won Gold Medals for RCM exams, competed in festivals at the Provincial level,  won school music awards and have gone on to music at the post secondary level including Masters and PhD degrees in music. Michelle loves to share her passion for the flute and music and believes in fostering a supportive community in her studio. She believes that each child is unique and teaches with that in mind helping them to achieve excellence in their musical journey.</p>
+        <button type="button" class="bio-readmore" data-bio-name="Michelle Coon" data-bio-instr="Flute and Theory">Read more</button>
       </div>
       <div class="teacher-card">
         <div class="ph"><img src="Gallery/Headshot-Hana.jpg" alt="Placeholder headshot"><div class="ph-tag">Headshot</div></div>
         <h3>Hana Gurtlova</h3>
         <span class="instr">Piano</span>
-        <p>Blends Suzuki listening-based learning with RCM exam preparation for families pursuing both tracks.</p>
+        <p class="bio-clamp">Blends Suzuki listening-based learning with RCM exam preparation for families pursuing both tracks.</p>
+        <button type="button" class="bio-readmore" data-bio-name="Hana Gurtlova" data-bio-instr="Piano">Read more</button>
       </div>
       <div class="teacher-card">
         <div class="ph"><img src="Gallery/fdd4c3_b432182e435c4063a17dbce60dc26217~mv2.avif" alt="Placeholder headshot"><div class="ph-tag">Headshot</div></div>
         <h3>Angela Lee</h3>
         <span class="instr">Flute</span>
-        <p>Angela Sojung Lee is a dedicated flutist, educator, and performer with over 10 years of teaching experience. She holds a Master of Music in Performance and Literature from Western University and a Bachelor of Music in Performance from Queen's University. Angela has extensive teaching experience working with students of all ages and skill levels in both private and institutional settings. As a Flute Instructor and Supervisor at the CFLTC Music Training Centre, she provided structured instruction, mentorship, and performance guidance to developing musicians. Her teaching philosophy emphasizes strong technical foundations, musical artistry, discipline, and confidence-building within a supportive and engaging learning environment. As an active performer, her performance experience spans orchestral, chamber, wind ensemble, and ceremonial settings, including concerts, military events, and community performances. Angela is passionate about inspiring students to reach their full potential while cultivating a lifelong appreciation for music. She strives to create a positive learning environment where students can grow both technically and artistically.</p>
+        <p class="bio-clamp">Angela Sojung Lee is a dedicated flutist, educator, and performer with over 10 years of teaching experience. She holds a Master of Music in Performance and Literature from Western University and a Bachelor of Music in Performance from Queen's University. Angela has extensive teaching experience working with students of all ages and skill levels in both private and institutional settings. As a Flute Instructor and Supervisor at the CFLTC Music Training Centre, she provided structured instruction, mentorship, and performance guidance to developing musicians. Her teaching philosophy emphasizes strong technical foundations, musical artistry, discipline, and confidence-building within a supportive and engaging learning environment. As an active performer, her performance experience spans orchestral, chamber, wind ensemble, and ceremonial settings, including concerts, military events, and community performances. Angela is passionate about inspiring students to reach their full potential while cultivating a lifelong appreciation for music. She strives to create a positive learning environment where students can grow both technically and artistically.</p>
+        <button type="button" class="bio-readmore" data-bio-name="Angela Lee" data-bio-instr="Flute">Read more</button>
       </div>
       <div class="teacher-card">
         <div class="ph"><img src="https://picsum.photos/seed/osm-teacher-5/500/644" alt="Placeholder headshot"><div class="ph-tag">Headshot</div></div>
         <h3>[Teacher Name]</h3>
         <span class="instr">Guitar</span>
-        <p>Introduces classical guitar technique through songs children already love, building reading skills gradually.</p>
+        <p class="bio-clamp">Introduces classical guitar technique through songs children already love, building reading skills gradually.</p>
+        <button type="button" class="bio-readmore" data-bio-name="[Teacher Name]" data-bio-instr="Guitar">Read more</button>
       </div>
       <div class="teacher-card">
         <div class="ph"><img src="https://picsum.photos/seed/osm-teacher-6/500/645" alt="Placeholder headshot"><div class="ph-tag">Headshot</div></div>
         <h3>[Teacher Name]</h3>
         <span class="instr">Viola &amp; Double Bass</span>
-        <p>A specialist in low strings, helping late-starters and instrument-switchers find their footing quickly.</p>
+        <p class="bio-clamp">A specialist in low strings, helping late-starters and instrument-switchers find their footing quickly.</p>
+        <button type="button" class="bio-readmore" data-bio-name="[Teacher Name]" data-bio-instr="Viola &amp; Double Bass">Read more</button>
       </div>
     </div>
   </div>
@@ -692,8 +820,9 @@ Bethany has been teaching violin for 26 years with some of her students have win
     </div>
 
     <div class="editorial">
-      <div>
-        <div class="ph"><img src="Gallery/Suzuki.webp" alt="Placeholder — historical portrait of Dr. Shinichi Suzuki"><div class="ph-tag">Est. historical portrait</div></div>
+      <div class="suzuki-photos">
+        <div class="ph"><img src="Gallery/Suzuki.webp" alt="Placeholder — historical portrait of Dr. Shinichi Suzuki"><div class="ph-tag">Shinishi Suzuki</div></div>
+        <div class="ph"><img src="Gallery/JeanGrieve.jpg" alt="Placeholder — Jean Grieve - Founder of OSA"><div class="ph-tag">Jean Grieve</div></div>
       </div>
       <div class="editorial-copy">
         <p>This approach to music pedagogy is based on the belief that every child can learn to play an instrument when provided with proper encouragement and a nurturing environment. Suzuki believed that learning an instrument was akin to learning a language. Using this “Mother tongue” approach, whereby children learn to speak by listening to the language spoken to, and around them, students listen to their music as well as learn by ear to begin.</p>
@@ -731,8 +860,10 @@ Bethany has been teaching violin for 26 years with some of her students have win
       <div class="rcm-copy">
         <span class="eyebrow">Suzuki &amp; RCM</span>
         <h2>How does Suzuki fit with the Royal Conservatory of Music (RCM)?</h2>
-        <p><strong>Perfectly well!</strong></p>
-        <p>There is a sense out there that at some point it's time to "stop Suzuki and go to RCM," which is a misunderstanding of what exactly each thing is. Suzuki is a methodology for teaching music and the RCM is a Certificate Program. They are not mutually exclusive.</p>
+        <div class="accent-box">
+          <p><strong>Perfectly well!</strong></p>
+          <p>There is a sense out there that at some point it's time to "stop Suzuki and go to RCM," which is a misunderstanding of what exactly each thing is. Suzuki is a methodology for teaching music and the RCM is a Certificate Program. They are not mutually exclusive.</p>
+        </div>
         <p>Many OSM students have taken their Practical (instrumental) exams and written Theory exams. There have been many OSM students who have received Silver or Gold medals from the RCM, meaning they received the highest mark of that session in their level and instrument.</p>
         <p>Students can benefit from exams for various reasons. Some students only do one or two exams during their journey, others do more, and for some students exams are not helpful for them — it really depends on the student. RCM practical exams have several components including repertoire, etudes/studies, scales, ear training and sight reading.</p>
         <p>From Level 5 RCM onwards, there is a Theory Rudiments co-requisite, and from Level 9 there are two co-requisites, Harmony and History. These co-requisites are necessary to obtain the official RCM Certificate. Students can receive external High School Credits through RCM exams — the RCM worked with the Provincial governments to secure this designation. Level 7 (practical and theory) equals a Grade 11 credit and Level 8 (practical and theory) equals a Grade 12 external credit. The Practical exam grade and Theory exam grade are weighted equally in the determination of the final grade.</p>
@@ -746,7 +877,7 @@ Bethany has been teaching violin for 26 years with some of her students have win
       </div>
     </div>
 
-    <span class="eyebrow">Appendix A</span>
+    <span class="eyebrow">Appendix A: A Comparison</span>
     <div class="compare">
       <div class="col-a">
         <h3>The Suzuki Method</h3>
@@ -777,9 +908,6 @@ Bethany has been teaching violin for 26 years with some of her students have win
         </ul>
       </div>
     </div>
-
-    <p style="max-width:760px; margin-top:34px; color:var(--ink-soft);">Many OSM teachers use Suzuki repertoire as the technical and musical foundation in early years, then layer in RCM sight-reading, theory, and exam preparation once a student is reading fluently — giving families the best of a listening-based start and a nationally recognized credential later on.</p>
-
     <div class="accordion" style="margin-top:70px;">
       <div class="acc-item">
         <button type="button" class="acc-head"><span>Appendix B — Suzuki violin repertoire found in the RCM syllabus</span><span class="plus">+</span></button>
@@ -848,9 +976,9 @@ Bethany has been teaching violin for 26 years with some of her students have win
       </div>
 
       <div class="event-card" id="trophy-wall">
-        <div class="ph"><img src="https://picsum.photos/seed/osm-trophy-wall/700/442" alt="Placeholder — trophy wall"><div class="ph-tag">Trophy Wall</div></div>
+        <div class="ph"><img src="https://picsum.photos/seed/osm-trophy-wall/700/442" alt="Placeholder — Gallery"><div class="ph-tag">Gallery</div></div>
         <div class="event-card-body">
-          <h3>Trophy Wall</h3>
+          <h3>Gallery</h3>
           <p>A celebration of book graduations, exam successes, and recital milestones — updated after every performance season.</p>
           <a href="#" class="btn btn-outline" style="align-self:flex-start;">See All Achievements →</a>
         </div>
@@ -926,6 +1054,12 @@ Bethany has been teaching violin for 26 years with some of her students have win
         <button type="submit" class="btn btn-primary" style="width:100%;">Send Message</button>
       </form>
     </div>
+
+    <div class="legal-links">
+      <button type="button" class="legal-link" data-legal="privacy">Privacy Policy</button>
+      <button type="button" class="legal-link" data-legal="bylaws">OSM Bylaws</button>
+      <button type="button" class="legal-link" data-legal="refund">Refund Policy</button>
+    </div>
   </div>
 </section>
 
@@ -958,13 +1092,13 @@ Bethany has been teaching violin for 26 years with some of her students have win
           <h4>Studio</h4>
           <a href="#members">Member Portal</a>
           <a href="#contact">Contact Us</a>
-          <a href="#">Policies and By-Laws</a>
+          <a href="#contact" class="footer-legal-link" data-legal="bylaws">Policies and By-Laws</a>
         </div>
       </div>
     </div>
     <div class="footer-bottom">
       <span>© 2026 Oakville Suzuki Music. All rights reserved.</span>
-      <a href="#">Policies and By-Laws</a>
+      <a href="#contact" class="footer-legal-link" data-legal="bylaws">Policies and By-Laws</a>
     </div>
   </div>
 </footer>
@@ -974,6 +1108,44 @@ Bethany has been teaching violin for 26 years with some of her students have win
   <div class="video-modal-box">
     <button type="button" class="video-modal-close" id="videoModalClose" aria-label="Close video">&times;</button>
     <video id="videoModalPlayer" controls playsinline></video>
+  </div>
+</div>
+
+<!-- ============ LEGAL DOCUMENT POPUP MODAL ============ -->
+<div class="legal-modal-overlay" id="legalModal">
+  <div class="legal-modal-box">
+    <div class="legal-modal-header">
+      <h3 id="legalModalTitle">Privacy Policy</h3>
+      <button type="button" class="legal-modal-close" id="legalModalClose" aria-label="Close and return to Contact">&times;</button>
+    </div>
+    <div class="legal-modal-body" id="legalModalBody"></div>
+  </div>
+</div>
+
+<script id="legalContent" type="application/json">
+{
+  "privacy": {
+    "title": "Privacy Policy",
+    "html": "<p>Oakvillesuzukimusic.ca (the \u201cSite\u201d) is owned and operated by Oakville Suzuki Music. Contact: info@oakvillesuzukimusic.ca</p><h4>Purpose</h4><p>The purpose of this privacy policy is to inform users of our Site what personal data we collect, how it is used, who has access to it, and the rights of Site users.</p><h4>Consent</h4><p>We only collect data that helps us achieve the purpose set out in this privacy policy. We will not collect any additional data beyond the data listed below without notifying you first: family name, name of parent, name of child, child birthdate, email address, phone number, and any allergies or other medical concerns. This data may be collected using an online form.</p><h4>How We Use Personal Data</h4><p>Data collected on our Site is only used for the purposes specified in this privacy policy or indicated on the relevant pages of our Site. This includes communication, group placement, internal concert programs, and placement with a private teacher.</p><h4>Disclosure</h4><p>We may disclose user data to any member of our organization who reasonably needs access to it to achieve the purposes set out by this Privacy Policy.</p><h4>Other Disclosures</h4><p>We will not sell or share your data with any third parties, except where required by law or for any legal proceeding, or to prove or protect our legal rights.</p><h4>How Long We Store Personal Data</h4><p>User data is stored until the purpose for which it was collected has been achieved.</p><h4>How We Protect Your Data</h4><p>We take all reasonable precautions to ensure user data is secure and that users are protected, and we comply with all privacy regulations.</p><h4>Modifications</h4><p>This Privacy Policy may be amended from time to time to maintain compliance with the law and to reflect changes to our data collection process. Any time we amend this policy, we update the effective date below.</p><p><em>Effective Monday, June 22, 2026</em></p>"
+  },
+  "bylaws": {
+    "title": "OSM Bylaws",
+    "html": "<h4>Section 1 \u2013 General</h4><p><strong>1.01 Definitions.</strong> \u201cAct\u201d means the Not-for-Profit Corporations Act, 2010 (Ontario), including its regulations, as amended. \u201cBoard\u201d means the board of directors of the Corporation. \u201cBy-laws\u201d means this by-law and all other by-laws of the Corporation as amended and in force from time to time. \u201cChair\u201d means the chair of the Board. \u201cCorporation\u201d means Oakville Suzuki Music. \u201cDirector\u201d means an individual occupying the position of director. \u201cMember\u201d and \u201cMembers\u201d mean the membership of the Corporation. \u201cOfficer\u201d means an officer of the Corporation.</p><p><strong>Execution of Contracts.</strong> Any Director or Officer may certify a copy of any instrument, resolution, by-law, or other document of the Corporation to be a true copy.</p><h4>Section 2 \u2013 Directors</h4><p><strong>2.01 Election and Term.</strong> The Board will consist of 3 to 5 members, the majority of whom must be teachers of the Corporation. All Directors are considered Members of OSM. Directors are elected by the Members at the first meeting and at each succeeding annual meeting, and serve until the next annual meeting or until successors are elected.</p><p><strong>2.02 Vacancies.</strong> A Director's office is vacated upon written resignation, death, a finding of legal incapacity, or removal by ordinary resolution of the Members.</p><p><strong>2.03 Filling Vacancies.</strong> Vacancies may be filled by ordinary resolution of the Members, by a special meeting called by the remaining Directors (or by any Member if none remain), or by a quorum of Directors.</p><p><strong>2.04 Committees.</strong> The Board may appoint a managing Director or committee and delegate permitted powers to them, and may establish, define, or dissolve any committee as needed.</p><p><strong>2.05 Remuneration of Directors.</strong> Directors serve without remuneration and may not directly or indirectly profit from their position, though reasonable expenses may be reimbursed, and Directors may be paid for services provided in a capacity other than as Director, subject to Board approval and compliance with conflict-of-interest rules.</p><h4>Section 3 \u2013 Board Meetings</h4><p><strong>3.01 Calling of Meetings.</strong> Meetings may be called by the Chair, president, or any two Directors at any time and place, with required notice; the first organizational meeting may be called by an incorporator or Director with at least five days' notice.</p><p><strong>3.02 Regular Meetings.</strong> Board meetings are held on a regular basis with due notice to all Directors.</p><p><strong>3.03 Notice.</strong> Notice of Board meetings must be given at least seven days in advance, except where all Directors are present and do not object, or notice has been waived.</p><p><strong>3.04 Chair.</strong> The Chair presides at Board meetings; in their absence, the Directors present choose one of their number to act as Chair.</p><p><strong>3.05 Voting.</strong> Each Director has one vote; matters are decided by majority vote, with no casting vote for the Chair in case of a tie.</p><p><strong>3.06 Participation by Telephone or Other Communications Facilities.</strong> With consent of all Directors, a Director may participate by telephonic or electronic means permitting adequate communication, and is deemed present at that meeting.</p><h4>Section 4 \u2013 Financial</h4><p><strong>4.01 Financial Year.</strong> The Corporation's financial year ends August 15th each year, or on such other date as the Board may determine by resolution.</p><h4>Section 5 \u2013 Officers</h4><p><strong>5.01 Officers.</strong> The Board appoints a Chair and may appoint a president, treasurer, and secretary (the latter two roles may be combined) following the annual meeting, along with any other officers or agents it deems necessary.</p><p><strong>5.02 Office Held at Board's Discretion.</strong> An Officer holds office until a successor is appointed, they resign, they are removed by Board resolution, or they die.</p><h4>Section 6 \u2013 Protection of Directors and Others</h4><p><strong>6.01</strong> No Director, Officer, or committee member is liable for the acts, defaults, or losses of others, or for losses arising in the course of their duties, provided they have complied with the Act, the Corporation's articles and by-laws, and have properly exercised their powers and duties.</p><h4>Section 7 \u2013 Conflict of Interest</h4><p><strong>7.01</strong> A Director with a material interest in a contract or transaction with the Corporation must make the disclosure required by the Act, and, except as the Act allows, may not attend the relevant discussion or vote on its approval.</p><h4>Section 8 \u2013 Members</h4><p><strong>8.01</strong> Membership consists of the incorporators named in the articles and other persons accepted into membership by Board resolution.</p><p><strong>8.02</strong> Membership is not transferable and automatically terminates upon resignation or termination in accordance with the Act.</p><h4>Section 9 \u2013 Members' Meetings</h4><p><strong>9.01 Annual Meeting.</strong> Members may request financial statements and reports in advance of the annual meeting. Business includes the agenda, financial statements, election of Directors, and other properly noticed business.</p><p><strong>9.02 Special Meetings.</strong> Directors may call a special meeting, and must do so on written requisition of Members holding at least 10% of votes, to be held within 21 days of the request.</p><p><strong>9.03 Notice.</strong> Members' meetings require 10 to 50 days' written notice, with sufficient information for Members to form a reasoned judgment on any special business.</p><p><strong>9.04 Quorum.</strong> A quorum is 20% of Members entitled to vote, present in person or by proxy.</p><p><strong>9.05 Chair of the Meeting.</strong> The Chair presides, or in their absence another Director or a Member chosen by those present.</p><p><strong>9.06 Voting of Members.</strong> Each Member has one vote by show of hands; abstentions don't count as votes cast; ties are decided by written ballot with no casting vote, and the chair's declared result is conclusive evidence absent a required ballot.</p><p><strong>9.07 Persons Entitled to be Present.</strong> Only Members, Directors, and auditors (or review engagement personnel) are entitled to attend, unless otherwise invited or admitted by majority consent.</p><h4>Section 11 \u2013 Adoption and Amendment of By-laws</h4><p><strong>11.01</strong> This By-law may be amended by a majority vote of the Board.</p><p><em>Enacted June 22, 2026</em></p><h4>Schedule A \u2013 Position Description of the President</h4><p>The president provides leadership to the Board, ensures the integrity of its process, and represents the Board to outside parties, co-ordinating Board activities and facilitating co-operative relationships among Directors. Responsibilities include setting agendas aligned with annual Board goals, ensuring a Board work plan is developed and maintained, serving as the Board's primary public contact, reporting regularly to the Board, and upholding high standards of respect, punctuality, and brevity in Board conduct.</p><h4>Schedule B \u2013 Position Description of the Treasurer</h4><p>The treasurer works with the president to support the Board's financial responsibilities, including custody of funds and securities, keeping accurate accounts, depositing funds as designated, disbursing funds as directed with proper vouchers, reporting on transactions and financial position to the Board, and presenting the annual financial statement and auditor's report to Members.</p><h4>Schedule C \u2013 Position Description of the Secretary</h4><p>The secretary takes notes at Board meetings, supports high standards of Board conduct, keeps a roll of Members' names and addresses, ensures proper recording and maintenance of minutes and records, attends to Board correspondence, has custody of minute books and the Corporation's seal, and gives required notice of meetings.</p>"
+  },
+  "refund": {
+    "title": "Refund Policy",
+    "html": "<h4>Membership Fees</h4><p>Refund requests must be submitted via email to info@oakvillesuzukimusic.ca. There will be no refund on membership fees after September 30th of any given year. All membership refunds are subject to a $25 administration fee.</p><h4>Group Class Fee Refunds</h4><p>OSM must be notified at least 14 days prior to requesting a pro-rated partial group fee refund, by submitting an email to info@oakvillesuzukimusic.ca with the subject line \u201cGroup Class refund request.\u201d This policy applies to OSM-run group classes only.</p><h4>Individual Lesson Refunds</h4><p>Refund policies for private lessons are determined by each individual teacher, not by OSM.</p>"
+  }
+}
+</script>
+
+<!-- ============ TEACHER BIO POPUP MODAL ============ -->
+<div class="bio-modal-overlay" id="bioModal">
+  <div class="bio-modal-box">
+    <button type="button" class="bio-modal-close" id="bioModalClose" aria-label="Close bio">&times;</button>
+    <h3 id="bioModalName"></h3>
+    <span class="instr" id="bioModalInstr"></span>
+    <p id="bioModalText"></p>
   </div>
 </div>
 
@@ -1108,11 +1280,6 @@ Bethany has been teaching violin for 26 years with some of her students have win
     });
   });
 
-  // events dropdown on mobile tap
-  document.querySelectorAll('.has-drop > button').forEach(btn => {
-    btn.addEventListener('click', () => btn.parentElement.classList.toggle('open'));
-  });
-
   // video popup modal
   const videoModal = document.getElementById('videoModal');
   const videoPlayer = document.getElementById('videoModalPlayer');
@@ -1137,6 +1304,64 @@ Bethany has been teaching violin for 26 years with some of her students have win
   videoClose.addEventListener('click', closeVideoModal);
   videoModal.addEventListener('click', (e) => { if(e.target === videoModal) closeVideoModal(); });
   document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeVideoModal(); });
+
+  // legal documents popup (Privacy Policy / OSM Bylaws / Refund Policy)
+  const legalData = JSON.parse(document.getElementById('legalContent').textContent);
+  const legalModal = document.getElementById('legalModal');
+  const legalModalTitle = document.getElementById('legalModalTitle');
+  const legalModalBody = document.getElementById('legalModalBody');
+  const legalModalClose = document.getElementById('legalModalClose');
+
+  function openLegalModal(key){
+    const doc = legalData[key];
+    if(!doc) return;
+    legalModalTitle.textContent = doc.title;
+    legalModalBody.innerHTML = doc.html;
+    legalModalBody.scrollTop = 0;
+    legalModal.classList.add('open');
+  }
+  function closeLegalModal(){
+    legalModal.classList.remove('open');
+  }
+
+  document.querySelectorAll('.legal-link, .footer-legal-link').forEach(btn => {
+    btn.addEventListener('click', (e) => { e.preventDefault(); openLegalModal(btn.dataset.legal); });
+  });
+  legalModalClose.addEventListener('click', closeLegalModal);
+  legalModal.addEventListener('click', (e) => { if(e.target === legalModal) closeLegalModal(); });
+  document.addEventListener('keydown', (e) => { if(e.key === 'Escape' && legalModal.classList.contains('open')) closeLegalModal(); });
+
+  // teacher bio: hide "Read more" when bio fits within 4 lines, wire up popup
+  const bioModal = document.getElementById('bioModal');
+  const bioModalName = document.getElementById('bioModalName');
+  const bioModalInstr = document.getElementById('bioModalInstr');
+  const bioModalText = document.getElementById('bioModalText');
+  const bioModalClose = document.getElementById('bioModalClose');
+
+  function openBioModal(name, instr, text){
+    bioModalName.textContent = name;
+    bioModalInstr.textContent = instr;
+    bioModalText.textContent = text;
+    bioModal.classList.add('open');
+  }
+  function closeBioModal(){
+    bioModal.classList.remove('open');
+  }
+
+  document.querySelectorAll('.teacher-card').forEach(card => {
+    const bioEl = card.querySelector('.bio-clamp');
+    const btn = card.querySelector('.bio-readmore');
+    if(!bioEl || !btn) return;
+    // only show "Read more" if the bio text is actually being clipped
+    if(bioEl.scrollHeight <= bioEl.clientHeight + 1){
+      btn.style.display = 'none';
+    }
+    btn.addEventListener('click', () => openBioModal(btn.dataset.bioName, btn.dataset.bioInstr, bioEl.textContent.trim()));
+  });
+
+  bioModalClose.addEventListener('click', closeBioModal);
+  bioModal.addEventListener('click', (e) => { if(e.target === bioModal) closeBioModal(); });
+  document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeBioModal(); });
 
 </script>
 </body>
