@@ -258,10 +258,12 @@
   .acc-body-inner{padding:0 4px 26px; color:var(--ink-soft); max-width:760px;}
   .acc-body-inner ul{padding-left:18px; margin:10px 0;}
   .info-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-bottom:60px;}
-  .info-card{background:#fff; border:1px solid var(--line); border-radius:10px; padding:28px;}
+  .info-card{background:#fff; border:1px solid var(--line); border-radius:10px; padding:28px; display:flex; flex-direction:column;}
   .info-card .eyebrow{margin-bottom:12px;}
   .info-card h3{font-size:1.15rem;}
-  .info-card p{color:var(--ink-soft); font-size:0.94rem; margin:0;}
+  .info-card p{color:var(--ink-soft); font-size:0.94rem; margin:0 0 20px;}
+  .info-card-btn{margin-top:auto; align-self:flex-start; display:inline-flex; align-items:center; gap:8px;}
+  .info-card-btn-lock .lock-icon{font-size:0.95em; line-height:1;}
 
   /* ---------- TEACHERS ---------- */
   .teacher-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:36px;}
@@ -293,10 +295,14 @@
   .bio-modal-box .instr{font-family:'Space Mono',monospace; font-size:0.72rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--coral-dark); display:block; margin-bottom:18px;}
   .bio-modal-box p{font-size:0.96rem; color:var(--ink-soft); white-space:pre-line;}
   .bio-modal-close{
-    position:absolute; top:-46px; right:0; background:none; border:none; cursor:pointer;
-    color:#fff; font-size:1.6rem; line-height:1; padding:6px 10px;
+    position:absolute; top:16px; right:16px; z-index:5;
+    width:36px; height:36px; display:flex; align-items:center; justify-content:center;
+    background:var(--cream); border:1px solid var(--line); border-radius:50%; cursor:pointer;
+    color:var(--ink); font-size:1.3rem; line-height:1;
+    box-shadow:0 4px 12px rgba(34,29,24,0.14);
+    transition: background .15s ease, color .15s ease, border-color .15s ease;
   }
-  .bio-modal-close:hover{color:var(--coral);}
+  .bio-modal-close:hover{background:var(--coral); border-color:var(--coral); color:#fff;}
 
   /* ---------- SUZUKI EDITORIAL ---------- */
   .editorial{display:grid; grid-template-columns:0.9fr 1.1fr; gap:72px; align-items:start;}
@@ -443,6 +449,12 @@
   #information .info-card:nth-child(1) h3{color:var(--green-dark);}
   #information .info-card:nth-child(2) h3{color:var(--coral-dark);}
   #information .info-card:nth-child(3) h3{color:var(--green-dark);}
+  #information .info-card:nth-child(1) .info-card-btn{background:var(--green); border-color:var(--green); color:#fff;}
+  #information .info-card:nth-child(1) .info-card-btn:hover{background:var(--green-dark); border-color:var(--green-dark); color:#fff;}
+  #information .info-card:nth-child(2) .info-card-btn{background:var(--coral); border-color:var(--coral); color:#fff;}
+  #information .info-card:nth-child(2) .info-card-btn:hover{background:var(--coral-dark); border-color:var(--coral-dark); color:#fff;}
+  #information .info-card:nth-child(3) .info-card-btn{background:var(--green-dark); border-color:var(--green-dark); color:#fff;}
+  #information .info-card:nth-child(3) .info-card-btn:hover{background:var(--navy-dark); border-color:var(--navy-dark); color:#fff;}
   #information .acc-head .plus{color:var(--green-dark);}
 
   /* ---------- OUR TEACHERS: color accents ---------- */
@@ -470,6 +482,12 @@
   #events .event-card-body h3{color:var(--ink);}
   #events .event-card:nth-child(2) .event-card-body h3{color:var(--green-dark);}
   #events .trophy-item span{color:var(--green-dark); font-weight:600;}
+  #events .event-card:nth-child(1) .event-popup-btn{background:var(--coral); border-color:var(--coral); color:#fff;}
+  #events .event-card:nth-child(1) .event-popup-btn:hover{background:var(--coral-dark); border-color:var(--coral-dark); color:#fff;}
+  #events .event-card:nth-child(2) .event-popup-btn{background:var(--green); border-color:var(--green); color:#fff;}
+  #events .event-card:nth-child(2) .event-popup-btn:hover{background:var(--green-dark); border-color:var(--green-dark); color:#fff;}
+  #events .event-card:nth-child(3) .event-popup-btn{background:var(--coral-dark); border-color:var(--coral-dark); color:#fff;}
+  #events .event-card:nth-child(3) .event-popup-btn:hover{background:var(--coral); border-color:var(--coral); color:#fff;}
 
   /* ---------- CONTACT: color accents ---------- */
   #contact .contact-detail .k{color:var(--green-dark);}
@@ -647,7 +665,7 @@
     <div class="strip">
       <div class="strip-media">
         <div class="ph video-card">
-          <img src="https://picsum.photos/seed/osm-video-thumb/900/560" alt="Placeholder — video of a group class in session">
+          <img src="Gallery/group-class-video-thumb.jpg" alt="Placeholder — video of a group class in session">
           <div class="ph-tag">Video placeholder</div>
           <div class="play-btn"></div>
         </div>
@@ -663,7 +681,7 @@
     <div class="strip reverse">
       <div class="strip-media">
         <div class="ph">
-          <img src="https://picsum.photos/seed/osm-smiling-student/900/700" alt="Placeholder — smiling student holding their instrument">
+          <img src="Gallery/smiling-student.jpg" alt="Placeholder — smiling student holding their instrument">
           <div class="ph-tag">Photo placeholder</div>
         </div>
       </div>
@@ -686,79 +704,37 @@
   <div class="wrap">
     <div class="section-head">
       <span class="eyebrow">Information</span>
-      <h2>What we offers</h2>
-      <p>Private lessons, Group Classes, Membership privilege and a whole repository of exclusive resources that will help your child success as a young musician</p>
+      <h2>What we offer</h2>
+      <p>Private lessons, Group Classes, Solo recitals, Multi-instrumental concerts, Theory & Music history, and exclusive resources for members.</p>
     </div>
 
     <div class="info-grid">
       <div class="info-card">
         <span class="eyebrow" style="margin-bottom:8px;">Group</span>
         <h3>GROUP CLASSES</h3>
-        <p>Private lessons take place across partner studios in Oakville; group classes are held at a central community venue. Exact addresses are confirmed at registration.</p>
+        <p>Group classes are an essential part of the program. Students progress more quickly, they learn from one another and enjoy leadership opportunities in class.</p>
+        <button type="button" class="btn btn-outline info-card-btn" id="openGroupClassesBtn">Group Classes</button>
       </div>
       <div class="info-card">
         <span class="eyebrow" style="margin-bottom:8px;">Private</span>
         <h3>PRIVATE LESSONS</h3>
-        <p>The teaching year runs in three terms with a summer camp session in July. A printable term calendar is shared with families each September.</p>
+        <p>Private lessons booked directly with the teacher. Currently, the OSM offers private lessons in flute, piano, violin and viola on a weekly basis</p>
+        <a href="#teachers" class="btn btn-outline info-card-btn">Meet the Teachers</a>
       </div>
       <div class="info-card">
         <span class="eyebrow" style="margin-bottom:8px;">Resources</span>
-        <h3>GENERAL RESOURCES</h3>
-        <p>Early Childhood Music welcomes the youngest musicians; private instruction typically begins around age 4, with no upper age limit.</p>
+        <h3>EXCLUSIVE RESOURCES</h3>
+        <p>Theory printouts (based on RCM curriculum worksheets) and videos, music history tutorials, urated listening lists, Ask-A-Teacher columns (for Parents) and much more.</p>
+        <a href="#members" class="btn btn-outline info-card-btn info-card-btn-lock"><span class="lock-icon" aria-hidden="true">🔒</span> Exclusive Resources</a>
       </div>
     </div>
-
-    <!-- REPLACE WITH REAL SITE COPY: paste exact schedule / pricing / term-date text from the live OSM site here -->
-    <div class="accordion">
-      <div class="acc-item open">
-        <button class="acc-head">Weekly schedule &amp; lesson formats <span class="plus">+</span></button>
-        <div class="acc-body">
-          <div class="acc-body-inner">
-            <p>Private lessons are booked directly with each teacher and scheduled around school hours. Group classes run on a fixed weekly or bi-weekly night depending on instrument:</p>
-            <ul>
-              <li>Violin group classes — weekly, weekday evenings</li>
-              <li>Flute group classes — weekly, weekday evenings</li>
-              <li>Cello group classes — every second week, evenings</li>
-              <li>Piano, viola &amp; guitar — grouped play arranged as numbers allow</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="acc-item">
-        <button class="acc-head">Tuition &amp; fees <span class="plus">+</span></button>
-        <div class="acc-body">
-          <div class="acc-body-inner">
-            <p>Tuition covers private lesson time with your chosen teacher plus enrolment in the group class program. Registration fees, materials, and optional enhanced lesson lengths are billed separately. A current fee schedule is issued at the start of each teaching year.</p>
-          </div>
-        </div>
-      </div>
-      <div class="acc-item">
-        <button class="acc-head">Location &amp; getting there <span class="plus">+</span></button>
-        <div class="acc-body">
-          <div class="acc-body-inner">
-            <p>Studios are located across Oakville, ON, chosen for easy access from most neighbourhoods. Group classes and recitals are held at a central community centre with on-site parking.</p>
-          </div>
-        </div>
-      </div>
-      <div class="acc-item">
-        <button class="acc-head">Registration &amp; term dates <span class="plus">+</span></button>
-        <div class="acc-body">
-          <div class="acc-body-inner">
-            <p>New family registration opens each spring for the following September, with rolling admission as spots allow. Returning students re-register each June through the Member Portal.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- ============ OUR TEACHERS ============ -->
 <section id="teachers">
   <div class="wrap">
     <div class="section-head">
-      <span class="eyebrow">Our Teachers</span>
-      <h2>Professional, prestigious, and genuinely warm</h2>
-      <p>Every OSM teacher is a trained musician and a trained Suzuki educator — each brings their own specialty and their own teaching voice.</p>
+      <span class="eyebrow">Meet Our Teachers</span>
+      <p>Our teachers have university music degrees as well as Suzuki Teacher Training and are committed to nurturing every's student's musical journey</p>
     </div>
 
     <!-- REPEATER LAYOUT — duplicate .teacher-card for each instructor; replace names, photos & bios -->
@@ -958,38 +934,38 @@ Bethany has been teaching violin for 26 years with some of her students have win
 
     <div class="events-grid">
       <div class="event-card" id="registration">
-        <div class="ph"><img src="https://picsum.photos/seed/osm-event-registration/700/440" alt="Placeholder — workshop registration"><div class="ph-tag">Registration</div></div>
+        <div class="ph"><img src="Gallery/OSM-registration.png" alt="Placeholder — workshop registration"><div class="ph-tag">Registration</div></div>
         <div class="event-card-body">
           <h3>Event Registration</h3>
-          <p>Sign up for upcoming workshops, masterclasses, and recitals through a simple, secure form. This block links out to a dedicated registration &amp; ticketing service.</p>
-          <a href="#" class="btn btn-outline" style="align-self:flex-start;">Open Registration →</a>
+          <p>Throughout the year, there may be special eventsfor which you will need to register. the OSM will let you know about these via email. You will use this link to register.</p>
+          <button type="button" class="btn btn-outline event-popup-btn" data-event="registration" style="align-self:flex-start;">Open Registration →</button>
         </div>
       </div>
 
       <div class="event-card" id="calendar">
-        <div class="ph"><img src="https://picsum.photos/seed/osm-event-calendar/700/441" alt="Placeholder — event calendar"><div class="ph-tag">Calendar</div></div>
+        <div class="ph"><img src="Gallery/OSM-calendar.png" alt="Placeholder — event calendar"><div class="ph-tag">Calendar</div></div>
         <div class="event-card-body">
-          <h3>Event Calendar</h3>
+          <h3>OSM Calendar</h3>
           <p>A live, always-current calendar of recitals, group class dates, and studio closures — embedded directly from our shared scheduling calendar.</p>
-          <a href="#" class="btn btn-outline" style="align-self:flex-start;">View Full Calendar →</a>
+          <button type="button" class="btn btn-outline event-popup-btn" data-event="calendar" style="align-self:flex-start;">View Full Calendar →</button>
         </div>
       </div>
-
       <div class="event-card" id="trophy-wall">
-        <div class="ph"><img src="https://picsum.photos/seed/osm-trophy-wall/700/442" alt="Placeholder — Gallery"><div class="ph-tag">Gallery</div></div>
+        <div class="ph"><img src="Gallery/OSM-Trophy.png" alt="Placeholder — Gallery"><div class="ph-tag">Gallery</div>
+      </div>
         <div class="event-card-body">
-          <h3>Gallery</h3>
-          <p>A celebration of book graduations, exam successes, and recital milestones — updated after every performance season.</p>
-          <a href="#" class="btn btn-outline" style="align-self:flex-start;">See All Achievements →</a>
+          <h3>Trophy Wall</h3>
+          <p>All our students are amazing! As they develop and progress, they will often find themselves receiving awards  from schools, music festivals, competition and more</p>
+          <button type="button" class="btn btn-outline event-popup-btn" data-event="trophy-wall" style="align-self:flex-start;">See All Achievements →</button>
         </div>
       </div>
     </div>
 
     <div class="trophy-strip">
-      <div class="trophy-item"><div class="ph"><img src="https://picsum.photos/seed/osm-trophy-1/300/300" alt="Placeholder — student with certificate"></div><h4>[Student Name]</h4><span>Book 3 graduation</span></div>
-      <div class="trophy-item"><div class="ph"><img src="https://picsum.photos/seed/osm-trophy-2/300/301" alt="Placeholder — student with certificate"></div><h4>[Student Name]</h4><span>RCM Level 4 — honours</span></div>
-      <div class="trophy-item"><div class="ph"><img src="https://picsum.photos/seed/osm-trophy-3/300/302" alt="Placeholder — student with certificate"></div><h4>[Student Name]</h4><span>Recital soloist</span></div>
-      <div class="trophy-item"><div class="ph"><img src="https://picsum.photos/seed/osm-trophy-4/300/303" alt="Placeholder — student with certificate"></div><h4>[Student Name]</h4><span>Book 6 graduation</span></div>
+      <div class="trophy-item"><div class="ph"><img src="images/events/trophy-1.jpg" alt="Placeholder — student with certificate"></div><h4>[Student Name]</h4><span>Book 3 graduation</span></div>
+      <div class="trophy-item"><div class="ph"><img src="images/events/trophy-2.jpg" alt="Placeholder — student with certificate"></div><h4>[Student Name]</h4><span>RCM Level 4 — honours</span></div>
+      <div class="trophy-item"><div class="ph"><img src="images/events/trophy-3.jpg" alt="Placeholder — student with certificate"></div><h4>[Student Name]</h4><span>Recital soloist</span></div>
+      <div class="trophy-item"><div class="ph"><img src="images/events/trophy-4.jpg" alt="Placeholder — student with certificate"></div><h4>[Student Name]</h4><span>Book 6 graduation</span></div>
     </div>
   </div>
 </section>
@@ -1044,13 +1020,13 @@ Bethany has been teaching violin for 26 years with some of her students have win
         <div class="contact-detail"><span class="k">Location</span><span>Oakville, Ontario, Canada</span></div>
       </div>
 
-      <form onsubmit="return false;">
+      <form id="contactForm" action="https://formspree.io/f/mqerybyo" method="POST">
         <div class="form-row">
-          <div class="field"><label for="c-name">Name</label><input id="c-name" type="text" placeholder="Your full name"></div>
-          <div class="field"><label for="c-email">Email</label><input id="c-email" type="email" placeholder="you@example.com"></div>
+          <div class="field"><label for="c-name">Name</label><input id="c-name" name="name" type="text" placeholder="Your full name" required></div>
+          <div class="field"><label for="c-email">Email</label><input id="c-email" name="email" type="email" placeholder="you@example.com" required></div>
         </div>
-        <div class="field"><label for="c-phone">Phone</label><input id="c-phone" type="tel" placeholder="(optional)"></div>
-        <div class="field"><label for="c-msg">Message</label><textarea id="c-msg" placeholder="Tell us a bit about your child and what you're looking for..."></textarea></div>
+        <div class="field"><label for="c-phone">Phone</label><input id="c-phone" name="phone" type="tel" placeholder="(optional)"></div>
+        <div class="field"><label for="c-msg">Message</label><textarea id="c-msg" name="message" placeholder="Tell us a bit about your child and what you're looking for..." required></textarea></div>
         <button type="submit" class="btn btn-primary" style="width:100%;">Send Message</button>
       </form>
     </div>
@@ -1108,6 +1084,95 @@ Bethany has been teaching violin for 26 years with some of her students have win
   <div class="video-modal-box">
     <button type="button" class="video-modal-close" id="videoModalClose" aria-label="Close video">&times;</button>
     <video id="videoModalPlayer" controls playsinline></video>
+  </div>
+</div>
+
+<!-- ============ GROUP CLASSES POPUP MODAL (placeholder) ============ -->
+<div class="legal-modal-overlay" id="groupClassesModal">
+  <div class="legal-modal-box" style="max-width:640px;">
+    <div class="legal-modal-header">
+      <h3>Group Classes</h3>
+      <button type="button" class="legal-modal-close" id="groupClassesModalClose" aria-label="Close">&times;</button>
+    </div>
+    <div class="legal-modal-body">
+      <p style="font-family:'Space Mono',monospace; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.06em; color:var(--coral-dark); margin-bottom:16px;">Placeholder — page in progress</p>
+      <h4>Group Classes at OSM</h4>
+      <p>This is a placeholder for the full Group Classes page. Here we'll outline class levels, weekly schedules, locations, and what to expect at a first group class.</p>
+      <h4>What will go here</h4>
+      <p>Age &amp; level groupings, term dates and calendar, instruments offered per group, registration steps, and photos/video from recent classes.</p>
+      <h4>Next steps</h4>
+      <p>Share the real schedule and copy for Group Classes and this placeholder will be replaced with the finished page.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ EVENT REGISTRATION POPUP MODAL (placeholder) ============ -->
+<div class="legal-modal-overlay" id="eventRegistrationModal">
+  <div class="legal-modal-box" style="max-width:640px;">
+    <div class="legal-modal-header">
+      <h3>Event Registration</h3>
+      <a href="#events" class="legal-modal-close" id="eventRegistrationModalClose" aria-label="Close and return to Events">&times;</a>
+    </div>
+    <div class="legal-modal-body">
+      <p style="font-family:'Space Mono',monospace; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.06em; color:var(--coral-dark); margin-bottom:16px;">Placeholder — page in progress</p>
+      <h4>Theme: Registering for OSM events</h4>
+      <p>This is a placeholder for the Event Registration page. It will connect to the scheduling app OSM uses to register families for recitals, workshops, and special events.</p>
+      <h4>What will go here</h4>
+      <p>A list of upcoming events open for registration, sign-up forms per event, and confirmation emails once a spot is reserved.</p>
+      <h4>Next steps</h4>
+      <p>Share the real registration link/service and this placeholder will be replaced with the finished page.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ OSM CALENDAR POPUP MODAL (placeholder) ============ -->
+<div class="legal-modal-overlay" id="eventCalendarModal">
+  <div class="legal-modal-box" style="max-width:640px;">
+    <div class="legal-modal-header">
+      <h3>OSM Calendar</h3>
+      <a href="#events" class="legal-modal-close" id="eventCalendarModalClose" aria-label="Close and return to Events">&times;</a>
+    </div>
+    <div class="legal-modal-body">
+      <p style="font-family:'Space Mono',monospace; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.06em; color:var(--coral-dark); margin-bottom:16px;">Placeholder — page in progress</p>
+      <h4>Theme: A live, shared calendar</h4>
+      <p>This is a placeholder for the OSM Calendar page. It will embed a live, always-current calendar of recitals, group class dates, and studio closures.</p>
+      <h4>What will go here</h4>
+      <p>An embedded Google Calendar (or similar) feed, filterable by event type, with the option to add dates directly to a visitor's own calendar.</p>
+      <h4>Next steps</h4>
+      <p>Share the calendar feed/service to embed and this placeholder will be replaced with the finished page.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ TROPHY WALL POPUP MODAL (placeholder) ============ -->
+<div class="legal-modal-overlay" id="eventTrophyWallModal">
+  <div class="legal-modal-box" style="max-width:640px;">
+    <div class="legal-modal-header">
+      <h3>Trophy Wall</h3>
+      <a href="#events" class="legal-modal-close" id="eventTrophyWallModalClose" aria-label="Close and return to Events">&times;</a>
+    </div>
+    <div class="legal-modal-body">
+      <p style="font-family:'Space Mono',monospace; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.06em; color:var(--coral-dark); margin-bottom:16px;">Placeholder — page in progress</p>
+      <h4>Theme: Celebrating student achievements</h4>
+      <p>This is a placeholder for the Trophy Wall page — a growing gallery celebrating student awards, festival results, competition wins, and graduations.</p>
+      <h4>What will go here</h4>
+      <p>A full, ever-growing photo gallery of student achievements, filterable by instrument or year, expanding on the highlights already shown on the Events page.</p>
+      <h4>Next steps</h4>
+      <p>Share student photos and achievement details and this placeholder will be replaced with the finished page.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CONTACT CONFIRMATION POPUP MODAL ============ -->
+<div class="legal-modal-overlay" id="contactConfirmModal">
+  <div class="legal-modal-box" style="max-width:480px;">
+    <div class="legal-modal-header">
+      <h3>Message Sent</h3>
+      <button type="button" class="legal-modal-close" id="contactConfirmModalClose" aria-label="Close">&times;</button>
+    </div>
+    <div class="legal-modal-body">
+      <p>Thank you for your interest in the OSM. We have received your message. You should hear from us within 2 business days.</p>
+    </div>
   </div>
 </div>
 
@@ -1304,6 +1369,101 @@ Bethany has been teaching violin for 26 years with some of her students have win
   videoClose.addEventListener('click', closeVideoModal);
   videoModal.addEventListener('click', (e) => { if(e.target === videoModal) closeVideoModal(); });
   document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeVideoModal(); });
+
+  // Contact form submission + confirmation popup
+  // Submits the form data to Formspree (https://formspree.io/f/mqerybyo) via
+  // fetch so the visitor never leaves the page — on success the existing
+  // "Message Sent" confirmation modal is shown; on failure we fall back to
+  // a plain (non-AJAX) form submission so the message still goes through.
+  const contactForm = document.getElementById('contactForm');
+  const contactConfirmModal = document.getElementById('contactConfirmModal');
+  const contactConfirmModalClose = document.getElementById('contactConfirmModalClose');
+
+  function openContactConfirmModal(){
+    contactConfirmModal.classList.add('open');
+  }
+  function closeContactConfirmModal(){
+    contactConfirmModal.classList.remove('open');
+  }
+
+  if(contactForm){
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if(!contactForm.checkValidity()){
+        contactForm.reportValidity();
+        return;
+      }
+      const submitBtn = contactForm.querySelector('button[type="submit"]');
+      if(submitBtn) submitBtn.disabled = true;
+
+      fetch(contactForm.action, {
+        method: 'POST',
+        body: new FormData(contactForm),
+        headers: { 'Accept': 'application/json' }
+      }).then((response) => {
+        if(response.ok){
+          openContactConfirmModal();
+          contactForm.reset();
+        } else {
+          // Formspree rejected the request — submit normally as a fallback.
+          contactForm.submit();
+        }
+      }).catch(() => {
+        // Network error — submit normally as a fallback.
+        contactForm.submit();
+      }).finally(() => {
+        if(submitBtn) submitBtn.disabled = false;
+      });
+    });
+  }
+  contactConfirmModalClose.addEventListener('click', closeContactConfirmModal);
+  contactConfirmModal.addEventListener('click', (e) => { if(e.target === contactConfirmModal) closeContactConfirmModal(); });
+  document.addEventListener('keydown', (e) => { if(e.key === 'Escape' && contactConfirmModal.classList.contains('open')) closeContactConfirmModal(); });
+
+  // Group Classes popup (placeholder page)
+  const groupClassesBtn = document.getElementById('openGroupClassesBtn');
+  const groupClassesModal = document.getElementById('groupClassesModal');
+  const groupClassesModalClose = document.getElementById('groupClassesModalClose');
+
+  function openGroupClassesModal(){
+    groupClassesModal.classList.add('open');
+  }
+  function closeGroupClassesModal(){
+    groupClassesModal.classList.remove('open');
+  }
+
+  if(groupClassesBtn){ groupClassesBtn.addEventListener('click', openGroupClassesModal); }
+  groupClassesModalClose.addEventListener('click', closeGroupClassesModal);
+  groupClassesModal.addEventListener('click', (e) => { if(e.target === groupClassesModal) closeGroupClassesModal(); });
+  document.addEventListener('keydown', (e) => { if(e.key === 'Escape' && groupClassesModal.classList.contains('open')) closeGroupClassesModal(); });
+
+  // Events popups (Registration / Calendar / Trophy Wall) — each opens its
+  // own placeholder modal; the × in the header uses href="#events" so
+  // closing a popup also scrolls back to the Events section.
+  const eventModals = {
+    'registration': document.getElementById('eventRegistrationModal'),
+    'calendar': document.getElementById('eventCalendarModal'),
+    'trophy-wall': document.getElementById('eventTrophyWallModal')
+  };
+
+  function openEventModal(key){
+    const modal = eventModals[key];
+    if(!modal) return;
+    modal.classList.add('open');
+  }
+  function closeEventModal(modal){
+    modal.classList.remove('open');
+  }
+
+  document.querySelectorAll('.event-popup-btn').forEach(btn => {
+    btn.addEventListener('click', () => openEventModal(btn.dataset.event));
+  });
+  Object.values(eventModals).forEach(modal => {
+    if(!modal) return;
+    modal.querySelector('.legal-modal-close').addEventListener('click', () => closeEventModal(modal));
+    modal.addEventListener('click', (e) => { if(e.target === modal) closeEventModal(modal); });
+    document.addEventListener('keydown', (e) => { if(e.key === 'Escape' && modal.classList.contains('open')) closeEventModal(modal); });
+  });
 
   // legal documents popup (Privacy Policy / OSM Bylaws / Refund Policy)
   const legalData = JSON.parse(document.getElementById('legalContent').textContent);
