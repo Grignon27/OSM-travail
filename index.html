@@ -413,6 +413,33 @@
   #suzuki-rcm .acc-head .plus{color:var(--green-dark);}
   #suzuki-rcm .compare .col-a{border-top:4px solid var(--coral);}
 
+  /* Appendix B — full per-level / per-instrument comparison table */
+  table.rcm-table-full{width:100%; border-collapse:collapse; min-width:980px; font-size:0.86rem;}
+  table.rcm-table-full thead th{
+    font-family:'Space Mono',monospace; font-size:0.68rem; letter-spacing:0.06em; text-transform:uppercase;
+    color:var(--green-dark); background:var(--green-soft); padding:14px 18px; text-align:left; white-space:nowrap;
+    position:sticky; top:0; z-index:1;
+  }
+  table.rcm-table-full tbody th{
+    font-family:'Space Mono',monospace; font-weight:700; font-size:0.92rem; color:var(--ink);
+    background:#fff; white-space:nowrap; padding:16px 18px; vertical-align:top;
+    position:sticky; left:0; border-right:1px solid var(--line); z-index:1;
+  }
+  table.rcm-table-full thead th:first-child{position:sticky; left:0; z-index:2; border-right:1px solid var(--line);}
+  table.rcm-table-full tbody td{padding:16px 18px; vertical-align:top; border-bottom:1px solid var(--line); color:var(--ink-soft);}
+  table.rcm-table-full tbody tr:nth-child(even) td, table.rcm-table-full tbody tr:nth-child(even) th{background:rgba(0,168,104,0.05);}
+  table.rcm-table-full tbody tr:last-child td, table.rcm-table-full tbody tr:last-child th{border-bottom:none;}
+  table.rcm-table-full .book-line{margin-bottom:8px;}
+  table.rcm-table-full .book-line:last-child{margin-bottom:0;}
+  table.rcm-table-full .book-tag{
+    display:inline-block; font-family:'Space Mono',monospace; font-size:0.66rem; letter-spacing:0.02em;
+    color:var(--coral-dark); background:rgba(232,104,63,0.12); border-radius:999px; padding:2px 9px;
+    margin-right:8px; margin-bottom:3px; white-space:nowrap;
+  }
+  table.rcm-table-full .rcm-empty{color:var(--ink-soft); opacity:0.55; font-style:italic;}
+  .rcm-legend{display:flex; flex-wrap:wrap; gap:10px 24px; margin:18px 2px 0; font-size:0.82rem; color:var(--ink-soft);}
+  .rcm-legend strong{color:var(--ink);}
+
   /* ---------- COLOR ACCENT UTILITIES ----------
      Used across the non-home, non-members pages (Check Us Out, Information,
      Our Teachers, What Is Suzuki, Suzuki & RCM, Events, Contact) to keep the
@@ -884,34 +911,131 @@ Bethany has been teaching violin for 26 years with some of her students have win
         </ul>
       </div>
     </div>
-    <div class="accordion" style="margin-top:70px;">
+    <span class="eyebrow" style="margin-top:70px;">Appendix B: Comparison per levels</span>
+    <div class="accordion">
       <div class="acc-item">
-        <button type="button" class="acc-head"><span>Appendix B — Suzuki violin repertoire found in the RCM syllabus</span><span class="plus">+</span></button>
+        <button type="button" class="acc-head"><span>View the full per-level, per-instrument table</span><span class="plus">+</span></button>
         <div class="acc-body">
           <div class="acc-body-inner" style="max-width:none;">
-            <p>Many pieces from the Suzuki Violin books also appear in the RCM syllabus. Here is the cross-reference by RCM level (Cello, Flute &amp; Piano cross-references are also on file with the studio).</p>
+            <p>Many pieces from the Suzuki repertoire also appear in the RCM syllabus. Here is the full cross-reference by RCM level and instrument.</p>
             <div class="table-scroll">
-              <table class="rcm-table">
+              <table class="rcm-table-full">
                 <thead>
-                  <tr><th>RCM Level</th><th>Suzuki Violin Repertoire</th></tr>
+                  <tr><th>RCM Level</th><th>Cello</th><th>Flute</th><th>Piano</th><th>Violin</th></tr>
                 </thead>
                 <tbody>
-                  <tr><th>Prep</th><td>Book 1: Go Tell Aunt Rhody, May Song, O Come Little Children, Song of the Wind, Allegro</td></tr>
-                  <tr><th>1</th><td>Book 1: Andantino, Minuet 1 (Bach), Allegretto, Happy Farmer, Allegretto</td></tr>
-                  <tr><th>2</th><td>Book 2: Minuet in G Major, Gavotte (attr. Lully), Waltz, Two Grenadiers (Schumann), Witches Dance. Book 3: Minuet, Gavotte (Becker), Gavotte (Martini)</td></tr>
-                  <tr><th>3</th><td>Book 3: Gavotte (Gossec)</td></tr>
-                  <tr><th>4</th><td>Book 3: Gavotte in g minor, Humoresque (Dvorak)</td></tr>
-                  <tr><th>5</th><td>Book 3: Bourree, Concerto #2 mvt 3 (Seitz), Concerto #5 mvt 1 or 3 (Seitz)</td></tr>
-                  <tr><th>6</th><td>Book 4: Concerto in a minor mvt 1 or 3 (Vivaldi), Perpetual Mobile. Book 6: Gavotte (Rameau), Sonata #3 F Major (Handel)</td></tr>
-                  <tr><th>7</th><td>Book 5: Concerto in g minor mvt 1 (Vivaldi). Book 6: La Folia, Allegro (Fiocco). Book 8: Sonata in g minor (Eccles)</td></tr>
-                  <tr><th>8</th><td>Book 6: Sonata #4 D Major (Handel). Book 7: Concerto in a minor Mvt 1 (Bach), Sonata #1 A Major Mvts 1, 2 and 4 (Handel)</td></tr>
-                  <tr><th>9</th><td>Book 7: #1 Carnival of Venice (Genin). Book 8: #2 Fantasie (Faure), Sonata e minor Mvts 1 and 2 (Veracini)</td></tr>
-                  <tr><th>10</th><td>N/A</td></tr>
-                  <tr><th>ARCT</th><td>Book 9: Concerto #5 A Major (Mozart). Book 10: Concerto #4 D Major (Mozart)</td></tr>
+                  <tr>
+                    <th>Prep</th>
+                    <td><div class="book-line"><span class="book-tag">Book 1</span>French Folk Song, Go Tell Aunt Rhody, May Song, Lightly Row, O Come Little Children, Allegro</div></td>
+                    <td><div class="book-line"><span class="book-tag">Book 1</span>#5 Lightly Row, #10 Long Long Ago</div></td>
+                    <td><span class="rcm-empty">Not yet compiled</span></td>
+                    <td><div class="book-line"><span class="book-tag">Book 1</span>Go Tell Aunt Rhody, May Song, O Come Little Children, Song of the Wind, Allegro (Suzuki)</div></td>
+                  </tr>
+                  <tr>
+                    <th>1</th>
+                    <td><div class="book-line"><span class="book-tag">Book 1</span>Rigadoon, Happy Farmer, Minuet 2</div>
+<div class="book-line"><span class="book-tag">Book 2</span>Moon Over the Ruined Castle</div></td>
+                    <td><div class="book-line"><span class="book-tag">Book 1</span>#15 Minuet (Petzold)</div></td>
+                    <td><span class="rcm-empty">Not yet compiled</span></td>
+                    <td><div class="book-line"><span class="book-tag">Book 1</span>Andantino, Minuet 1 (Bach), Allegretto, Happy Farmer, Allegretto</div></td>
+                  </tr>
+                  <tr>
+                    <th>2</th>
+                    <td><div class="book-line"><span class="book-tag">Book 2</span>Long Long Ago, March in G, Minuet 1, Minuet 3, Musette, Gavotte, 2 Grenadiers</div></td>
+                    <td><div class="book-line"><span class="book-tag">Book 1</span>#17 Bourree (Handel)</div>
+<div class="book-line"><span class="book-tag">Book 2</span>#1 Menuet (Gluck), #6 Theme (Beethoven)</div></td>
+                    <td><span class="rcm-empty">Not yet compiled</span></td>
+                    <td><div class="book-line"><span class="book-tag">Book 1</span>Minuet 2 (Bach), Minuet 3 (Petzold, attr. Bach), Musette (Bach)</div>
+<div class="book-line"><span class="book-tag">Book 2</span>Long Long Ago</div></td>
+                  </tr>
+                  <tr>
+                    <th>3</th>
+                    <td><div class="book-line"><span class="book-tag">Book 2</span>Bourree, Witches Dance</div>
+<div class="book-line"><span class="book-tag">Book 3</span>Minuet (Petzold)</div></td>
+                    <td><div class="book-line"><span class="book-tag">Book 2</span>#4 Minuet (Bach)</div>
+<div class="book-line"><span class="book-tag">Book 4</span>#3 Rondeau (Bach)</div></td>
+                    <td><span class="rcm-empty">Not yet compiled</span></td>
+                    <td><div class="book-line"><span class="book-tag">Book 1</span>Gavotte (Gossec)</div>
+<div class="book-line"><span class="book-tag">Book 2</span>Minuet in G Major, Gavotte (attr. Lully), Waltz, Two Grenadiers (Schumann), Witches Dance</div>
+<div class="book-line"><span class="book-tag">Book 3</span>Minuet, Gavotte (Becker), Gavotte (Martini)</div></td>
+                  </tr>
+                  <tr>
+                    <th>4</th>
+                    <td><div class="book-line"><span class="book-tag">Book 3</span>Gavotte in c minor, Minuet (Boccherini), Gavotte (Marais, formerly attr. to Lully)</div></td>
+                    <td><div class="book-line"><span class="book-tag">Book 4</span>#2 Siciliano (Bach)</div></td>
+                    <td><span class="rcm-empty">Not yet compiled</span></td>
+                    <td><div class="book-line"><span class="book-tag">Book 2</span>Minuet (Boccherini)</div>
+<div class="book-line"><span class="book-tag">Book 3</span>Gavotte in g minor, Humoresque (Dvořák)</div></td>
+                  </tr>
+                  <tr>
+                    <th>5</th>
+                    <td><div class="book-line"><span class="book-tag">Book 3</span>Sonata No. 1 (Bach), Minuet in G (Beethoven), Scherzo</div></td>
+                    <td><div class="book-line"><span class="book-tag">Book 3</span>#3 Serenade (Drigo), #4 Scherzando (Anderson)</div></td>
+                    <td><span class="rcm-empty">Not yet compiled</span></td>
+                    <td><div class="book-line"><span class="book-tag">Book 3</span>Bourree, Concerto #2 mvt. 3 (Seitz), Concerto #5 mvt. 1 or 3 (Seitz)</div></td>
+                  </tr>
+                  <tr>
+                    <th>6</th>
+                    <td><div class="book-line"><span class="book-tag">Book 4</span>Concertino No. 2 (Bréval), Chanson Triste</div></td>
+                    <td><div class="book-line"><span class="book-tag">Book 3</span>#3 Serenade (Woodall), #6 Serenade à Pierrette (Schulz)</div>
+<div class="book-line"><span class="book-tag">Book 4</span>#4 Sonata “La Vibray” (Blavet)</div></td>
+                    <td><span class="rcm-empty">Not yet compiled</span></td>
+                    <td><div class="book-line"><span class="book-tag">Book 4</span>Concerto in a minor mvt. 1 or 3 (Vivaldi), Perpetual Motion</div>
+<div class="book-line"><span class="book-tag">Book 6</span>Gavotte (Rameau), Sonata #3 F Major (Handel)</div></td>
+                  </tr>
+                  <tr>
+                    <th>7</th>
+                    <td><div class="book-line"><span class="book-tag">Book 5</span>Concerto (Goltermann), Arioso (Bach)</div>
+<div class="book-line"><span class="book-tag">Book 6</span>Tarantella</div>
+<div class="book-line"><span class="book-tag">Book 7</span>Sicilienne (von Paradis)</div></td>
+                    <td><div class="book-line"><span class="book-tag">Book 3</span>#2 Dance of the Blessed Spirits, incl. Bk. 2 #1 Minuet (Gluck)</div></td>
+                    <td><span class="rcm-empty">Not yet compiled</span></td>
+                    <td><div class="book-line"><span class="book-tag">Book 5</span>Concerto in g minor mvt. 1 (Vivaldi)</div>
+<div class="book-line"><span class="book-tag">Book 6</span>La Folia, Allegro (Fiocco)</div>
+<div class="book-line"><span class="book-tag">Book 8</span>Sonata in g minor (Eccles)</div></td>
+                  </tr>
+                  <tr>
+                    <th>8</th>
+                    <td><div class="book-line"><span class="book-tag">Book 6</span>Concerto in G (Bréval), Concerto in D (Vivaldi)</div>
+<div class="book-line"><span class="book-tag">Book 7</span>Sonata in g minor (Eccles)</div></td>
+                    <td><div class="book-line"><span class="book-tag">Book 5</span>#4 Allegretto (Godard)</div></td>
+                    <td><span class="rcm-empty">Not yet compiled</span></td>
+                    <td><div class="book-line"><span class="book-tag">Book 6</span>Sonata #4 D Major (Handel)</div>
+<div class="book-line"><span class="book-tag">Book 7</span>Concerto in a minor mvt. 1 (Bach), Sonata #1 A Major mvts. 1, 2 and 4 (Handel)</div></td>
+                  </tr>
+                  <tr>
+                    <th>9</th>
+                    <td><div class="book-line"><span class="book-tag">Book 7</span>Gavotte in D (Popper)</div>
+<div class="book-line"><span class="book-tag">Book 8</span>Sonata in G (Berteau), Élégie (Fauré), Allegro Appassionato (Saint-Saëns)</div></td>
+                    <td><div class="book-line"><span class="book-tag">Book 5 / 6</span>Suite in b minor, #1 and #2 (Bach)</div>
+<div class="book-line"><span class="book-tag">Book 7</span>#1 Carnival of Venice (Genin)</div>
+<div class="book-line"><span class="book-tag">Book 8</span>#2 Fantaisie (Fauré)</div>
+<div class="book-line"><span class="book-tag">Book 10</span>#2 Concertino (Chaminade)</div></td>
+                    <td><span class="rcm-empty">Not yet compiled</span></td>
+                    <td><div class="book-line"><span class="book-tag">Book 8</span>Sonata in e minor mvts. 1 and 2 (Veracini)</div></td>
+                  </tr>
+                  <tr>
+                    <th>10</th>
+                    <td><div class="book-line"><span class="book-tag">Book 8</span>Scherzo (Goens)</div>
+<div class="book-line"><span class="book-tag">Book 9</span>Concerto in C (Haydn)</div></td>
+                    <td><div class="book-line"><span class="book-tag">Book 7</span>#3 Hungarian Pastoral Fantasy Op. 26 (Doppler)</div>
+<div class="book-line"><span class="book-tag">Book 8</span>#1 Concerto in G Major (Quantz)</div></td>
+                    <td><span class="rcm-empty">Not yet compiled</span></td>
+                    <td><span class="rcm-empty">N/A</span></td>
+                  </tr>
+                  <tr>
+                    <th>ARCT</th>
+                    <td><span class="rcm-empty">N/A</span></td>
+                    <td><div class="book-line"><span class="book-tag">Book 9</span>Concerto in D Major (Mozart)</div>
+<div class="book-line"><span class="book-tag">Book 11</span>Concerto in G Major (Mozart)</div></td>
+                    <td><span class="rcm-empty">Not yet compiled</span></td>
+                    <td><div class="book-line"><span class="book-tag">Book 9</span>Concerto #5 A Major (Mozart)</div>
+<div class="book-line"><span class="book-tag">Book 10</span>Concerto #4 D Major (Mozart)</div></td>
+                  </tr>
                 </tbody>
               </table>
             </div>
-            <p style="margin-top:16px; font-size:0.85rem;">Note: at Level 3, the source syllabus lists this piece as "Book 1: Gavotte (Gossec)" — it appears in Book 3 in most current Suzuki Violin editions; families should confirm the specific edition with their teacher.</p>
+            <p style="margin-top:16px; font-size:0.85rem;">Note: at Level 3, the source syllabus lists the violin piece as "Book 1: Gavotte (Gossec)" — it appears in Book 3 in most current Suzuki Violin editions; families should confirm the specific edition with their teacher. Piano cross-references have not yet been compiled and will be added once available.</p>
           </div>
         </div>
       </div>
