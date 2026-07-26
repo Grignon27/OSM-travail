@@ -115,24 +115,34 @@
     border-bottom:1px solid var(--line);
   }
   .nav-inner{
-    max-width:var(--maxw); margin:0 auto; padding:14px 28px;
-    display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:24px;
+    max-width:var(--maxw); margin:0 auto; padding:8px 28px;
+    display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:24px;
   }
   .brand{display:flex; align-items:center; gap:12px; justify-self:start;}
-  .brand img{height:96px; width:auto; border-radius:8px;}
-  nav.primary{display:flex; align-items:center; justify-content:center; gap:2px;}
+  .brand img{height:108px; width:auto; object-fit:contain;}
+  nav.primary{display:flex; align-items:center; justify-content:center; gap:2px; width:100%;}
   nav.primary > a{
     font-size:0.86rem; font-weight:500; padding:10px 14px; border-radius:999px;
     background:none; border:none; font-family:'Work Sans',sans-serif; cursor:pointer; color:var(--ink);
     transition: background .15s ease, color .15s ease;
+    text-align:center;
   }
   nav.primary > a:hover{background:var(--paper); color:var(--green-dark);}
   .nav-cta{display:flex; align-items:center; gap:10px; justify-self:end;}
-  .nav-cta .btn{padding:10px 20px; font-size:0.82rem;}
+  .nav-cta .btn{padding:10px 16px; font-size:0.82rem;}
   .lock-pill{
-    display:inline-flex; align-items:center; gap:6px; padding:9px 16px;
+    display:inline-flex; align-items:center; gap:6px; padding:9px 13px;
     border-radius:var(--radius); background:var(--navy); color:#fff; font-size:0.8rem; font-weight:600;
   }
+  .member-pill{
+    display:inline-flex; align-items:center; gap:6px; padding:9px 13px;
+    border-radius:var(--radius); background:none; color:var(--ink); font-size:0.8rem; font-weight:600;
+    border:1.5px solid var(--line); cursor:pointer; font-family:'Work Sans',sans-serif;
+    transition: border-color .15s ease, color .15s ease, background .15s ease;
+  }
+  .member-pill:hover{border-color:var(--coral); color:var(--coral-dark);}
+  .member-pill .lock-icon{font-size:0.9em; line-height:1;}
+  .member-pill.is-unlocked{border-color:var(--green); color:var(--green-dark);}
   .hamburger{display:none; background:none; border:none; cursor:pointer; padding:6px;}
   .hamburger span{display:block; width:24px; height:2px; background:var(--ink); margin:5px 0;}
 
@@ -264,6 +274,31 @@
   .info-card p{color:var(--ink-soft); font-size:0.94rem; margin:0 0 20px;}
   .info-card-btn{margin-top:auto; align-self:flex-start; display:inline-flex; align-items:center; gap:8px;}
   .info-card-btn-lock .lock-icon{font-size:0.95em; line-height:1;}
+  .info-card-btn-lock.is-unlocked{cursor:pointer;}
+  .info-card-btn-lock.is-locked{opacity:0.72; cursor:pointer;}
+
+  /* ---------- MEMBER PASSCODE MODAL ---------- */
+  .passcode-field{margin:18px 0 6px;}
+  .passcode-field label{display:block; font-size:0.78rem; font-family:'Space Mono',monospace; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:8px;}
+  .passcode-field input{
+    width:100%; padding:14px 16px; border:1px solid var(--line); border-radius:8px; background:#fff;
+    font-family:'Space Mono',monospace; letter-spacing:0.12em; font-size:1rem; color:var(--ink); text-transform:uppercase;
+  }
+  .passcode-error{
+    display:none; align-items:center; gap:8px; margin-top:12px; padding:10px 14px;
+    background:rgba(232,104,63,0.1); border:1px solid rgba(232,104,63,0.35); border-radius:8px;
+    color:var(--coral-dark); font-size:0.85rem;
+  }
+  .passcode-error.show{display:flex;}
+  .passcode-success{
+    display:none; align-items:center; gap:8px; margin-top:12px; padding:10px 14px;
+    background:var(--green-soft); border:1px solid rgba(0,168,104,0.4); border-radius:8px;
+    color:var(--green-dark); font-size:0.85rem;
+  }
+  .passcode-success.show{display:flex;}
+  .passcode-submit-row{display:flex; gap:12px; margin-top:20px;}
+  .passcode-submit-row .btn{flex:1;}
+  .passcode-hint{font-size:0.82rem; color:var(--ink-soft); margin-top:14px;}
 
   /* ---------- TEACHERS ---------- */
   .teacher-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:36px;}
@@ -464,8 +499,9 @@
   .accent-tag.green{background:var(--green-soft); color:var(--green-dark);}
 
   /* ---------- REGISTER: MEMBERSHIP BENEFITS BOX ---------- */
+  #register .section-head{margin-bottom:26px;}
   .benefits-box{
-    border-radius:14px; padding:30px 32px; margin:10px 0;
+    border-radius:14px; padding:30px 32px; margin:10px 0 42px;
     background:var(--coral);
     border:1px solid var(--coral-dark);
     border-left:4px solid var(--green);
@@ -675,17 +711,17 @@
     </a>
 
     <nav class="primary">
-      <a href="#home">Home</a>
       <a href="#check-us-out">Check Us Out!</a>
       <a href="#information">Information</a>
       <a href="#teachers">Our Teachers</a>
       <a href="#suzuki">What Is Suzuki?</a>
       <a href="#suzuki-rcm">Suzuki &amp; RCM</a>
       <a href="#events">Events</a>
-      <a href="#contact">Contact Us</a>
+      <a href="#contact">Contact</a>
     </nav>
 
     <div class="nav-cta">
+      <button type="button" class="member-pill" id="memberPasscodeBtn"><span class="lock-icon" aria-hidden="true">🔒</span> Member Passcode</button>
       <a href="#register" class="lock-pill">Register Now!</a>
       <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">
         <span></span><span></span><span></span>
@@ -694,7 +730,6 @@
   </div>
   <!-- mobile menu -->
   <nav id="mobileNav" style="display:none; flex-direction:column; padding:10px 28px 22px; border-top:1px solid var(--line);">
-    <a href="#home" style="padding:12px 0;">Home</a>
     <a href="#check-us-out" style="padding:12px 0;">Check Us Out!</a>
     <a href="#information" style="padding:12px 0;">Information</a>
     <a href="#teachers" style="padding:12px 0;">Our Teachers</a>
@@ -702,7 +737,8 @@
     <a href="#suzuki-rcm" style="padding:12px 0;">Suzuki &amp; RCM</a>
     <a href="#events" style="padding:12px 0;">Events</a>
     <a href="#register" style="padding:12px 0;">Register Now!</a>
-    <a href="#contact" style="padding:12px 0;">Contact Us</a>
+    <button type="button" id="memberPasscodeBtnMobile" style="padding:12px 0; text-align:left; background:none; border:none; font:inherit; color:inherit; cursor:pointer;">🔒 Member Passcode</button>
+    <a href="#contact" style="padding:12px 0;">Contact</a>
   </nav>
 </header>
 
@@ -813,7 +849,8 @@
         <span class="eyebrow" style="margin-bottom:8px;">Resources</span>
         <h3>EXCLUSIVE RESOURCES</h3>
         <p>Theory printouts and videos (based on RCM curriculum), music history tutorials, curated listening lists, Ask-A-Teacher columns (for Parents) and more.</p>
-        <a href="#register" class="btn btn-outline info-card-btn info-card-btn-lock"><span class="lock-icon" aria-hidden="true">🔒</span> Exclusive Resources</a>
+        <button type="button" id="exclusiveResourcesBtn" class="btn btn-outline info-card-btn info-card-btn-lock is-locked"><span class="lock-icon" aria-hidden="true">🔒</span> Exclusive Resources</button>
+        <p id="exclusiveResourcesHint" style="font-size:0.78rem; color:var(--ink-soft); margin-top:10px;">Members: click above and enter your personal passcode to unlock.</p>
       </div>
     </div>
 
@@ -1181,28 +1218,30 @@ Bethany has been teaching violin for 26 years with some of her students have win
       <!-- ---- STEP 1: registration form ---- -->
       <div id="registrationFormStep">
         <form id="registrationForm" class="reg-form" action="https://formspree.io/f/xwvgwazd" method="POST">
-          <input type="hidden" name="_subject" value="OSM Registration Form">
+          <input type="hidden" name="_subject" value="New OSM Registration">
+          <input type="hidden" name="_replyto" id="r-replyto">
+          <input type="hidden" name="_format" value="plain">
 
           <fieldset class="reg-fieldset">
             <legend>Student information</legend>
             <div class="form-row">
-              <div class="field"><label for="r-student-name">Student's full name</label><input id="r-student-name" name="student_name" type="text" placeholder="Child's full name" required></div>
-              <div class="field"><label for="r-student-dob">Date of birth</label><input id="r-student-dob" name="student_dob" type="date" required></div>
+              <div class="field"><label for="r-student-name">Student's full name</label><input id="r-student-name" name="Student's full name" type="text" placeholder="Child's full name" required></div>
+              <div class="field"><label for="r-student-dob">Date of birth</label><input id="r-student-dob" name="Student's date of birth" type="date" required></div>
             </div>
             <div class="field field-full">
               <label>Instrument(s) of interest</label>
               <div class="checkbox-grid">
-                <label class="check-field"><input type="checkbox" name="instrument" value="Violin"> Violin</label>
-                <label class="check-field"><input type="checkbox" name="instrument" value="Viola"> Viola</label>
-                <label class="check-field"><input type="checkbox" name="instrument" value="Cello"> Cello</label>
-                <label class="check-field"><input type="checkbox" name="instrument" value="Piano"> Piano</label>
-                <label class="check-field"><input type="checkbox" name="instrument" value="Flute"> Flute</label>
+                <label class="check-field"><input type="checkbox" name="Instrument(s) of interest" value="Violin"> Violin</label>
+                <label class="check-field"><input type="checkbox" name="Instrument(s) of interest" value="Viola"> Viola</label>
+                <label class="check-field"><input type="checkbox" name="Instrument(s) of interest" value="Cello"> Cello</label>
+                <label class="check-field"><input type="checkbox" name="Instrument(s) of interest" value="Piano"> Piano</label>
+                <label class="check-field"><input type="checkbox" name="Instrument(s) of interest" value="Flute"> Flute</label>
               </div>
             </div>
             <div class="form-row">
               <div class="field">
                 <label for="r-experience">Musical experience</label>
-                <select id="r-experience" name="experience" required>
+                <select id="r-experience" name="Musical experience" required>
                   <option value="" disabled selected>Select one</option>
                   <option value="New to music">New to music</option>
                   <option value="New to OSM, previous Suzuki experience">New to OSM, previous Suzuki experience</option>
@@ -1211,7 +1250,7 @@ Bethany has been teaching violin for 26 years with some of her students have win
               </div>
               <div class="field">
                 <label for="r-teacher">Preferred teacher (if any)</label>
-                <select id="r-teacher" name="preferred_teacher">
+                <select id="r-teacher" name="Preferred teacher">
                   <option value="No preference" selected>No preference</option>
                   <option value="Bethany Goluboff">Bethany Goluboff — Violin</option>
                   <option value="Michelle Coon">Michelle Coon — Flute &amp; Theory</option>
@@ -1225,29 +1264,29 @@ Bethany has been teaching violin for 26 years with some of her students have win
           <fieldset class="reg-fieldset">
             <legend>Parent / guardian information</legend>
             <div class="form-row">
-              <div class="field"><label for="r-parent-name">Parent/guardian full name</label><input id="r-parent-name" name="parent_name" type="text" placeholder="Your full name" required></div>
-              <div class="field"><label for="r-parent-email">Email address</label><input id="r-parent-email" name="parent_email" type="email" placeholder="you@example.com" required></div>
+              <div class="field"><label for="r-parent-name">Parent/guardian full name</label><input id="r-parent-name" name="Parent/guardian full name" type="text" placeholder="Your full name" required></div>
+              <div class="field"><label for="r-parent-email">Email address</label><input id="r-parent-email" name="Parent/guardian email" type="email" placeholder="you@example.com" required></div>
             </div>
             <div class="form-row">
-              <div class="field"><label for="r-parent-phone">Phone number</label><input id="r-parent-phone" name="parent_phone" type="tel" placeholder="(905) 000-0000" required></div>
-              <div class="field"><label for="r-address">Home address</label><input id="r-address" name="home_address" type="text" placeholder="Street, city, postal code" required></div>
+              <div class="field"><label for="r-parent-phone">Phone number</label><input id="r-parent-phone" name="Parent/guardian phone" type="tel" placeholder="(905) 000-0000" required></div>
+              <div class="field"><label for="r-address">Home address</label><input id="r-address" name="Home address" type="text" placeholder="Street, city, postal code" required></div>
             </div>
           </fieldset>
 
           <fieldset class="reg-fieldset">
             <legend>Emergency contact</legend>
             <div class="form-row">
-              <div class="field"><label for="r-emerg-name">Emergency contact name</label><input id="r-emerg-name" name="emergency_name" type="text" placeholder="Full name" required></div>
-              <div class="field"><label for="r-emerg-phone">Emergency contact phone</label><input id="r-emerg-phone" name="emergency_phone" type="tel" placeholder="(905) 000-0000" required></div>
+              <div class="field"><label for="r-emerg-name">Emergency contact name</label><input id="r-emerg-name" name="Emergency contact name" type="text" placeholder="Full name" required></div>
+              <div class="field"><label for="r-emerg-phone">Emergency contact phone</label><input id="r-emerg-phone" name="Emergency contact phone" type="tel" placeholder="(905) 000-0000" required></div>
             </div>
           </fieldset>
 
           <fieldset class="reg-fieldset">
             <legend>Additional information</legend>
-            <div class="field field-full"><label for="r-medical">Allergies or medical conditions we should know about</label><textarea id="r-medical" name="medical_info" style="min-height:80px;" placeholder="Optional — leave blank if none"></textarea></div>
+            <div class="field field-full"><label for="r-medical">Allergies or medical conditions we should know about</label><textarea id="r-medical" name="Allergies or medical conditions" style="min-height:80px;" placeholder="Optional — leave blank if none"></textarea></div>
             <div class="field">
               <label for="r-referral">How did you hear about OSM?</label>
-              <select id="r-referral" name="referral_source">
+              <select id="r-referral" name="How they heard about OSM">
                 <option value="" disabled selected>Select one</option>
                 <option value="Word of mouth">Word of mouth</option>
                 <option value="Google search">Google search</option>
@@ -1262,11 +1301,11 @@ Bethany has been teaching violin for 26 years with some of her students have win
           <fieldset class="reg-fieldset">
             <legend>Agreements</legend>
             <label class="consent-field">
-              <input type="checkbox" name="agree_policies" value="Yes" required>
+              <input type="checkbox" name="Agreed to Bylaws &amp; Refund Policy" value="Yes" required>
               <span>I have read and agree to OSM's <button type="button" class="legal-link" data-legal="bylaws">Bylaws</button> and <button type="button" class="legal-link" data-legal="refund">Refund Policy</button>, and understand the annual OSM registration fee is CAN$135.</span>
             </label>
             <label class="consent-field">
-              <input type="checkbox" name="photo_consent" value="Yes">
+              <input type="checkbox" name="Photo/video consent" value="Yes">
               <span>I consent to occasional photos or video of my child being used in OSM promotional materials (newsletter, website, social media).</span>
             </label>
           </fieldset>
@@ -1292,9 +1331,10 @@ Bethany has been teaching violin for 26 years with some of her students have win
         <div class="reg-payment-box">
           <div class="reg-fee-label" style="font-family:'Space Mono',monospace; font-size:0.74rem; letter-spacing:0.06em; text-transform:uppercase; color:var(--coral-dark);">OSM Annual Registration Fee</div>
           <div class="reg-fee-amount">CAN$135</div>
-          <!-- TODO: replace this placeholder href with the OSM association's real Zeffy campaign link once created -->
-          <a href="https://www.zeffy.com/" target="_blank" rel="noopener" class="btn btn-navy">Pay CAN$135 via Zeffy →</a>
-          <p style="margin-top:16px; font-size:0.78rem; color:var(--ink-soft);">Zeffy link placeholder — to be replaced with the OSM association's account once set up.</p>
+          <!-- href is set from ZEFFY_OSA_CAMPAIGN_URL near the top of the script
+               at the bottom of this file — edit the URL there (not here). -->
+          <a href="#" id="zeffyPayBtn" target="_blank" rel="noopener" class="btn btn-navy">Pay CAN$135 via Zeffy →</a>
+          <p id="zeffyRedirectNote" style="margin-top:16px; font-size:0.78rem; color:var(--ink-soft);">You'll be redirected to the OSA's secure Zeffy payment page automatically in a few seconds — or click the button above.</p>
         </div>
       </div>
 
@@ -1321,12 +1361,15 @@ Bethany has been teaching violin for 26 years with some of her students have win
       </div>
 
       <form id="contactForm" action="https://formspree.io/f/xwvgwazd" method="POST">
+        <input type="hidden" name="_subject" value="New OSM Contact Form Message">
+        <input type="hidden" name="_replyto" id="c-replyto">
+        <input type="hidden" name="_format" value="plain">
         <div class="form-row">
-          <div class="field"><label for="c-name">Name</label><input id="c-name" name="name" type="text" placeholder="Your full name" required></div>
-          <div class="field"><label for="c-email">Email</label><input id="c-email" name="email" type="email" placeholder="you@example.com" required></div>
+          <div class="field"><label for="c-name">Name</label><input id="c-name" name="Name" type="text" placeholder="Your full name" required></div>
+          <div class="field"><label for="c-email">Email</label><input id="c-email" name="Email" type="email" placeholder="you@example.com" required></div>
         </div>
-        <div class="field"><label for="c-phone">Phone</label><input id="c-phone" name="phone" type="tel" placeholder="(optional)"></div>
-        <div class="field"><label for="c-msg">Message</label><textarea id="c-msg" name="message" placeholder="Tell us a bit about your child and what you're looking for..." required></textarea></div>
+        <div class="field"><label for="c-phone">Phone</label><input id="c-phone" name="Phone" type="tel" placeholder="(optional)"></div>
+        <div class="field"><label for="c-msg">Message</label><textarea id="c-msg" name="Message" placeholder="Tell us a bit about your child and what you're looking for..." required></textarea></div>
         <button type="submit" class="btn btn-primary" style="width:100%;">Send Message</button>
       </form>
     </div>
@@ -1445,6 +1488,31 @@ Bethany has been teaching violin for 26 years with some of her students have win
 </div>
 
 <!-- ============ CONTACT CONFIRMATION POPUP MODAL ============ -->
+<!-- ============ MEMBER PASSCODE MODAL ============ -->
+<div class="legal-modal-overlay" id="memberPasscodeModal">
+  <div class="legal-modal-box" style="max-width:460px;">
+    <div class="legal-modal-header">
+      <h3>Member Access</h3>
+      <button type="button" class="legal-modal-close" id="memberPasscodeModalClose" aria-label="Close">&times;</button>
+    </div>
+    <div class="legal-modal-body">
+      <p>Enter the personal passcode you received when OSM registered you as a member to unlock the Exclusive Resources area on the Information page.</p>
+      <form id="memberPasscodeForm">
+        <div class="passcode-field">
+          <label for="memberPasscodeInput">Personal passcode</label>
+          <input type="text" id="memberPasscodeInput" name="passcode" autocomplete="off" spellcheck="false" placeholder="e.g. OSM-4821" required>
+        </div>
+        <div class="passcode-error" id="memberPasscodeError">Sorry, that passcode wasn't recognized. Please check it and try again, or contact OSM if you need help.</div>
+        <div class="passcode-success" id="memberPasscodeSuccess">Passcode accepted! The Exclusive Resources button on the Information page is now unlocked.</div>
+        <div class="passcode-submit-row">
+          <button type="submit" class="btn btn-primary" id="memberPasscodeSubmitBtn">Unlock</button>
+        </div>
+      </form>
+      <p class="passcode-hint">Don't have a passcode yet? Members receive one by email from OSM after registering. <a href="#register" style="color:var(--coral-dark); text-decoration:underline;">Register here</a> or contact us if you haven't received yours.</p>
+    </div>
+  </div>
+</div>
+
 <div class="legal-modal-overlay" id="contactConfirmModal">
   <div class="legal-modal-box" style="max-width:480px;">
     <div class="legal-modal-header">
@@ -1528,6 +1596,29 @@ Bethany has been teaching violin for 26 years with some of her students have win
   // already points at #eventsToComeBtn and will pick this URL up below.
   // ============================================================
   const EVENTS_CALENDAR_URL = 'https://cal.com/oakville-suzuki-music';
+
+  // Zeffy OSA (Oakville Suzuki Association) membership-fee campaign — this is
+  // the ONLY place this URL needs to be edited. Once the OSA's real Zeffy
+  // campaign page exists, replace the placeholder below and both the
+  // "Pay via Zeffy" button and the automatic post-registration redirect
+  // will point to it.
+  const ZEFFY_OSA_CAMPAIGN_URL = 'https://www.zeffy.com/en-CA/donation-form/REPLACE-WITH-OSA-ZEFFY-CAMPAIGN-LINK';
+
+  // ---------------------------------------------------------------------
+  // MEMBERS-ONLY RESOURCES AREA
+  // ---------------------------------------------------------------------
+  // Passcodes are NOT stored anywhere in this file (that would defeat the
+  // purpose — anyone could open the page source and read them). Instead,
+  // every passcode check is sent to a small server-side endpoint (a Google
+  // Apps Script "Web App" reading from a private Google Sheet that acts as
+  // the members list). Replace the placeholder URL below with your own
+  // deployed Web App URL — see MEMBERS-AREA-SETUP.md for the exact steps
+  // and the ready-to-paste Apps Script code.
+  const MEMBER_CHECK_ENDPOINT = 'https://script.google.com/macros/s/REPLACE-WITH-YOUR-APPS-SCRIPT-DEPLOYMENT-ID/exec';
+  // sessionStorage key used to remember (for this browser tab only) that a
+  // passcode was already verified, so the Exclusive Resources button stays
+  // unlocked while browsing the site and resources.html doesn't ask again.
+  const MEMBER_SESSION_KEY = 'osmMemberPasscode';
   const eventsToComeBtn = document.getElementById('eventsToComeBtn');
   if(eventsToComeBtn) eventsToComeBtn.href = EVENTS_CALENDAR_URL;
 
@@ -1651,11 +1742,43 @@ Bethany has been teaching violin for 26 years with some of her students have win
   videoModal.addEventListener('click', (e) => { if(e.target === videoModal) closeVideoModal(); });
   document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeVideoModal(); });
 
+  // Shared Formspree submit handler — used by BOTH the contact form and the
+  // registration form so they behave identically: submit via fetch so the
+  // visitor never leaves the page, run onSuccess(response) once Formspree
+  // confirms the email was sent, and on any failure (rejected request or
+  // network error) fall back to a plain, non-AJAX form submission/redirect
+  // so the message still goes through.
+  function submitToFormspree(form, onSuccess){
+    if(!form.checkValidity()){
+      form.reportValidity();
+      return;
+    }
+    const submitBtn = form.querySelector('button[type="submit"]');
+    if(submitBtn) submitBtn.disabled = true;
+
+    fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    }).then((response) => {
+      if(response.ok){
+        onSuccess();
+      } else {
+        // Formspree rejected the request — submit normally as a fallback.
+        form.submit();
+      }
+    }).catch(() => {
+      // Network error — submit normally as a fallback.
+      form.submit();
+    }).finally(() => {
+      if(submitBtn) submitBtn.disabled = false;
+    });
+  }
+
   // Contact form submission + confirmation popup
   // Submits the form data to Formspree (https://formspree.io/f/xwvgwazd) via
-  // fetch so the visitor never leaves the page — on success the existing
-  // "Message Sent" confirmation modal is shown; on failure we fall back to
-  // a plain (non-AJAX) form submission so the message still goes through.
+  // the shared submitToFormspree() helper above — on success the existing
+  // "Message Sent" confirmation modal is shown.
   const contactForm = document.getElementById('contactForm');
   const contactConfirmModal = document.getElementById('contactConfirmModal');
   const contactConfirmModalClose = document.getElementById('contactConfirmModalClose');
@@ -1670,36 +1793,120 @@ Bethany has been teaching violin for 26 years with some of her students have win
   if(contactForm){
     contactForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      if(!contactForm.checkValidity()){
-        contactForm.reportValidity();
-        return;
-      }
-      const submitBtn = contactForm.querySelector('button[type="submit"]');
-      if(submitBtn) submitBtn.disabled = true;
-
-      fetch(contactForm.action, {
-        method: 'POST',
-        body: new FormData(contactForm),
-        headers: { 'Accept': 'application/json' }
-      }).then((response) => {
-        if(response.ok){
-          openContactConfirmModal();
-          contactForm.reset();
-        } else {
-          // Formspree rejected the request — submit normally as a fallback.
-          contactForm.submit();
-        }
-      }).catch(() => {
-        // Network error — submit normally as a fallback.
-        contactForm.submit();
-      }).finally(() => {
-        if(submitBtn) submitBtn.disabled = false;
+      const replyTo = document.getElementById('c-replyto');
+      if(replyTo) replyTo.value = document.getElementById('c-email').value;
+      submitToFormspree(contactForm, () => {
+        openContactConfirmModal();
+        contactForm.reset();
       });
     });
   }
   contactConfirmModalClose.addEventListener('click', closeContactConfirmModal);
   contactConfirmModal.addEventListener('click', (e) => { if(e.target === contactConfirmModal) closeContactConfirmModal(); });
   document.addEventListener('keydown', (e) => { if(e.key === 'Escape' && contactConfirmModal.classList.contains('open')) closeContactConfirmModal(); });
+
+  // ---------------------------------------------------------------------
+  // Member Passcode modal + Exclusive Resources unlock
+  // ---------------------------------------------------------------------
+  // Checks a passcode against the MEMBER_CHECK_ENDPOINT (see the config
+  // constants near the top of this script). Never checks passcodes against
+  // any list stored in this file — there isn't one to find.
+  const memberPasscodeModal = document.getElementById('memberPasscodeModal');
+  const memberPasscodeModalClose = document.getElementById('memberPasscodeModalClose');
+  const memberPasscodeBtn = document.getElementById('memberPasscodeBtn');
+  const memberPasscodeBtnMobile = document.getElementById('memberPasscodeBtnMobile');
+  const memberPasscodeForm = document.getElementById('memberPasscodeForm');
+  const memberPasscodeInput = document.getElementById('memberPasscodeInput');
+  const memberPasscodeError = document.getElementById('memberPasscodeError');
+  const memberPasscodeSuccess = document.getElementById('memberPasscodeSuccess');
+  const memberPasscodeSubmitBtn = document.getElementById('memberPasscodeSubmitBtn');
+  const exclusiveResourcesBtn = document.getElementById('exclusiveResourcesBtn');
+  const exclusiveResourcesHint = document.getElementById('exclusiveResourcesHint');
+
+  function openMemberPasscodeModal(){
+    memberPasscodeError.classList.remove('show');
+    memberPasscodeSuccess.classList.remove('show');
+    memberPasscodeModal.classList.add('open');
+    setTimeout(() => memberPasscodeInput.focus(), 50);
+  }
+  function closeMemberPasscodeModal(){
+    memberPasscodeModal.classList.remove('open');
+  }
+  if(memberPasscodeBtn) memberPasscodeBtn.addEventListener('click', openMemberPasscodeModal);
+  if(memberPasscodeBtnMobile) memberPasscodeBtnMobile.addEventListener('click', () => {
+    document.getElementById('mobileNav').style.display = 'none';
+    openMemberPasscodeModal();
+  });
+  memberPasscodeModalClose.addEventListener('click', closeMemberPasscodeModal);
+  memberPasscodeModal.addEventListener('click', (e) => { if(e.target === memberPasscodeModal) closeMemberPasscodeModal(); });
+  document.addEventListener('keydown', (e) => { if(e.key === 'Escape' && memberPasscodeModal.classList.contains('open')) closeMemberPasscodeModal(); });
+
+  // Reflects a verified passcode in the Exclusive Resources button on the
+  // Information page. Called both right after a successful modal check and
+  // on page load (in case a passcode was already verified earlier in this
+  // browser tab's session).
+  function unlockExclusiveResources(){
+    if(!exclusiveResourcesBtn) return;
+    exclusiveResourcesBtn.classList.remove('is-locked');
+    exclusiveResourcesBtn.classList.add('is-unlocked');
+    exclusiveResourcesBtn.innerHTML = '<span class="lock-icon" aria-hidden="true">🔓</span> Exclusive Resources';
+    if(exclusiveResourcesHint) exclusiveResourcesHint.textContent = "Unlocked — click above to open the members' resources area.";
+    exclusiveResourcesBtn.onclick = () => { window.location.href = 'resources.html'; };
+  }
+  function lockExclusiveResources(){
+    if(!exclusiveResourcesBtn) return;
+    exclusiveResourcesBtn.classList.add('is-locked');
+    exclusiveResourcesBtn.classList.remove('is-unlocked');
+    exclusiveResourcesBtn.innerHTML = '<span class="lock-icon" aria-hidden="true">🔒</span> Exclusive Resources';
+    if(exclusiveResourcesHint) exclusiveResourcesHint.textContent = 'Members: click above and enter your personal passcode to unlock.';
+    exclusiveResourcesBtn.onclick = openMemberPasscodeModal;
+  }
+  lockExclusiveResources();
+
+  // Verifies a passcode against the server-side endpoint. Returns a Promise
+  // that resolves true/false. Kept separate from the modal so resources.html
+  // can reuse the exact same check (it has its own copy of this function).
+  function verifyMemberPasscode(code){
+    const url = MEMBER_CHECK_ENDPOINT + '?code=' + encodeURIComponent(code);
+    return fetch(url).then((r) => r.json()).then((data) => !!(data && data.valid)).catch(() => false);
+  }
+
+  if(memberPasscodeForm){
+    memberPasscodeForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const code = memberPasscodeInput.value.trim();
+      if(!code) return;
+      memberPasscodeSubmitBtn.disabled = true;
+      memberPasscodeError.classList.remove('show');
+      verifyMemberPasscode(code).then((isValid) => {
+        if(isValid){
+          sessionStorage.setItem(MEMBER_SESSION_KEY, code);
+          memberPasscodeSuccess.classList.add('show');
+          unlockExclusiveResources();
+          if(memberPasscodeBtn){ memberPasscodeBtn.classList.add('is-unlocked'); memberPasscodeBtn.innerHTML = '<span class="lock-icon" aria-hidden="true">🔓</span> Member Passcode'; }
+          setTimeout(closeMemberPasscodeModal, 1600);
+        } else {
+          memberPasscodeError.classList.add('show');
+        }
+      }).finally(() => { memberPasscodeSubmitBtn.disabled = false; });
+    });
+  }
+
+  // On load, if this tab already verified a passcode earlier in the session
+  // (e.g. the member unlocked resources, browsed around, and came back to
+  // this page), silently unlock again without asking a second time.
+  (function restoreMemberSession(){
+    const savedCode = sessionStorage.getItem(MEMBER_SESSION_KEY);
+    if(!savedCode) return;
+    verifyMemberPasscode(savedCode).then((isValid) => {
+      if(isValid){
+        unlockExclusiveResources();
+        if(memberPasscodeBtn){ memberPasscodeBtn.classList.add('is-unlocked'); memberPasscodeBtn.innerHTML = '<span class="lock-icon" aria-hidden="true">🔓</span> Member Passcode'; }
+      } else {
+        sessionStorage.removeItem(MEMBER_SESSION_KEY);
+      }
+    });
+  })();
 
   // Group Classes popup (placeholder page)
   const groupClassesBtn = document.getElementById('openGroupClassesBtn');
@@ -1719,46 +1926,31 @@ Bethany has been teaching violin for 26 years with some of her students have win
   document.addEventListener('keydown', (e) => { if(e.key === 'Escape' && groupClassesModal.classList.contains('open')) closeGroupClassesModal(); });
 
   // OSM Registration form (inline on the page, in the Register for OSM
-  // section) — submits to Formspree via fetch so the visitor never leaves
-  // the page; on success we swap the form over to the Zeffy payment step.
-  // On failure we fall back to a plain (non-AJAX) form submission so the
-  // registration still goes through.
+  // section) — uses the exact same submitToFormspree() helper as the
+  // contact form above, so both forms submit/fall back/redirect identically.
+  // On success we swap the form over to the Zeffy payment step.
   const registrationForm = document.getElementById('registrationForm');
   const registrationFormStep = document.getElementById('registrationFormStep');
   const registrationPaymentStep = document.getElementById('registrationPaymentStep');
   const registrationChildName = document.getElementById('registrationChildName');
+  const zeffyPayBtn = document.getElementById('zeffyPayBtn');
+  if(zeffyPayBtn) zeffyPayBtn.href = ZEFFY_OSA_CAMPAIGN_URL;
 
   if(registrationForm){
     registrationForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      if(!registrationForm.checkValidity()){
-        registrationForm.reportValidity();
-        return;
-      }
-      const submitBtn = registrationForm.querySelector('button[type="submit"]');
-      if(submitBtn) submitBtn.disabled = true;
-
-      fetch(registrationForm.action, {
-        method: 'POST',
-        body: new FormData(registrationForm),
-        headers: { 'Accept': 'application/json' }
-      }).then((response) => {
-        if(response.ok){
-          const studentName = registrationForm.querySelector('#r-student-name').value.trim();
-          if(registrationChildName) registrationChildName.textContent = studentName ? studentName + "'s" : 'your';
-          registrationFormStep.style.display = 'none';
-          registrationPaymentStep.style.display = '';
-          registrationPaymentStep.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          registrationForm.reset();
-        } else {
-          // Formspree rejected the request — submit normally as a fallback.
-          registrationForm.submit();
-        }
-      }).catch(() => {
-        // Network error — submit normally as a fallback.
-        registrationForm.submit();
-      }).finally(() => {
-        if(submitBtn) submitBtn.disabled = false;
+      const replyTo = document.getElementById('r-replyto');
+      if(replyTo) replyTo.value = document.getElementById('r-parent-email').value;
+      submitToFormspree(registrationForm, () => {
+        const studentName = registrationForm.querySelector('#r-student-name').value.trim();
+        if(registrationChildName) registrationChildName.textContent = studentName ? studentName + "'s" : 'your';
+        registrationFormStep.style.display = 'none';
+        registrationPaymentStep.style.display = '';
+        registrationPaymentStep.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        registrationForm.reset();
+        // Give the family a moment to read the confirmation, then send them
+        // on to the OSA's Zeffy campaign to pay the membership fee.
+        setTimeout(() => { window.location.href = ZEFFY_OSA_CAMPAIGN_URL; }, 4000);
       });
     });
   }
