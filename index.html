@@ -560,7 +560,7 @@
   #events .event-card:nth-child(3){border-top-color:var(--coral-dark);}
   #events .event-card-body h3{color:var(--ink);}
   #events .event-card:nth-child(2) .event-card-body h3{color:var(--green-dark);}
-  #events .trophy-item span{color:var(--green-dark); font-weight:600;}
+
   #events .event-card:nth-child(1) .event-popup-btn{background:var(--coral); border-color:var(--coral); color:#fff;}
   #events .event-card:nth-child(1) .event-popup-btn:hover{background:var(--coral-dark); border-color:var(--coral-dark); color:#fff;}
   #events .event-card:nth-child(2) .event-popup-btn{background:var(--green); border-color:var(--green); color:#fff;}
@@ -580,10 +580,7 @@
   .event-card-body{padding:26px 26px 30px; display:flex; flex-direction:column; gap:14px; flex:1;}
   .event-card-body h3{font-size:1.2rem;}
   .event-card-body p{color:var(--ink-soft); font-size:0.92rem; margin:0; flex:1;}
-  .trophy-strip{display:grid; grid-template-columns:repeat(4,1fr); gap:20px; margin-top:60px;}
-  .trophy-item .ph{aspect-ratio:1/1; margin-bottom:12px;}
-  .trophy-item h4{font-size:0.98rem; margin-bottom:2px;}
-  .trophy-item span{font-family:'Space Mono',monospace; font-size:0.68rem; color:var(--ink-soft); text-transform:uppercase; letter-spacing:0.05em;}
+
 
   /* ---------- MEMBERS PORTAL ---------- */
   .portal-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px; margin-top:50px;}
@@ -639,13 +636,39 @@
   .reg-form .form-row-3{display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px;}
   .checkbox-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:10px 16px; margin-bottom:20px;}
   .check-field{display:flex; align-items:center; gap:9px; font-size:0.92rem; color:var(--ink);}
-  .check-field input[type="checkbox"]{
-    width:18px; height:18px; flex-shrink:0; border:1.5px solid var(--line); border-radius:4px;
-    cursor:pointer; accent-color:var(--green-dark);
-  }
+  .check-field span{display:inline-flex; align-items:center; height:18px; line-height:1;}
   .consent-field{display:flex; align-items:flex-start; gap:10px; margin-bottom:16px; font-size:0.86rem; color:var(--ink-soft); line-height:1.55;}
-  .consent-field input[type="checkbox"]{width:18px; height:18px; flex-shrink:0; margin-top:2px; accent-color:var(--green-dark); cursor:pointer;}
   .consent-field .legal-link{font-size:inherit;}
+  /* Custom checkbox skin: the global appearance:none reset (see the base
+     button/input/textarea/select rule near the top of this stylesheet)
+     strips the native checkbox box + tick in every browser, which is why
+     these were rendering as blank, unaligned squares that appeared to do
+     nothing when clicked. We rebuild the box and the checked-state tick
+     by hand here so the control is visible, aligned, and shows a clear
+     check mark. */
+  .check-field input[type="checkbox"],
+  .consent-field input[type="checkbox"]{
+    -webkit-appearance:none; -moz-appearance:none; appearance:none;
+    width:18px; height:18px; flex-shrink:0; box-sizing:border-box;
+    border:1.5px solid var(--line); border-radius:4px; background:#fff;
+    display:inline-block; position:relative; top:0; margin:0;
+    cursor:pointer; transition:background 0.15s ease, border-color 0.15s ease;
+  }
+  .consent-field input[type="checkbox"]{margin-top:2px;}
+  .check-field input[type="checkbox"]:checked,
+  .consent-field input[type="checkbox"]:checked{
+    background:var(--green-dark); border-color:var(--green-dark);
+  }
+  .check-field input[type="checkbox"]:checked::after,
+  .consent-field input[type="checkbox"]:checked::after{
+    content:""; position:absolute; left:50%; top:44%;
+    width:5px; height:9px; border:solid #fff; border-width:0 2px 2px 0;
+    transform:translate(-50%,-55%) rotate(45deg);
+  }
+  .check-field input[type="checkbox"]:focus-visible,
+  .consent-field input[type="checkbox"]:focus-visible{
+    outline:2px solid var(--green); outline-offset:2px;
+  }
   .reg-fee-box{
     background:var(--green-soft); border:1px solid rgba(0,168,104,0.3); border-radius:10px;
     padding:20px 22px; margin:6px 0 26px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;
@@ -668,15 +691,18 @@
   }
 
   /* ---------- FOOTER ---------- */
-  footer{background:var(--ink); color:rgba(255,255,255,0.75); padding:60px 0 30px;}
-  .footer-top{display:flex; justify-content:space-between; align-items:flex-start; gap:40px; flex-wrap:wrap; padding-bottom:40px; border-bottom:1px solid rgba(255,255,255,0.12); margin-bottom:26px;}
+  footer{background:#666666; color:rgba(255,255,255,0.75); padding:60px 0 30px;}
+  .footer-top{display:flex; justify-content:space-between; align-items:flex-start; gap:40px; flex-wrap:wrap; padding-bottom:40px; border-bottom:1px solid rgba(255,255,255,0.2); margin-bottom:26px;}
   .footer-brand{display:flex; align-items:center; gap:14px;}
   .footer-brand img{height:50px; border-radius:8px;}
   .footer-cols{display:flex; gap:64px; flex-wrap:wrap;}
   .footer-col h4{color:#fff; font-size:0.78rem; font-family:'Space Mono',monospace; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:14px;}
-  .footer-col a{display:block; font-size:0.88rem; color:rgba(255,255,255,0.68); margin-bottom:10px;}
+  .footer-col a{display:block; font-size:0.88rem; color:rgba(255,255,255,0.85); margin-bottom:10px;}
   .footer-col a:hover{color:var(--green);}
-  .footer-bottom{display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; font-size:0.8rem; color:rgba(255,255,255,0.5);}
+  .footer-bottom{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; font-size:0.8rem; color:rgba(255,255,255,0.75);}
+  .footer-bottom-links{display:flex; gap:18px; flex-wrap:wrap;}
+  .footer-bottom-links a{color:rgba(255,255,255,0.75);}
+  .footer-bottom-links a:hover{color:var(--green);}
 
   /* ---------- RESPONSIVE ---------- */
   @media(max-width:980px){
@@ -686,11 +712,11 @@
     .suzuki-photos{height:auto;}
     .suzuki-photos .ph{flex:none; aspect-ratio:4/3;}
     .strip.reverse .strip-media{order:0;}
-    .info-grid, .teacher-grid, .events-grid, .trophy-strip, .portal-grid{grid-template-columns:repeat(2,1fr);}
+    .info-grid, .teacher-grid, .events-grid, .portal-grid{grid-template-columns:repeat(2,1fr);}
     .form-row{grid-template-columns:1fr;}
   }
   @media(max-width:600px){
-    .info-grid, .teacher-grid, .events-grid, .trophy-strip, .portal-grid{grid-template-columns:1fr;}
+    .info-grid, .teacher-grid, .events-grid, .portal-grid{grid-template-columns:1fr;}
     section{padding:30px 0 72px;}
     .hero-content{padding:28px 24px;}
     .hero-actions{padding:16px 24px;}
@@ -845,12 +871,13 @@
         <p>Private lessons are booked directly with the teacher. Currently, the OSM offers private lessons in flute, piano, violin and viola on a weekly basis.</p>
         <a href="#teachers" class="btn btn-outline info-card-btn">Meet the Teachers</a>
       </div>
-      <div class="info-card">
+      <div class="info-card" style="position:relative;">
+        <span style="position:absolute; top:16px; right:16px; background:rgba(232,104,63,0.9); color:#fff; font-family:'Space Mono',monospace; font-size:0.68rem; letter-spacing:0.06em; padding:5px 10px; border-radius:4px; text-transform:uppercase;">Coming Soon !</span>
         <span class="eyebrow" style="margin-bottom:8px;">Resources</span>
         <h3>EXCLUSIVE RESOURCES</h3>
         <p>Theory printouts and videos (based on RCM curriculum), music history tutorials, curated listening lists, Ask-A-Teacher columns (for Parents) and more.</p>
+        <p id="exclusiveResourcesHint" style="font-size:0.78rem; color:var(--ink-soft); margin-bottom:10px;">Members: click below and enter your personal passcode to unlock.</p>
         <button type="button" id="exclusiveResourcesBtn" class="btn btn-outline info-card-btn info-card-btn-lock is-locked"><span class="lock-icon" aria-hidden="true">🔒</span> Exclusive Resources</button>
-        <p id="exclusiveResourcesHint" style="font-size:0.78rem; color:var(--ink-soft); margin-top:10px;">Members: click above and enter your personal passcode to unlock.</p>
       </div>
     </div>
 
@@ -1172,22 +1199,15 @@ Bethany has been teaching violin for 26 years with some of her students have win
           <button type="button" class="btn btn-outline event-popup-btn" data-event="calendar" style="align-self:flex-start;">View Full Calendar →</button>
         </div>
       </div>
-      <div class="event-card" id="trophy-wall">
-        <div class="ph"><img src="Gallery/OSM-Trophy.png" alt="Placeholder — Gallery"><div class="ph-tag">Gallery</div>
-      </div>
+      <div class="event-card" id="trophy-wall" style="position:relative;">
+        <span style="position:absolute; top:16px; right:16px; z-index:3; background:rgba(232,104,63,0.9); color:#fff; font-family:'Space Mono',monospace; font-size:0.68rem; letter-spacing:0.06em; padding:5px 10px; border-radius:4px; text-transform:uppercase;">Coming Soon !</span>
+        <div class="ph"><img src="Gallery/OSM-Trophy.png" alt="Placeholder — Gallery"><div class="ph-tag">Gallery</div></div>
         <div class="event-card-body">
           <h3>Trophy Wall</h3>
           <p>All our students are amazing! As they develop and progress, they will often find themselves receiving awards  from schools, music festivals, competitions and more.</p>
           <button type="button" class="btn btn-outline event-popup-btn" data-event="trophy-wall" style="align-self:flex-start;">See All Achievements →</button>
         </div>
       </div>
-    </div>
-
-    <div class="trophy-strip">
-      <div class="trophy-item"><div class="ph"><img src="images/events/trophy-1.jpg" alt="Placeholder — student with certificate"></div><h4>[Student Name]</h4><span>Book 3 graduation</span></div>
-      <div class="trophy-item"><div class="ph"><img src="images/events/trophy-2.jpg" alt="Placeholder — student with certificate"></div><h4>[Student Name]</h4><span>RCM Level 4 — honours</span></div>
-      <div class="trophy-item"><div class="ph"><img src="images/events/trophy-3.jpg" alt="Placeholder — student with certificate"></div><h4>[Student Name]</h4><span>Recital soloist</span></div>
-      <div class="trophy-item"><div class="ph"><img src="images/events/trophy-4.jpg" alt="Placeholder — student with certificate"></div><h4>[Student Name]</h4><span>Book 6 graduation</span></div>
     </div>
   </div>
 </section>
@@ -1231,11 +1251,11 @@ Bethany has been teaching violin for 26 years with some of her students have win
             <div class="field field-full">
               <label>Instrument(s) of interest</label>
               <div class="checkbox-grid">
-                <label class="check-field"><input type="checkbox" name="Instrument(s) of interest" value="Violin"> Violin</label>
-                <label class="check-field"><input type="checkbox" name="Instrument(s) of interest" value="Viola"> Viola</label>
-                <label class="check-field"><input type="checkbox" name="Instrument(s) of interest" value="Cello"> Cello</label>
-                <label class="check-field"><input type="checkbox" name="Instrument(s) of interest" value="Piano"> Piano</label>
-                <label class="check-field"><input type="checkbox" name="Instrument(s) of interest" value="Flute"> Flute</label>
+                <label class="check-field"><input type="checkbox" name="Instrument(s) of interest" value="Violin"> <span>Violin</span></label>
+                <label class="check-field"><input type="checkbox" name="Instrument(s) of interest" value="Viola"> <span>Viola</span></label>
+                <label class="check-field"><input type="checkbox" name="Instrument(s) of interest" value="Cello"> <span>Cello</span></label>
+                <label class="check-field"><input type="checkbox" name="Instrument(s) of interest" value="Piano"> <span>Piano</span></label>
+                <label class="check-field"><input type="checkbox" name="Instrument(s) of interest" value="Flute"> <span>Flute</span></label>
               </div>
             </div>
             <div class="form-row">
@@ -1303,6 +1323,10 @@ Bethany has been teaching violin for 26 years with some of her students have win
             <label class="consent-field">
               <input type="checkbox" name="Agreed to Bylaws &amp; Refund Policy" value="Yes" required>
               <span>I have read and agree to OSM's <button type="button" class="legal-link" data-legal="bylaws">Bylaws</button> and <button type="button" class="legal-link" data-legal="refund">Refund Policy</button>, and understand the annual OSM registration fee is CAN$135.</span>
+            </label>
+            <label class="consent-field">
+              <input type="checkbox" name="Agreed to Membership Contract" value="Yes" required>
+              <span>I have read and accept OSM's <button type="button" class="legal-link" data-legal="privacy">Membership Contract &amp; Privacy Policy</button>, and agree to its terms for this registration.</span>
             </label>
             <label class="consent-field">
               <input type="checkbox" name="Photo/video consent" value="Yes">
@@ -1375,9 +1399,9 @@ Bethany has been teaching violin for 26 years with some of her students have win
     </div>
 
     <div class="legal-links">
-      <button type="button" class="legal-link" data-legal="privacy">Privacy Policy</button>
-      <button type="button" class="legal-link" data-legal="bylaws">OSM Bylaws</button>
       <button type="button" class="legal-link" data-legal="refund">Refund Policy</button>
+      <button type="button" class="legal-link" data-legal="bylaws">OSM Bylaws</button>
+      <button type="button" class="legal-link" data-legal="privacy">Privacy Policy</button>
     </div>
   </div>
 </section>
@@ -1390,7 +1414,7 @@ Bethany has been teaching violin for 26 years with some of her students have win
         <img src="Images/Logo-OSM.png" alt="Oakville Suzuki Music logo">
         <div>
           <div style="font-family:'Fraunces',serif; font-size:1.05rem; color:#fff;">Oakville Suzuki Music</div>
-          <div style="font-size:0.82rem; color:rgba(255,255,255,0.55);">Oakville, Ontario, Canada</div>
+          <div style="font-size:0.82rem; color:rgba(255,255,255,0.7);">Oakville, Ontario, Canada</div>
         </div>
       </div>
       <div class="footer-cols">
@@ -1411,13 +1435,17 @@ Bethany has been teaching violin for 26 years with some of her students have win
           <h4>Studio</h4>
           <a href="#register">Register Now!</a>
           <a href="#contact">Contact Us</a>
-          <a href="#contact" class="footer-legal-link" data-legal="bylaws">Policies and By-Laws</a>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <a href="#contact" class="footer-legal-link" data-legal="refund">Refund Policy</a>
+          <a href="#contact" class="footer-legal-link" data-legal="bylaws">OSM Bylaws</a>
+          <a href="#contact" class="footer-legal-link" data-legal="privacy">Privacy Policy</a>
         </div>
       </div>
     </div>
     <div class="footer-bottom">
       <span>© 2026 Oakville Suzuki Music. All rights reserved.</span>
-      <a href="#contact" class="footer-legal-link" data-legal="bylaws">Policies and By-Laws</a>
     </div>
   </div>
 </footer>
@@ -1858,7 +1886,7 @@ Bethany has been teaching violin for 26 years with some of her students have win
     exclusiveResourcesBtn.classList.add('is-locked');
     exclusiveResourcesBtn.classList.remove('is-unlocked');
     exclusiveResourcesBtn.innerHTML = '<span class="lock-icon" aria-hidden="true">🔒</span> Exclusive Resources';
-    if(exclusiveResourcesHint) exclusiveResourcesHint.textContent = 'Members: click above and enter your personal passcode to unlock.';
+    if(exclusiveResourcesHint) exclusiveResourcesHint.textContent = 'Members: click below and enter your personal passcode to unlock.';
     exclusiveResourcesBtn.onclick = openMemberPasscodeModal;
   }
   lockExclusiveResources();
