@@ -367,6 +367,8 @@
   .video-modal-overlay.open{display:flex;}
   .video-modal-box{position:relative; width:100%; max-width:960px;}
   .video-modal-box video{width:100%; max-height:78vh; border-radius:10px; background:#000; display:block;}
+  .video-modal-frame{position:relative; width:100%; padding-top:56.25%; border-radius:10px; overflow:hidden; background:#000;}
+  .video-modal-frame iframe{position:absolute; inset:0; width:100%; height:100%; border:0; display:block;}
   .video-modal-close{
     position:absolute; top:-46px; right:0; background:none; border:none; cursor:pointer;
     color:#fff; font-size:1.6rem; line-height:1; padding:6px 10px;
@@ -669,6 +671,40 @@
   .consent-field input[type="checkbox"]:focus-visible{
     outline:2px solid var(--green); outline-offset:2px;
   }
+  .consent-field-yesno{display:block;}
+  .consent-field-yesno > span:first-child{display:block; margin-bottom:12px;}
+  .consent-yesno-options{display:flex; gap:24px;}
+  .consent-yesno-options label{display:inline-flex; align-items:center; gap:7px; font-size:0.92rem; color:var(--ink); cursor:pointer;}
+  .consent-yesno-options input[type="radio"]{
+    -webkit-appearance:none; -moz-appearance:none; appearance:none;
+    width:18px; height:18px; flex-shrink:0; box-sizing:border-box;
+    border:1.5px solid var(--line); border-radius:50%; background:#fff;
+    display:inline-block; position:relative; margin:0; cursor:pointer;
+    transition:background 0.15s ease, border-color 0.15s ease;
+  }
+  .consent-yesno-options input[type="radio"]:checked{border-color:var(--green-dark);}
+  .consent-yesno-options input[type="radio"]:checked::after{
+    content:""; position:absolute; left:50%; top:50%; width:9px; height:9px;
+    border-radius:50%; background:var(--green-dark); transform:translate(-50%,-50%);
+  }
+  .consent-yesno-options input[type="radio"]:focus-visible{
+    outline:2px solid var(--green); outline-offset:2px;
+  }
+
+  /* ---------- REGISTRATION: additional students (multi-kid families) ---------- */
+  .student-item{
+    border:1px solid var(--line); border-radius:10px; margin-bottom:14px;
+    overflow:hidden; background:rgba(255,255,255,0.4);
+  }
+  .student-item .acc-head{padding:15px 18px; font-size:1rem;}
+  .student-item .acc-head-actions{display:flex; align-items:center; gap:18px;}
+  .student-item .student-remove-btn{
+    font-family:'Work Sans',sans-serif; font-size:0.78rem; font-weight:600;
+    color:var(--coral-dark); text-transform:none; letter-spacing:0;
+  }
+  .student-item .student-remove-btn:hover{text-decoration:underline;}
+  .student-item .acc-body-inner{padding:2px 18px 24px; max-width:none;}
+  .add-student-btn{margin:0 0 30px;}
   .reg-fee-box{
     background:var(--green-soft); border:1px solid rgba(0,168,104,0.3); border-radius:10px;
     padding:20px 22px; margin:6px 0 26px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;
@@ -747,7 +783,7 @@
     </nav>
 
     <div class="nav-cta">
-      <button type="button" class="member-pill" id="memberPasscodeBtn"><span class="lock-icon" aria-hidden="true">🔒</span> Member Passcode</button>
+      <button type="button" class="member-pill" id="memberPasscodeBtn"><span class="lock-icon" aria-hidden="true">🔒</span> Member Portal</button>
       <a href="#register" class="lock-pill">Register Now!</a>
       <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">
         <span></span><span></span><span></span>
@@ -763,7 +799,7 @@
     <a href="#suzuki-rcm" style="padding:12px 0;">Suzuki &amp; RCM</a>
     <a href="#events" style="padding:12px 0;">Events</a>
     <a href="#register" style="padding:12px 0;">Register Now!</a>
-    <button type="button" id="memberPasscodeBtnMobile" style="padding:12px 0; text-align:left; background:none; border:none; font:inherit; color:inherit; cursor:pointer;">🔒 Member Passcode</button>
+    <button type="button" id="memberPasscodeBtnMobile" style="padding:12px 0; text-align:left; background:none; border:none; font:inherit; color:inherit; cursor:pointer;">🔒 Member Portal</button>
     <a href="#contact" style="padding:12px 0;">Contact</a>
   </nav>
 </header>
@@ -950,7 +986,7 @@ Bethany has been teaching violin for 26 years with some of her students have win
     <div class="editorial">
       <div class="suzuki-photos">
         <div class="ph"><img src="Gallery/Suzuki.webp" alt="Placeholder — historical portrait of Dr. Shinichi Suzuki"><div class="ph-tag">Shinishi Suzuki</div></div>
-        <div class="ph"><img src="Gallery/JeanGrieve.jpg" alt="Placeholder — Jean Grieve - Founder of OSA"><div class="ph-tag">Jean Grieve</div></div>
+        <div class="ph"><img src="Images/jeanwithSophie.JPG" alt="Placeholder — Jean Grieve - Founder of OSA"><div class="ph-tag">Jean Grieve</div></div>
       </div>
       <div class="editorial-copy">
         <p>This approach to music pedagogy is based on the belief that every child can learn to play an instrument when provided with proper encouragement and a nurturing environment. Suzuki believed that learning an instrument was akin to learning a language. Using this “Mother tongue” approach, whereby children learn to speak by listening to the language spoken to, and around them, students listen to their music as well as learn by ear to begin.</p>
@@ -961,19 +997,19 @@ Bethany has been teaching violin for 26 years with some of her students have win
         <p>Jean Grieve has been the driving force behind the Suzuki method in Oakville for decades.</p>
         <p>I was able to sit down with her as she shared some memories, and her thoughts on the Suzuki methodology. Here are some excerpts. </p>
         <div class="video-row">
-          <button type="button" class="video-thumb" data-video="Videos/suzuki-triangle.mp4" data-title="The Suzuki Triangle: Parent, Teacher, Student">
+          <button type="button" class="video-thumb" data-yt="5591l4ByfJU" data-title="The Suzuki Triangle: Parent, Teacher, Student">
             <div class="ph">
-              <img src="Images/suzuki-triangle-thumb.jpg" alt="Placeholder — video thumbnail, the Suzuki triangle of parent, teacher and student">
+              <img src="https://img.youtube.com/vi/5591l4ByfJU/hqdefault.jpg" alt="Video thumbnail — the Suzuki triangle of parent, teacher and student">
               <div class="play-circle"><svg viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></div>
             </div>
-            <span class="vlabel">The Suzuki Triangle</span>
+            <span class="vlabel">How Jean learned about Suzuki</span>
           </button>
-          <button type="button" class="video-thumb" data-video="Videos/jean-grieve-interview.mp4" data-title="Jean Grieve on Decades of Suzuki Teaching">
+          <button type="button" class="video-thumb" data-yt="ZiDqQzBFeKU" data-title="Jean Grieve on Decades of Suzuki Teaching">
             <div class="ph">
-              <img src="Images/jean-grieve-thumb.jpg" alt="Placeholder — video thumbnail, interview with Jean Grieve">
+              <img src="https://img.youtube.com/vi/ZiDqQzBFeKU/hqdefault.jpg" alt="Video thumbnail — interview with Jean Grieve">
               <div class="play-circle"><svg viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></div>
             </div>
-            <span class="vlabel">Jean Grieve, In Her Own Words</span>
+            <span class="vlabel">Jean on value of Suzuki</span>
           </button>
         </div>
       </div>
@@ -1195,7 +1231,7 @@ Bethany has been teaching violin for 26 years with some of her students have win
         <div class="ph"><img src="Gallery/OSM-calendar.png" alt="Placeholder — event calendar"><div class="ph-tag">Calendar</div></div>
         <div class="event-card-body">
           <h3>OSM Calendar</h3>
-          <p>A live, always-current calendar of recitals, group class dates, and studio closures — embedded directly from our shared scheduling calendar.</p>
+          <p>An up-to-date calendar of recitals, concerts, group class dates, and special events.</p>
           <button type="button" class="btn btn-outline event-popup-btn" data-event="calendar" style="align-self:flex-start;">View Full Calendar →</button>
         </div>
       </div>
@@ -1224,12 +1260,13 @@ Bethany has been teaching violin for 26 years with some of her students have win
     <div class="benefits-box">
       <h3>What your OSM membership includes</h3>
       <ul>
-        <li>Highly qualified, experienced Suzuki-trained teachers</li>
+        <li>Access to highly qualified, experienced teachers</li>
         <li>Exclusive access to member-only resources and materials</li>
-        <li>Weekly group classes that build community and confidence</li>
+        <li>Access to group classes that build community and confidence</li>
         <li>Special events, recitals and performance opportunities</li>
-        <li>Ongoing parent support and guidance through the Suzuki Triangle</li>
+        <li>Ongoing parent and student support</li>
         <li>A nurturing, encouraging environment for every child</li>
+        <li>Third party liability insurance for all events</li>
       </ul>
     </div>
 
@@ -1240,70 +1277,75 @@ Bethany has been teaching violin for 26 years with some of her students have win
         <form id="registrationForm" class="reg-form" action="https://formspree.io/f/xwvgwazd" method="POST">
           <input type="hidden" name="_subject" value="New OSM Registration">
           <input type="hidden" name="_replyto" id="r-replyto">
-          <input type="hidden" name="_format" value="plain">
 
           <fieldset class="reg-fieldset">
             <legend>Student information</legend>
             <div class="form-row">
-              <div class="field"><label for="r-student-name">Student's full name</label><input id="r-student-name" name="Student's full name" type="text" placeholder="Child's full name" required></div>
+              <div class="field"><label for="r-student-first-name">Student's first name</label><input id="r-student-first-name" name="Student's first name" type="text" placeholder="First name" required></div>
+              <div class="field"><label for="r-student-last-name">Student's last name</label><input id="r-student-last-name" name="Student's last name" type="text" placeholder="Last name" required></div>
+            </div>
+            <div class="form-row">
               <div class="field"><label for="r-student-dob">Date of birth</label><input id="r-student-dob" name="Student's date of birth" type="date" required></div>
-            </div>
-            <div class="field field-full">
-              <label>Instrument(s) of interest</label>
-              <div class="checkbox-grid">
-                <label class="check-field"><input type="checkbox" name="Instrument(s) of interest" value="Violin"> <span>Violin</span></label>
-                <label class="check-field"><input type="checkbox" name="Instrument(s) of interest" value="Viola"> <span>Viola</span></label>
-                <label class="check-field"><input type="checkbox" name="Instrument(s) of interest" value="Cello"> <span>Cello</span></label>
-                <label class="check-field"><input type="checkbox" name="Instrument(s) of interest" value="Piano"> <span>Piano</span></label>
-                <label class="check-field"><input type="checkbox" name="Instrument(s) of interest" value="Flute"> <span>Flute</span></label>
-              </div>
-            </div>
-            <div class="form-row">
               <div class="field">
-                <label for="r-experience">Musical experience</label>
-                <select id="r-experience" name="Musical experience" required>
+                <label for="r-instrument">Instrument of interest</label>
+                <select id="r-instrument" name="Instrument of interest" required>
                   <option value="" disabled selected>Select one</option>
-                  <option value="New to music">New to music</option>
-                  <option value="New to OSM, previous Suzuki experience">New to OSM, previous Suzuki experience</option>
-                  <option value="Continuing OSM student">Continuing OSM student</option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="r-teacher">Preferred teacher (if any)</label>
-                <select id="r-teacher" name="Preferred teacher">
-                  <option value="No preference" selected>No preference</option>
-                  <option value="Bethany Goluboff">Bethany Goluboff — Violin</option>
-                  <option value="Michelle Coon">Michelle Coon — Flute &amp; Theory</option>
-                  <option value="Angela Lee">Angela Lee — Flute</option>
-                  <option value="Hana Gurtlova">Hana Gurtlova — Piano</option>
+                  <option value="Flute">Flute</option>
+                  <option value="Piano">Piano</option>
+                  <option value="Violin">Violin</option>
+                  <option value="Viola">Viola</option>
                 </select>
               </div>
             </div>
+            <div class="form-row">
+              <div class="field field-full">
+                <label for="r-teacher">Level on selected instrument</label>
+                <select id="r-teacher" name="Level on selected instrument" required>
+                  <option value="" disabled selected>Select one</option>
+                  <option value="New">New</option>
+                  <option value="Beginner">Beginner</option>
+                  <option value="Intermediate">Intermediate</option>
+                  <option value="Advanced">Advanced</option>
+                </select>
+              </div>
+            </div>
+            <div class="field field-full"><label for="r-medical">Allergies or medical conditions we should know about</label><textarea id="r-medical" name="Allergies or medical conditions" style="min-height:80px;" placeholder="Optional — leave blank if none"></textarea></div>
           </fieldset>
 
           <fieldset class="reg-fieldset">
-            <legend>Parent / guardian information</legend>
-            <div class="form-row">
-              <div class="field"><label for="r-parent-name">Parent/guardian full name</label><input id="r-parent-name" name="Parent/guardian full name" type="text" placeholder="Your full name" required></div>
-              <div class="field"><label for="r-parent-email">Email address</label><input id="r-parent-email" name="Parent/guardian email" type="email" placeholder="you@example.com" required></div>
-            </div>
-            <div class="form-row">
-              <div class="field"><label for="r-parent-phone">Phone number</label><input id="r-parent-phone" name="Parent/guardian phone" type="tel" placeholder="(905) 000-0000" required></div>
-              <div class="field"><label for="r-address">Home address</label><input id="r-address" name="Home address" type="text" placeholder="Street, city, postal code" required></div>
-            </div>
+            <legend>Additional students (for multiple child families)</legend>
+            <div id="additionalStudentsContainer"></div>
+            <button type="button" id="addStudentBtn" class="btn btn-outline add-student-btn">+ Add another student</button>
           </fieldset>
 
           <fieldset class="reg-fieldset">
-            <legend>Emergency contact</legend>
+            <legend>Parent / guardian #1 information</legend>
             <div class="form-row">
-              <div class="field"><label for="r-emerg-name">Emergency contact name</label><input id="r-emerg-name" name="Emergency contact name" type="text" placeholder="Full name" required></div>
-              <div class="field"><label for="r-emerg-phone">Emergency contact phone</label><input id="r-emerg-phone" name="Emergency contact phone" type="tel" placeholder="(905) 000-0000" required></div>
+              <div class="field"><label for="r-parent1-first-name">First name</label><input id="r-parent1-first-name" name="Parent/guardian #1 first name" type="text" placeholder="First name" required></div>
+              <div class="field"><label for="r-parent1-last-name">Last name</label><input id="r-parent1-last-name" name="Parent/guardian #1 last name" type="text" placeholder="Last name" required></div>
             </div>
+            <div class="form-row">
+              <div class="field"><label for="r-parent1-phone">Phone number</label><input id="r-parent1-phone" name="Parent/guardian #1 phone" type="tel" placeholder="(905) 000-0000" required></div>
+              <div class="field"><label for="r-parent1-email">Email address</label><input id="r-parent1-email" name="Parent/guardian #1 email" type="email" placeholder="you@example.com" required></div>
+            </div>
+            <div class="field field-full"><label for="r-parent1-address">Home address</label><input id="r-parent1-address" name="Parent/guardian #1 address" type="text" placeholder="Street, city, postal code" required></div>
+          </fieldset>
+
+          <fieldset class="reg-fieldset">
+            <legend>Parent / guardian #2 information (optional)</legend>
+            <div class="form-row">
+              <div class="field"><label for="r-parent2-first-name">First name</label><input id="r-parent2-first-name" name="Parent/guardian #2 first name" type="text" placeholder="First name"></div>
+              <div class="field"><label for="r-parent2-last-name">Last name</label><input id="r-parent2-last-name" name="Parent/guardian #2 last name" type="text" placeholder="Last name"></div>
+            </div>
+            <div class="form-row">
+              <div class="field"><label for="r-parent2-phone">Phone number</label><input id="r-parent2-phone" name="Parent/guardian #2 phone" type="tel" placeholder="(905) 000-0000"></div>
+              <div class="field"><label for="r-parent2-email">Email address</label><input id="r-parent2-email" name="Parent/guardian #2 email" type="email" placeholder="you@example.com"></div>
+            </div>
+            <div class="field field-full"><label for="r-parent2-address">Home address</label><input id="r-parent2-address" name="Parent/guardian #2 address" type="text" placeholder="Street, city, postal code"></div>
           </fieldset>
 
           <fieldset class="reg-fieldset">
             <legend>Additional information</legend>
-            <div class="field field-full"><label for="r-medical">Allergies or medical conditions we should know about</label><textarea id="r-medical" name="Allergies or medical conditions" style="min-height:80px;" placeholder="Optional — leave blank if none"></textarea></div>
             <div class="field">
               <label for="r-referral">How did you hear about OSM?</label>
               <select id="r-referral" name="How they heard about OSM">
@@ -1312,34 +1354,30 @@ Bethany has been teaching violin for 26 years with some of her students have win
                 <option value="Google search">Google search</option>
                 <option value="Social media">Social media</option>
                 <option value="School">School</option>
-                <option value="Suzuki Association">Suzuki Association</option>
+                <option value="Family or friend">Family or Friend</option>
                 <option value="Other">Other</option>
               </select>
             </div>
+            <div class="field field-full"><label for="r-other-info">Any other information you would like to share</label><textarea id="r-other-info" name="Any other information" style="min-height:80px;" placeholder="Optional"></textarea></div>
           </fieldset>
 
           <fieldset class="reg-fieldset">
             <legend>Agreements</legend>
-            <label class="consent-field">
-              <input type="checkbox" name="Agreed to Bylaws &amp; Refund Policy" value="Yes" required>
-              <span>I have read and agree to OSM's <button type="button" class="legal-link" data-legal="bylaws">Bylaws</button> and <button type="button" class="legal-link" data-legal="refund">Refund Policy</button>, and understand the annual OSM registration fee is CAN$135.</span>
-            </label>
-            <label class="consent-field">
-              <input type="checkbox" name="Agreed to Membership Contract" value="Yes" required>
-              <span>I have read and accept OSM's <button type="button" class="legal-link" data-legal="privacy">Membership Contract &amp; Privacy Policy</button>, and agree to its terms for this registration.</span>
-            </label>
-            <label class="consent-field">
-              <input type="checkbox" name="Photo/video consent" value="Yes">
-              <span>I consent to occasional photos or video of my child being used in OSM promotional materials (newsletter, website, social media).</span>
-            </label>
+            <div class="consent-field consent-field-yesno">
+              <span>I consent to occasional, anonymous photos or videos of my child being used in OSM promotional materials (newsletter, website, social media).</span>
+              <span class="consent-yesno-options">
+                <label><input type="radio" name="Photo/video consent" value="Yes" required> Yes</label>
+                <label><input type="radio" name="Photo/video consent" value="No" required> No</label>
+              </span>
+            </div>
           </fieldset>
 
           <div class="reg-fee-box">
             <div>
-              <div class="reg-fee-label">Annual OSM registration fee</div>
-              <div class="reg-fee-amount">CAN$135</div>
+              <div class="reg-fee-label">Annual OSM Membership Fee</div>
+              <div class="reg-fee-amount" id="regFeeAmount">CAN$135</div>
             </div>
-            <span style="font-size:0.82rem; color:var(--ink-soft); max-width:280px;">Paid separately, online, right after you submit this form.</span>
+            <span style="font-size:0.82rem; color:var(--ink-soft); max-width:420px;">The menbership fee is 135$ per student. When you click on “Submit Registration” you will be directed to Zeffy, a Canadian, secured payment website. This service is free for Not-For-Profits but they do ask for an <strong>optional</strong> “tip” with a drop-down menu. You may select “Other” to write in your own amount.</span>
           </div>
 
           <button type="submit" class="btn btn-primary" style="width:100%;">Submit Registration</button>
@@ -1354,7 +1392,7 @@ Bethany has been teaching violin for 26 years with some of her students have win
         <p>The last step is to pay the annual OSM membership registration fee below. This is handled securely through Zeffy, an external payment platform used by the OSM association — you'll be taken to their site to complete payment.</p>
         <div class="reg-payment-box">
           <div class="reg-fee-label" style="font-family:'Space Mono',monospace; font-size:0.74rem; letter-spacing:0.06em; text-transform:uppercase; color:var(--coral-dark);">OSM Annual Registration Fee</div>
-          <div class="reg-fee-amount">CAN$135</div>
+          <div class="reg-fee-amount" id="regPaymentFeeAmount">CAN$135</div>
           <!-- href is set from ZEFFY_OSA_CAMPAIGN_URL near the top of the script
                at the bottom of this file — edit the URL there (not here). -->
           <a href="#" id="zeffyPayBtn" target="_blank" rel="noopener" class="btn btn-navy">Pay CAN$135 via Zeffy →</a>
@@ -1387,7 +1425,6 @@ Bethany has been teaching violin for 26 years with some of her students have win
       <form id="contactForm" action="https://formspree.io/f/xwvgwazd" method="POST">
         <input type="hidden" name="_subject" value="New OSM Contact Form Message">
         <input type="hidden" name="_replyto" id="c-replyto">
-        <input type="hidden" name="_format" value="plain">
         <div class="form-row">
           <div class="field"><label for="c-name">Name</label><input id="c-name" name="Name" type="text" placeholder="Your full name" required></div>
           <div class="field"><label for="c-email">Email</label><input id="c-email" name="Email" type="email" placeholder="you@example.com" required></div>
@@ -1400,8 +1437,8 @@ Bethany has been teaching violin for 26 years with some of her students have win
 
     <div class="legal-links">
       <button type="button" class="legal-link" data-legal="refund">Refund Policy</button>
-      <button type="button" class="legal-link" data-legal="bylaws">OSM Bylaws</button>
       <button type="button" class="legal-link" data-legal="privacy">Privacy Policy</button>
+      <button type="button" class="legal-link" data-legal="bylaws">OSM Bylaws</button>
     </div>
   </div>
 </section>
@@ -1439,8 +1476,8 @@ Bethany has been teaching violin for 26 years with some of her students have win
         <div class="footer-col">
           <h4>Legal</h4>
           <a href="#contact" class="footer-legal-link" data-legal="refund">Refund Policy</a>
-          <a href="#contact" class="footer-legal-link" data-legal="bylaws">OSM Bylaws</a>
           <a href="#contact" class="footer-legal-link" data-legal="privacy">Privacy Policy</a>
+          <a href="#contact" class="footer-legal-link" data-legal="bylaws">OSM Bylaws</a>
         </div>
       </div>
     </div>
@@ -1454,7 +1491,9 @@ Bethany has been teaching violin for 26 years with some of her students have win
 <div class="video-modal-overlay" id="videoModal">
   <div class="video-modal-box">
     <button type="button" class="video-modal-close" id="videoModalClose" aria-label="Close video">&times;</button>
-    <video id="videoModalPlayer" controls playsinline></video>
+    <div class="video-modal-frame">
+      <iframe id="videoModalPlayer" title="Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
   </div>
 </div>
 
@@ -1750,21 +1789,19 @@ Bethany has been teaching violin for 26 years with some of her students have win
   const videoPlayer = document.getElementById('videoModalPlayer');
   const videoClose = document.getElementById('videoModalClose');
 
-  function openVideoModal(src, title){
-    videoPlayer.src = src;
+  function openVideoModal(ytId, title){
+    videoPlayer.src = `https://www.youtube.com/embed/${ytId}?autoplay=1&rel=0`;
+    videoPlayer.title = title || 'Video';
     videoPlayer.setAttribute('aria-label', title || 'Video');
     videoModal.classList.add('open');
-    videoPlayer.play().catch(() => {});
   }
   function closeVideoModal(){
     videoModal.classList.remove('open');
-    videoPlayer.pause();
-    videoPlayer.removeAttribute('src');
-    videoPlayer.load();
+    videoPlayer.src = '';
   }
 
   document.querySelectorAll('.video-thumb').forEach(btn => {
-    btn.addEventListener('click', () => openVideoModal(btn.dataset.video, btn.dataset.title));
+    btn.addEventListener('click', () => openVideoModal(btn.dataset.yt, btn.dataset.title));
   });
   videoClose.addEventListener('click', closeVideoModal);
   videoModal.addEventListener('click', (e) => { if(e.target === videoModal) closeVideoModal(); });
@@ -1911,7 +1948,7 @@ Bethany has been teaching violin for 26 years with some of her students have win
           sessionStorage.setItem(MEMBER_SESSION_KEY, code);
           memberPasscodeSuccess.classList.add('show');
           unlockExclusiveResources();
-          if(memberPasscodeBtn){ memberPasscodeBtn.classList.add('is-unlocked'); memberPasscodeBtn.innerHTML = '<span class="lock-icon" aria-hidden="true">🔓</span> Member Passcode'; }
+          if(memberPasscodeBtn){ memberPasscodeBtn.classList.add('is-unlocked'); memberPasscodeBtn.innerHTML = '<span class="lock-icon" aria-hidden="true">🔓</span> Member Portal'; }
           setTimeout(closeMemberPasscodeModal, 1600);
         } else {
           memberPasscodeError.classList.add('show');
@@ -1929,7 +1966,7 @@ Bethany has been teaching violin for 26 years with some of her students have win
     verifyMemberPasscode(savedCode).then((isValid) => {
       if(isValid){
         unlockExclusiveResources();
-        if(memberPasscodeBtn){ memberPasscodeBtn.classList.add('is-unlocked'); memberPasscodeBtn.innerHTML = '<span class="lock-icon" aria-hidden="true">🔓</span> Member Passcode'; }
+        if(memberPasscodeBtn){ memberPasscodeBtn.classList.add('is-unlocked'); memberPasscodeBtn.innerHTML = '<span class="lock-icon" aria-hidden="true">🔓</span> Member Portal'; }
       } else {
         sessionStorage.removeItem(MEMBER_SESSION_KEY);
       }
@@ -1957,6 +1994,116 @@ Bethany has been teaching violin for 26 years with some of her students have win
   // section) — uses the exact same submitToFormspree() helper as the
   // contact form above, so both forms submit/fall back/redirect identically.
   // On success we swap the form over to the Zeffy payment step.
+  // Additional students (multi-child families) — each added student gets its
+  // own collapsible accordion entry with the same fields as the first student,
+  // wired independently so opening/closing one never affects the others.
+  const addStudentBtn = document.getElementById('addStudentBtn');
+  const additionalStudentsContainer = document.getElementById('additionalStudentsContainer');
+
+  // Registration fee is CAN$135 per student — updates live any time a
+  // student is added or removed, on the form step, the payment step, and
+  // the "Pay via Zeffy" button label.
+  const PER_STUDENT_FEE = 135;
+  function currentStudentCount(){
+    return 1 + (additionalStudentsContainer ? additionalStudentsContainer.querySelectorAll('.student-item').length : 0);
+  }
+  function updateRegFeeDisplays(){
+    const total = currentStudentCount() * PER_STUDENT_FEE;
+    const formAmountEl = document.getElementById('regFeeAmount');
+    if(formAmountEl) formAmountEl.textContent = 'CAN$' + total;
+    const paymentAmountEl = document.getElementById('regPaymentFeeAmount');
+    if(paymentAmountEl) paymentAmountEl.textContent = 'CAN$' + total;
+    const zeffyBtn = document.getElementById('zeffyPayBtn');
+    if(zeffyBtn) zeffyBtn.textContent = 'Pay CAN$' + total + ' via Zeffy →';
+  }
+
+  function buildStudentEntryHTML(n){
+    return '<div class="student-item">' +
+      '<button type="button" class="acc-head student-acc-head">' +
+        '<span class="student-title">Student ' + n + '</span>' +
+        '<span class="acc-head-actions"><span class="student-remove-btn" role="button" tabindex="0">Remove</span><span class="plus">+</span></span>' +
+      '</button>' +
+      '<div class="acc-body student-acc-body">' +
+        '<div class="acc-body-inner">' +
+          '<div class="form-row">' +
+            '<div class="field"><label>Student\'s first name</label><input name="Student ' + n + ' first name" type="text" placeholder="First name" required></div>' +
+            '<div class="field"><label>Student\'s last name</label><input name="Student ' + n + ' last name" type="text" placeholder="Last name" required></div>' +
+          '</div>' +
+          '<div class="form-row">' +
+            '<div class="field"><label>Date of birth</label><input name="Student ' + n + ' date of birth" type="date" required></div>' +
+            '<div class="field">' +
+              '<label>Instrument of interest</label>' +
+              '<select name="Student ' + n + ' instrument of interest" required>' +
+                '<option value="" disabled selected>Select one</option>' +
+                '<option value="Flute">Flute</option>' +
+                '<option value="Piano">Piano</option>' +
+                '<option value="Violin">Violin</option>' +
+                '<option value="Viola">Viola</option>' +
+              '</select>' +
+            '</div>' +
+          '</div>' +
+          '<div class="form-row">' +
+            '<div class="field field-full">' +
+              '<label>Level on selected instrument</label>' +
+              '<select name="Student ' + n + ' level" required>' +
+                '<option value="" disabled selected>Select one</option>' +
+                '<option value="New">New</option>' +
+                '<option value="Beginner">Beginner</option>' +
+                '<option value="Intermediate">Intermediate</option>' +
+                '<option value="Advanced">Advanced</option>' +
+              '</select>' +
+            '</div>' +
+          '</div>' +
+          '<div class="field field-full"><label>Allergies or medical conditions we should know about</label><textarea name="Student ' + n + ' allergies or medical conditions" style="min-height:80px;" placeholder="Optional — leave blank if none"></textarea></div>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function renumberStudentEntries(){
+    additionalStudentsContainer.querySelectorAll('.student-item').forEach((el, i) => {
+      const n = i + 2; // student #1 is the fixed fieldset above
+      el.querySelector('.student-title').textContent = 'Student ' + n;
+      el.querySelectorAll('[name^="Student "]').forEach(field => {
+        field.name = field.name.replace(/^Student \d+/, 'Student ' + n);
+      });
+    });
+  }
+
+  function wireStudentEntry(entryEl){
+    const head = entryEl.querySelector('.student-acc-head');
+    const body = entryEl.querySelector('.student-acc-body');
+    const removeBtn = entryEl.querySelector('.student-remove-btn');
+    head.addEventListener('click', (e) => {
+      if(e.target === removeBtn) return;
+      const isOpen = entryEl.classList.contains('open');
+      entryEl.classList.toggle('open', !isOpen);
+      body.style.maxHeight = !isOpen ? body.scrollHeight + 'px' : null;
+    });
+    removeBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      entryEl.remove();
+      renumberStudentEntries();
+      updateRegFeeDisplays();
+    });
+  }
+
+  if(addStudentBtn && additionalStudentsContainer){
+    addStudentBtn.addEventListener('click', () => {
+      const n = additionalStudentsContainer.querySelectorAll('.student-item').length + 2;
+      const wrapper = document.createElement('div');
+      wrapper.innerHTML = buildStudentEntryHTML(n);
+      const entryEl = wrapper.firstElementChild;
+      additionalStudentsContainer.appendChild(entryEl);
+      wireStudentEntry(entryEl);
+      entryEl.classList.add('open');
+      const body = entryEl.querySelector('.student-acc-body');
+      body.style.maxHeight = body.scrollHeight + 'px';
+      entryEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      updateRegFeeDisplays();
+    });
+  }
+
   const registrationForm = document.getElementById('registrationForm');
   const registrationFormStep = document.getElementById('registrationFormStep');
   const registrationPaymentStep = document.getElementById('registrationPaymentStep');
@@ -1968,14 +2115,17 @@ Bethany has been teaching violin for 26 years with some of her students have win
     registrationForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const replyTo = document.getElementById('r-replyto');
-      if(replyTo) replyTo.value = document.getElementById('r-parent-email').value;
+      if(replyTo) replyTo.value = document.getElementById('r-parent1-email').value;
       submitToFormspree(registrationForm, () => {
-        const studentName = registrationForm.querySelector('#r-student-name').value.trim();
-        if(registrationChildName) registrationChildName.textContent = studentName ? studentName + "'s" : 'your';
+        const studentFirstName = registrationForm.querySelector('#r-student-first-name').value.trim();
+        if(registrationChildName) registrationChildName.textContent = studentFirstName ? studentFirstName + "'s" : 'your';
+        updateRegFeeDisplays(); // lock in the payment step's total before the student list is cleared below
         registrationFormStep.style.display = 'none';
         registrationPaymentStep.style.display = '';
         registrationPaymentStep.scrollIntoView({ behavior: 'smooth', block: 'start' });
         registrationForm.reset();
+        if(additionalStudentsContainer) additionalStudentsContainer.innerHTML = '';
+        updateRegFeeDisplays(); // reset the form step's total back to CAN$135 for the next registration
         // Give the family a moment to read the confirmation, then send them
         // on to the OSA's Zeffy campaign to pay the membership fee.
         setTimeout(() => { window.location.href = ZEFFY_OSA_CAMPAIGN_URL; }, 4000);
