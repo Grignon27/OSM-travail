@@ -246,13 +246,6 @@
   .strip.reverse .strip-media{order:2;}
   .strip-media .ph{aspect-ratio:4/3;}
   .strip-text .eyebrow{margin-bottom:10px;}
-  .video-card{position:relative; aspect-ratio:16/10;}
-  .play-btn{
-    position:absolute; inset:0; margin:auto; width:74px; height:74px; border-radius:50%;
-    background:rgba(255,255,255,0.92); display:flex; align-items:center; justify-content:center; z-index:3;
-    box-shadow:0 12px 30px rgba(0,0,0,0.25);
-  }
-  .play-btn::before{content:""; border-style:solid; border-width:11px 0 11px 18px; border-color:transparent transparent transparent var(--coral-dark); margin-left:4px;}
 
   /* ---------- ACCORDION ---------- */
   .accordion{border-top:1px solid var(--line);}
@@ -418,6 +411,11 @@
   }
   .legal-modal-body h4:first-child{margin-top:0;}
   .legal-modal-body p{margin-bottom:12px;}
+  /* Registration form popup: same modal shell as legal docs, just wider
+     to accommodate the multi-fieldset registration form. */
+  .register-modal-box{max-width:920px;}
+  .register-modal-box .legal-modal-body{padding:28px 40px 40px;}
+  @media(max-width:640px){ .register-modal-box .legal-modal-body{padding:22px 20px 30px;} }
 
   /* ---------- SUZUKI vs RCM ---------- */
   .rcm-intro{display:grid; grid-template-columns:1.35fr 1fr; gap:56px; align-items:start; margin-bottom:60px;}
@@ -501,7 +499,6 @@
   .accent-tag.green{background:var(--green-soft); color:var(--green-dark);}
 
   /* ---------- REGISTER: MEMBERSHIP BENEFITS BOX ---------- */
-  #register .section-head{margin-bottom:26px;}
   .benefits-box{
     border-radius:14px; padding:30px 32px; margin:10px 0 42px;
     background:var(--coral);
@@ -522,6 +519,44 @@
   #check-us-out .strip.reverse h3{color:var(--coral-dark);}
   #check-us-out .strip-media .ph-tag{background:rgba(0,117,74,0.75);}
   #check-us-out .strip.reverse .strip-media .ph-tag{background:rgba(232,104,63,0.82);}
+
+  /* ---------- CHECK US OUT: mission statement (full-width, high-impact) ---------- */
+  .mission-statement{
+    position:relative;
+    width:100%;
+    margin:-6px 0 60px;
+    padding:52px 64px;
+    border-radius:16px;
+    background:linear-gradient(135deg, var(--green-soft), rgba(0,117,74,0.05));
+    border-left:6px solid var(--green);
+    overflow:hidden;
+  }
+  .mission-statement::before{
+    content:"\201C";
+    position:absolute;
+    top:-18px; left:22px;
+    font-family:'Fraunces',serif;
+    font-size:7rem;
+    color:var(--green);
+    opacity:0.16;
+    line-height:1;
+    pointer-events:none;
+  }
+  .mission-statement p{
+    position:relative;
+    z-index:1;
+    margin:0;
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:clamp(1.35rem, 1.05rem + 1.1vw, 2.05rem);
+    line-height:1.5;
+    color:var(--ink);
+    max-width:none;
+  }
+  @media(max-width:700px){
+    .mission-statement{padding:36px 28px; margin-bottom:44px;}
+    .mission-statement::before{font-size:5rem; top:-10px; left:14px;}
+  }
 
   /* ---------- INFORMATION: color accents ---------- */
   #information .info-card:nth-child(1){border-top:4px solid var(--green);}
@@ -716,12 +751,7 @@
     padding:30px 26px; margin-top:6px;
   }
   .reg-payment-box .reg-fee-amount{font-family:'Fraunces',serif; font-size:2.1rem; color:var(--green-dark); margin:6px 0 18px;}
-  .register-card{
-    background:var(--paper); border-radius:18px; padding:48px 46px;
-    box-shadow:0 24px 60px rgba(20,15,10,0.25);
-  }
   @media(max-width:640px){
-    .register-card{padding:30px 22px;}
     .checkbox-grid{grid-template-columns:repeat(2,1fr);}
     .reg-form .form-row-3{grid-template-columns:1fr;}
   }
@@ -843,17 +873,17 @@
     <div class="section-head">
       <span class="eyebrow">Check Us Out!</span>
       <h2>Our Mission</h2>
-      <div class="accent-box green">
-        <p>The OSM fosters community and excellence in musicianship using the Suzuki Methodology of teaching in a nurturing environment with emphasis on the individual child and their needs.</p>
-      </div>
+    </div>
+
+    <div class="mission-statement">
+      <p>The OSM fosters community and excellence in musicianship using the Suzuki Methodology of teaching in a nurturing environment with emphasis on the individual child and their needs.</p>
     </div>
 
     <div class="strip">
       <div class="strip-media">
-        <div class="ph video-card">
-          <img src="Gallery/group-class-video-thumb.jpg" alt="Teacher teaching">
-          <div class="ph-tag">teachers</div>
-          <div class="play-btn"></div>
+        <div class="ph">
+          <img src="Gallery/MeettheTeacher.png" alt="Teaching">
+          <div class="ph-tag">Teaching Flute</div>
         </div>
       </div>
       <div class="strip-text">
@@ -868,7 +898,7 @@
       <div class="strip-media">
         <div class="ph">
           <img src="Gallery/SuzukiMethod.png" alt="Placeholder — smiling students with Dr. Suzuki">
-          <div class="ph-tag">The Suzuki Mthod</div>
+          <div class="ph-tag">The Suzuki Method</div>
         </div>
       </div>
       <div class="strip-text">
@@ -904,7 +934,7 @@
       <div class="info-card">
         <span class="eyebrow" style="margin-bottom:8px;">Private</span>
         <h3>PRIVATE LESSONS</h3>
-        <p>Private lessons are booked directly with the teacher. Currently, the OSM offers private lessons in flute, piano, violin and viola on a weekly basis.</p>
+        <p>Private lessons are booked directly with the teacher. Currently, the OSM teachers offer private lessons in flute, piano, violin, viola and theory on a weekly basis.</p>
         <a href="#teachers" class="btn btn-outline info-card-btn">Meet the Teachers</a>
       </div>
       <div class="info-card" style="position:relative;">
@@ -928,7 +958,7 @@
     <!-- REPEATER LAYOUT — duplicate .teacher-card for each instructor; replace names, photos & bios -->
     <div class="teacher-grid">
       <div class="teacher-card">
-        <div class="ph"><img src="Gallery/Headshot-Bethany.jpg" alt="Placeholder headshot"><div class="ph-tag">Headshot</div></div>
+        <div class="ph"><img src="Gallery/Headshot-Bethany.jpg" alt="Placeholder headshot"></div>
         <h3>Bethany Goluboff</h3>
         <span class="instr">Violin</span>
         <p class="bio-clamp">Bethany started with the Suzuki method at age 4 and came from a musical family.   She has a B.M. and M.M. in Violin Performance, and a B.A. in Music Education as well as completing Suzuki teacher training (all 10) .  
@@ -937,36 +967,36 @@ Bethany has been teaching violin for 26 years with some of her students have win
         <button type="button" class="bio-readmore" data-bio-name="Bethany Goluboff" data-bio-instr="Violin">Read more</button>
       </div>
       <div class="teacher-card">
-        <div class="ph"><img src="Gallery/Headshot-Michelle.jpg" alt="Placeholder headshot"><div class="ph-tag">Headshot</div></div>
+        <div class="ph"><img src="Gallery/Headshot-Michelle.jpg" alt="Placeholder headshot"></div>
         <h3>Michelle Coon</h3>
         <span class="instr">Flute and Theory</span>
         <p class="bio-clamp">Michelle has taught and performed in the Oakville and surrounding area for more than 30 years and has experience teaching all ages and levels of flute and theory. She has a YouTube channel to help theory students "Theory in a Nutshell" and has also started a Podcast "Hidden Gems in the History of Music".  Michelle's music degree is in both Performance and Music History from Queen's University. She received her Suzuki training at the Great Lakes Suzuki Institute and is an RCM Certified teacher for all levels of Flute, Theory, Harmony and Music History.  Michelle's students have won Gold Medals for RCM exams, competed in festivals at the Provincial level,  won school music awards and have gone on to music at the post secondary level including Masters and PhD degrees in music. Michelle loves to share her passion for the flute and music and believes in fostering a supportive community in her studio. She believes that each child is unique and teaches with that in mind helping them to achieve excellence in their musical journey.</p>
         <button type="button" class="bio-readmore" data-bio-name="Michelle Coon" data-bio-instr="Flute and Theory">Read more</button>
       </div>
       <div class="teacher-card">
-        <div class="ph"><img src="Gallery/Headshot-Hana.jpg" alt="Placeholder headshot"><div class="ph-tag">Headshot</div></div>
+        <div class="ph"><img src="Gallery/Headshot-Hana.jpg" alt="Placeholder headshot"></div>
         <h3>Hana Gurtlova</h3>
         <span class="instr">Piano</span>
         <p class="bio-clamp">TBA.</p>
         <button type="button" class="bio-readmore" data-bio-name="Hana Gurtlova" data-bio-instr="Piano">Read more</button>
       </div>
       <div class="teacher-card">
-        <div class="ph"><img src="Gallery/fdd4c3_b432182e435c4063a17dbce60dc26217~mv2.avif" alt="Placeholder headshot"><div class="ph-tag">Headshot</div></div>
+        <div class="ph"><img src="Gallery/fdd4c3_b432182e435c4063a17dbce60dc26217~mv2.avif" alt="Placeholder headshot"></div>
         <h3>Angela Lee</h3>
         <span class="instr">Flute</span>
         <p class="bio-clamp">Angela Sojung Lee is a dedicated flutist, educator, and performer with over 10 years of teaching experience. She holds a Master of Music in Performance and Literature from Western University and a Bachelor of Music in Performance from Queen's University. Angela has extensive teaching experience working with students of all ages and skill levels in both private and institutional settings. As a Flute Instructor and Supervisor at the CFLTC Music Training Centre, she provided structured instruction, mentorship, and performance guidance to developing musicians. Her teaching philosophy emphasizes strong technical foundations, musical artistry, discipline, and confidence-building within a supportive and engaging learning environment. As an active performer, her performance experience spans orchestral, chamber, wind ensemble, and ceremonial settings, including concerts, military events, and community performances. Angela is passionate about inspiring students to reach their full potential while cultivating a lifelong appreciation for music. She strives to create a positive learning environment where students can grow both technically and artistically.</p>
         <button type="button" class="bio-readmore" data-bio-name="Angela Lee" data-bio-instr="Flute">Read more</button>
       </div>
       <div class="teacher-card">
-        <div class="ph"><img src="https://picsum.photos/seed/osm-teacher-5/500/644" alt="Placeholder headshot"><div class="ph-tag">Headshot</div></div>
+        <div class="ph"><img src="Gallery/piano.jpg" alt="Placeholder headshot"></div>
         <h3>Catherine Balmer</h3>
         <span class="instr">Piano</span>
         <p class="bio-clamp">TBA.</p>
         <button type="button" class="bio-readmore" data-bio-name="[Teacher Name]" data-bio-instr="Guitar">Read more</button>
       </div>
       <div class="teacher-card">
-        <div class="ph"><img src="https://picsum.photos/seed/osm-teacher-6/500/645" alt="Placeholder headshot"><div class="ph-tag">Headshot</div></div>
-        <h3>Stephanie Sholman</h3>
+        <div class="ph"><img src="Gallery/viola.jpg" alt="Placeholder headshot"></div>
+        <h3>TBA</h3>
         <span class="instr">Viola</span>
         <p class="bio-clamp">TBA.</p>
         <button type="button" class="bio-readmore" data-bio-name="[Teacher Name]" data-bio-instr="Viola &amp; Double Bass">Read more</button>
@@ -1213,17 +1243,16 @@ Bethany has been teaching violin for 26 years with some of her students have win
   <div class="wrap">
     <div class="section-head">
       <span class="eyebrow">Events</span>
-      <h2>Registrations, calendars &amp; celebrations</h2>
-      <p>Each event area below will connect to its own specialized service — a scheduling app, a live calendar feed, and an ever-growing celebration wall.</p>
+      <h2>Special Event Registrations, OSM Calendar &amp; Celebrations</h2>
     </div>
 
     <div class="events-grid">
       <div class="event-card" id="registration">
-        <div class="ph"><img src="Gallery/OSM-registration.png" alt="Placeholder — OSM registration"><div class="ph-tag">Registration</div></div>
+        <div class="ph"><img src="Gallery/OSM-registration.png" alt="Placeholder — OSM registration"><div class="ph-tag">Event Registration</div></div>
         <div class="event-card-body">
-          <h3>Register for OSM</h3>
-          <p>New and returning families can complete the OSM registration form online, then finalize their annual membership with a secure payment through Zeffy.</p>
-          <a href="#register" class="btn btn-outline" style="align-self:flex-start;">Start Registration →</a>
+          <h3>Special Event Registrations</h3>
+          <p>To register for specific special events throughout the year, you will click on this button. This will only be accessible prior to each event.</p>
+          <button type="button" class="btn btn-outline event-popup-btn" data-event="special-event" style="align-self:flex-start;">Register Special Event →</button>
         </div>
       </div>
 
@@ -1239,7 +1268,7 @@ Bethany has been teaching violin for 26 years with some of her students have win
         <span style="position:absolute; top:16px; right:16px; z-index:3; background:rgba(232,104,63,0.9); color:#fff; font-family:'Space Mono',monospace; font-size:0.68rem; letter-spacing:0.06em; padding:5px 10px; border-radius:4px; text-transform:uppercase;">Coming Soon !</span>
         <div class="ph"><img src="Gallery/OSM-Trophy.png" alt="Placeholder — Gallery"><div class="ph-tag">Gallery</div></div>
         <div class="event-card-body">
-          <h3>Trophy Wall</h3>
+          <h3>Celebrations</h3>
           <p>All our students are amazing! As they develop and progress, they will often find themselves receiving awards  from schools, music festivals, competitions and more.</p>
           <button type="button" class="btn btn-outline event-popup-btn" data-event="trophy-wall" style="align-self:flex-start;">See All Achievements →</button>
         </div>
@@ -1248,29 +1277,28 @@ Bethany has been teaching violin for 26 years with some of her students have win
   </div>
 </section>
 
-<!-- ============ REGISTER FOR OSM ============ -->
-<section id="register" class="bg-navy">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow" style="color:var(--coral);">Join OSM</span>
-      <h2>Register with us!</h2>
-      <p>Welcome to Oakville Suzuki Music ! We are looking forward to you being part of the OSM family. Please, complete the registration form, then you will be directed to a secure website to pay your membership fee for this year.</p>
+<!-- ============ REGISTER FOR OSM (popup) ============ -->
+<div class="legal-modal-overlay" id="registerModal">
+  <div class="legal-modal-box register-modal-box">
+    <div class="legal-modal-header">
+      <h3>Register with us!</h3>
+      <button type="button" class="legal-modal-close" id="registerModalClose" aria-label="Close">&times;</button>
     </div>
+    <div class="legal-modal-body">
+      <p style="margin-bottom:24px;">Welcome to Oakville Suzuki Music ! We are looking forward to you being part of the OSM family. Please, complete the registration form, then you will be directed to a secure website to pay your membership fee for this year.</p>
 
-    <div class="benefits-box">
-      <h3>What your OSM membership includes</h3>
-      <ul>
-        <li>Access to highly qualified, experienced teachers</li>
-        <li>Exclusive access to member-only resources and materials</li>
-        <li>Access to group classes that build community and confidence</li>
-        <li>Special events, recitals and performance opportunities</li>
-        <li>Ongoing parent and student support</li>
-        <li>A nurturing, encouraging environment for every child</li>
-        <li>Third party liability insurance for all events</li>
-      </ul>
-    </div>
-
-    <div class="register-card">
+      <div class="benefits-box">
+        <h3>What your OSM membership includes</h3>
+        <ul>
+          <li>Access to highly qualified, experienced teachers</li>
+          <li>Exclusive access to member-only resources and materials</li>
+          <li>Access to group classes that build community and confidence</li>
+          <li>Special events, recitals and performance opportunities</li>
+          <li>Ongoing parent and student support</li>
+          <li>A nurturing, encouraging environment for every child</li>
+          <li>Neccessary insurance coverage for all events</li>
+        </ul>
+      </div>
 
       <!-- ---- STEP 1: registration form ---- -->
       <div id="registrationFormStep">
@@ -1402,7 +1430,7 @@ Bethany has been teaching violin for 26 years with some of her students have win
 
     </div>
   </div>
-</section>
+</div>
 
 <!-- ============ CONTACT US ============ -->
 <section id="contact">
@@ -1512,6 +1540,25 @@ Bethany has been teaching violin for 26 years with some of her students have win
       <p>Age &amp; level groupings, term dates and calendar, instruments offered per group, registration steps, and photos/video from recent classes.</p>
       <h4>Next steps</h4>
       <p>Share the real schedule and copy for Group Classes and this placeholder will be replaced with the finished page.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SPECIAL EVENT POPUP MODAL (placeholder) ============ -->
+<div class="legal-modal-overlay" id="eventSpecialModal">
+  <div class="legal-modal-box" style="max-width:640px;">
+    <div class="legal-modal-header">
+      <h3>Next Special Event</h3>
+      <a href="#events" class="legal-modal-close" id="eventSpecialModalClose" aria-label="Close and return to Events">&times;</a>
+    </div>
+    <div class="legal-modal-body">
+      <p style="font-family:'Space Mono',monospace; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.06em; color:var(--coral-dark); margin-bottom:16px;">Placeholder — page in progress</p>
+      <h4>Theme: The next special event</h4>
+      <p>This is a placeholder for details and registration for OSM's next special event — recitals, workshops, festivals, and one-off celebrations throughout the year.</p>
+      <h4>What will go here</h4>
+      <p>Event date, time, and location, a full description, and a registration button or link that only appears once the event is announced and open for sign-up.</p>
+      <h4>Next steps</h4>
+      <p>Share the details of the next special event and this placeholder will be replaced with the finished page.</p>
     </div>
   </div>
 </div>
@@ -1990,8 +2037,40 @@ Bethany has been teaching violin for 26 years with some of her students have win
   groupClassesModal.addEventListener('click', (e) => { if(e.target === groupClassesModal) closeGroupClassesModal(); });
   document.addEventListener('keydown', (e) => { if(e.key === 'Escape' && groupClassesModal.classList.contains('open')) closeGroupClassesModal(); });
 
-  // OSM Registration form (inline on the page, in the Register for OSM
-  // section) — uses the exact same submitToFormspree() helper as the
+  // Register For OSM popup — every "Register Now!" link across the site
+  // (nav, mobile nav, hero, footer, event card, member passcode hint, etc.)
+  // points to href="#register". Rather than scrolling to a section, we
+  // intercept those clicks and open this modal instead.
+  const registerModal = document.getElementById('registerModal');
+  const registerModalClose = document.getElementById('registerModalClose');
+
+  function openRegisterModal(){
+    registerModal.classList.add('open');
+  }
+  function closeRegisterModal(){
+    registerModal.classList.remove('open');
+  }
+
+  document.querySelectorAll('a[href="#register"]').forEach((link) => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      // If another popup (e.g. Member Portal) happens to be open, close it
+      // first so only the Register popup is visible.
+      document.querySelectorAll('.legal-modal-overlay.open, .bio-modal-overlay.open, .video-modal-overlay.open').forEach((overlay) => {
+        overlay.classList.remove('open');
+      });
+      const mobileNav = document.getElementById('mobileNav');
+      if(mobileNav) mobileNav.style.display = 'none';
+      openRegisterModal();
+    });
+  });
+  registerModalClose.addEventListener('click', closeRegisterModal);
+  registerModal.addEventListener('click', (e) => { if(e.target === registerModal) closeRegisterModal(); });
+  document.addEventListener('keydown', (e) => { if(e.key === 'Escape' && registerModal.classList.contains('open')) closeRegisterModal(); });
+
+  // OSM Registration form (now living inside the Register For OSM popup
+  // modal rather than an inline page section) — uses the exact same
+  // submitToFormspree() helper as the
   // contact form above, so both forms submit/fall back/redirect identically.
   // On success we swap the form over to the Zeffy payment step.
   // Additional students (multi-child families) — each added student gets its
@@ -2133,10 +2212,11 @@ Bethany has been teaching violin for 26 years with some of her students have win
     });
   }
 
-  // Events popups (Calendar / Trophy Wall) — each opens its own placeholder
+  // Events popups (Special Event / Calendar / Trophy Wall) — each opens its own placeholder
   // modal; the × in the header uses href="#events" so closing a popup also
   // scrolls back to the Events section.
   const eventModals = {
+    'special-event': document.getElementById('eventSpecialModal'),
     'calendar': document.getElementById('eventCalendarModal'),
     'trophy-wall': document.getElementById('eventTrophyWallModal')
   };
@@ -2217,6 +2297,28 @@ Bethany has been teaching violin for 26 years with some of her students have win
   bioModalClose.addEventListener('click', closeBioModal);
   bioModal.addEventListener('click', (e) => { if(e.target === bioModal) closeBioModal(); });
   document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeBioModal(); });
+
+  // ---------------------------------------------------------------------
+  // KEEP THE ADDRESS BAR CLEAN (domain URL only, never a #section hash)
+  // ---------------------------------------------------------------------
+  // Every in-page link (nav, footer, buttons, modal "back to" links, etc.)
+  // points at a `#section-id` anchor so the page can jump/scroll to that
+  // section. Left alone, clicking one changes the browser's address bar to
+  // e.g. oakvillesuzukimusic.ca/#events. This listener intercepts those
+  // clicks, performs the scroll manually, then immediately resets the URL
+  // back to the bare domain with history.replaceState — so the address bar
+  // only ever shows the site's domain, never a page/section name.
+  document.addEventListener('click', (e) => {
+    const link = e.target.closest('a[href^="#"]');
+    if(!link) return;
+    const hash = link.getAttribute('href');
+    if(!hash || hash.length < 2) return; // ignore bare "#" placeholder links
+    const targetEl = document.getElementById(hash.slice(1));
+    if(!targetEl) return; // e.g. "#register" is handled by its own modal logic above
+    e.preventDefault();
+    targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    history.replaceState(null, '', window.location.pathname + window.location.search);
+  });
 
 </script>
 </body>
