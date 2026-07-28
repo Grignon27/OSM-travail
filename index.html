@@ -548,10 +548,21 @@
     margin:0;
     font-family:'Fraunces',serif;
     font-weight:500;
-    font-size:clamp(1.35rem, 1.05rem + 1.1vw, 2.05rem);
+    font-size:clamp(1.05rem, 0.9rem + 0.7vw, 1.5rem);
     line-height:1.5;
     color:var(--ink);
     max-width:none;
+  }
+  .mission-statement .mission-quote{
+    position:relative;
+    z-index:1;
+    margin:18px 0 0;
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    font-weight:600;
+    font-size:clamp(0.85rem, 0.78rem + 0.35vw, 1.05rem);
+    line-height:1.5;
+    color:var(--green-dark);
   }
   @media(max-width:700px){
     .mission-statement{padding:36px 28px; margin-bottom:44px;}
@@ -877,13 +888,14 @@
 
     <div class="mission-statement">
       <p>The OSM fosters community and excellence in musicianship using the Suzuki Methodology of teaching in a nurturing environment with emphasis on the individual child and their needs.</p>
+      <p class="mission-quote">&#8220;Perhaps it is music that will save the world.&#8221; &mdash; Dr. Shinichi Suzuki</p>
     </div>
 
     <div class="strip">
       <div class="strip-media">
         <div class="ph">
           <img src="Gallery/MeettheTeacher.png" alt="Teaching">
-          <div class="ph-tag">Teaching Flute</div>
+          <div class="ph-tag">Teaching Chamber Music</div>
         </div>
       </div>
       <div class="strip-text">
@@ -1015,7 +1027,7 @@ Bethany has been teaching violin for 26 years with some of her students have win
 
     <div class="editorial">
       <div class="suzuki-photos">
-        <div class="ph"><img src="Gallery/Suzuki.webp" alt="Placeholder — historical portrait of Dr. Shinichi Suzuki"><div class="ph-tag">Shinishi Suzuki</div></div>
+        <div class="ph"><img src="Gallery/Suzuki.webp" alt="Placeholder — historical portrait of Dr. Shinichi Suzuki"><div class="ph-tag">Dr.Suzuki</div></div>
         <div class="ph"><img src="Images/jeanwithSophie.JPG" alt="Placeholder — Jean Grieve - Founder of OSA"><div class="ph-tag">Jean Grieve</div></div>
       </div>
       <div class="editorial-copy">
