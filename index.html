@@ -322,7 +322,8 @@
   }
   .bio-modal-box h3{font-size:1.4rem; margin-bottom:2px; color:var(--ink);}
   .bio-modal-box .instr{font-family:'Space Mono',monospace; font-size:0.72rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--coral-dark); display:block; margin-bottom:18px;}
-  .bio-modal-box p{font-size:0.96rem; color:var(--ink-soft); white-space:pre-line;}
+  .bio-modal-box .bio-modal-text p{font-size:0.96rem; color:var(--ink-soft); margin:0 0 14px;}
+  .bio-modal-box .bio-modal-text p:last-child{margin-bottom:0;}
   .bio-modal-close{
     position:absolute; top:16px; right:16px; z-index:5;
     width:36px; height:36px; display:flex; align-items:center; justify-content:center;
@@ -418,47 +419,48 @@
   .register-modal-box .legal-modal-body{padding:28px 40px 40px;}
   @media(max-width:640px){ .register-modal-box .legal-modal-body{padding:22px 20px 30px;} }
 
-  /* Calendar popup: embedded Google Calendar + footer CTA */
-  .calendar-modal-box{max-width:860px;}
+  /* Calendar popup: headline-style "coming soon" events + footer CTA to the
+     full external calendar (no embedded iframe) */
+  .calendar-modal-box{max-width:600px;}
   .calendar-modal-box .legal-modal-body{padding:0;}
-  .calendar-embed-wrap{
-    position:relative; width:100%; padding-top:75%; /* 800x600 aspect ratio */
-    background:var(--cream,#faf6f0);
-  }
-  .calendar-embed-wrap iframe{
-    position:absolute; inset:0; width:100%; height:100%; border:0;
-  }
   .calendar-modal-footer{
     display:flex; justify-content:center; align-items:center;
     padding:20px 26px 26px; border-top:1px solid var(--line);
   }
   @media(max-width:640px){
-    .calendar-embed-wrap{padding-top:125%;}
     .calendar-modal-footer{padding:18px 20px 24px;}
   }
-  /* Upcoming-events reminder strip, shown above the calendar embed */
-  .calendar-upcoming{
-    padding:22px 26px 4px; border-bottom:1px solid var(--line); display:none;
-  }
-  .calendar-upcoming.is-ready{display:block;}
+  /* Upcoming-events headline list */
+  .calendar-upcoming{ padding:30px 32px 6px; }
   .calendar-upcoming-title{
     font-family:'Space Mono',monospace; font-size:0.72rem; text-transform:uppercase;
-    letter-spacing:0.06em; color:var(--ink-soft); margin-bottom:12px;
+    letter-spacing:0.06em; color:var(--ink-soft); margin-bottom:16px;
   }
-  .calendar-upcoming-list{list-style:none; margin:0 0 18px; padding:0; display:flex; flex-direction:column; gap:8px;}
+  .calendar-upcoming-list{list-style:none; margin:0; padding:0; display:flex; flex-direction:column;}
   .calendar-upcoming-item{
-    display:flex; align-items:center; flex-wrap:wrap; gap:10px;
-    font-size:0.9rem; color:var(--ink);
+    display:flex; flex-direction:column; gap:6px;
+    padding:18px 0; border-bottom:1px solid var(--line);
   }
-  .calendar-upcoming-date{font-weight:600; color:var(--green-dark); white-space:nowrap;}
-  .calendar-upcoming-name{color:var(--ink-soft);}
+  .calendar-upcoming-item:last-child{border-bottom:none;}
+  .calendar-upcoming-item .calendar-upcoming-top{display:flex; align-items:center; flex-wrap:wrap; gap:10px;}
+  .calendar-upcoming-date{
+    font-family:'Space Mono',monospace; font-size:0.75rem; text-transform:uppercase;
+    letter-spacing:0.04em; color:var(--green-dark); white-space:nowrap;
+  }
+  .calendar-upcoming-name{
+    font-family:'Fraunces',serif; font-size:1.2rem; font-weight:600; color:var(--ink);
+  }
   .calendar-soon-badge{
     display:inline-flex; align-items:center; gap:5px;
-    background:var(--coral); color:#fff; font-weight:600; font-size:0.72rem;
+    background:var(--green-soft); color:var(--green-dark); font-weight:600; font-size:0.72rem;
     padding:3px 10px; border-radius:999px; white-space:nowrap;
+    border:1px solid rgba(0,168,104,0.35);
   }
   .calendar-soon-badge::before{
     content:"⏰"; font-size:0.8em; animation:calendarSoonPulse 1.6s ease-in-out infinite;
+  }
+  .calendar-upcoming-empty{
+    padding:14px 0 24px; color:var(--ink-soft); font-size:0.92rem;
   }
   @keyframes calendarSoonPulse{
     0%,100%{transform:scale(1); opacity:1;}
@@ -1021,14 +1023,14 @@
         <p class="bio-clamp">Bethany started with the Suzuki method at age 4 and came from a musical family.   She has a B.M. and M.M. in Violin Performance, and a B.A. in Music Education as well as completing Suzuki teacher training (all 10) .  
  She played with the Québec Symphony for two years, and was Concert Master of the Sudbury Symphony for three years. 
 Bethany has been teaching violin for 26 years with some of her students have winning the Gold Award for RCM, some going into the Taylor Academy as well as music study in university.</p>
-        <button type="button" class="bio-readmore" data-bio-name="Bethany Goluboff" data-bio-instr="Violin">Read more</button>
+        <button type="button" class="bio-readmore" data-bio-name="Bethany Goluboff" data-bio-instr="Violin" data-bio-paragraphs="Bethany started with the Suzuki method at age 4 and came from a musical family. She has a B.M. and M.M. in Violin Performance, and a B.A. in Music Education as well as completing Suzuki teacher training (all 10).|||She played with the Québec Symphony for two years, and was Concert Master of the Sudbury Symphony for three years.|||Bethany has been teaching violin for 26 years with some of her students have winning the Gold Award for RCM, some going into the Taylor Academy as well as music study in university.">Read more</button>
       </div>
       <div class="teacher-card">
         <div class="ph"><img src="Gallery/Headshot-Michelle.jpg" alt="Placeholder headshot"></div>
         <h3>Michelle Coon</h3>
         <span class="instr">Flute and Theory</span>
         <p class="bio-clamp">Michelle has taught and performed in the Oakville and surrounding area for more than 30 years and has experience teaching all ages and levels of flute and theory. She has a YouTube channel to help theory students "Theory in a Nutshell" and has also started a Podcast "Hidden Gems in the History of Music".  Michelle's music degree is in both Performance and Music History from Queen's University. She received her Suzuki training at the Great Lakes Suzuki Institute and is an RCM Certified teacher for all levels of Flute, Theory, Harmony and Music History.  Michelle's students have won Gold Medals for RCM exams, competed in festivals at the Provincial level,  won school music awards and have gone on to music at the post secondary level including Masters and PhD degrees in music. Michelle loves to share her passion for the flute and music and believes in fostering a supportive community in her studio. She believes that each child is unique and teaches with that in mind helping them to achieve excellence in their musical journey.</p>
-        <button type="button" class="bio-readmore" data-bio-name="Michelle Coon" data-bio-instr="Flute and Theory">Read more</button>
+        <button type="button" class="bio-readmore" data-bio-name="Michelle Coon" data-bio-instr="Flute and Theory" data-bio-paragraphs="Michelle has taught and performed in the Oakville and surrounding area for more than 30 years and has experience teaching all ages and levels of flute and theory. She has a YouTube channel to help theory students &quot;Theory in a Nutshell&quot; and has also started a Podcast &quot;Hidden Gems in the History of Music&quot;.|||Michelle's music degree is in both Performance and Music History from Queen's University. She received her Suzuki training at the Great Lakes Suzuki Institute and is an RCM Certified teacher for all levels of Flute, Theory, Harmony and Music History.|||Michelle's students have won Gold Medals for RCM exams, competed in festivals at the Provincial level, won school music awards and have gone on to music at the post secondary level including Masters and PhD degrees in music.|||Michelle loves to share her passion for the flute and music and believes in fostering a supportive community in her studio. She believes that each child is unique and teaches with that in mind helping them to achieve excellence in their musical journey.">Read more</button>
       </div>
       <div class="teacher-card">
         <div class="ph"><img src="Gallery/Headshot-Hana.jpg" alt="Placeholder headshot"></div>
@@ -1042,7 +1044,7 @@ Bethany has been teaching violin for 26 years with some of her students have win
         <h3>Angela Lee</h3>
         <span class="instr">Flute</span>
         <p class="bio-clamp">Angela Sojung Lee is a dedicated flutist, educator, and performer with over 10 years of teaching experience. She holds a Master of Music in Performance and Literature from Western University and a Bachelor of Music in Performance from Queen's University. Angela has extensive teaching experience working with students of all ages and skill levels in both private and institutional settings. As a Flute Instructor and Supervisor at the CFLTC Music Training Centre, she provided structured instruction, mentorship, and performance guidance to developing musicians. Her teaching philosophy emphasizes strong technical foundations, musical artistry, discipline, and confidence-building within a supportive and engaging learning environment. As an active performer, her performance experience spans orchestral, chamber, wind ensemble, and ceremonial settings, including concerts, military events, and community performances. Angela is passionate about inspiring students to reach their full potential while cultivating a lifelong appreciation for music. She strives to create a positive learning environment where students can grow both technically and artistically.</p>
-        <button type="button" class="bio-readmore" data-bio-name="Angela Lee" data-bio-instr="Flute">Read more</button>
+        <button type="button" class="bio-readmore" data-bio-name="Angela Lee" data-bio-instr="Flute" data-bio-paragraphs="Angela Sojung Lee is a dedicated flutist, educator, and performer with over 10 years of teaching experience. She holds a Master of Music in Performance and Literature from Western University and a Bachelor of Music in Performance from Queen's University.|||Angela has extensive teaching experience working with students of all ages and skill levels in both private and institutional settings. As a Flute Instructor and Supervisor at the CFLTC Music Training Centre, she provided structured instruction, mentorship, and performance guidance to developing musicians. Her teaching philosophy emphasizes strong technical foundations, musical artistry, discipline, and confidence-building within a supportive and engaging learning environment.|||As an active performer, her performance experience spans orchestral, chamber, wind ensemble, and ceremonial settings, including concerts, military events, and community performances.|||Angela is passionate about inspiring students to reach their full potential while cultivating a lifelong appreciation for music. She strives to create a positive learning environment where students can grow both technically and artistically.">Read more</button>
       </div>
       <div class="teacher-card">
         <div class="ph"><img src="Gallery/catherine.jpg" alt="Placeholder headshot"></div>
@@ -1115,7 +1117,6 @@ Bethany has been teaching violin for 26 years with some of her students have win
           <p><strong>Perfectly well!</strong></p>
           <p>There is a sense out there that at some point it's time to "stop Suzuki and go to RCM," which is a misunderstanding of what exactly each thing is. Suzuki is a methodology for teaching music and the RCM is a Certificate Program. They are not mutually exclusive.</p>
         </div>
-        <p>Many OSM students have taken their Practical (instrumental) exams and written Theory exams. There have been many OSM students who have received Silver or Gold medals from the RCM, meaning they received the highest mark of that session in their level and instrument.</p>
         <p>Students can benefit from exams for various reasons. Some students only do one or two exams during their journey, others do more, and for some students exams are not helpful for them — it really depends on the student. RCM practical exams have several components including repertoire, etudes/studies, scales, ear training and sight reading.</p>
         <p>From Level 5 RCM onwards, there is a Theory Rudiments co-requisite, and from Level 9 there are two co-requisites, Harmony and History. These co-requisites are necessary to obtain the official RCM Certificate. Students can receive external High School Credits through RCM exams — the RCM worked with the Provincial governments to secure this designation. Level 7 (practical and theory) equals a Grade 11 credit and Level 8 (practical and theory) equals a Grade 12 external credit. The Practical exam grade and Theory exam grade are weighted equally in the determination of the final grade.</p>
         <p>Many pieces in the Suzuki Books are found in the RCM Syllabi.</p>
@@ -1129,34 +1130,43 @@ Bethany has been teaching violin for 26 years with some of her students have win
     </div>
 
     <span class="eyebrow">Appendix A: A Comparison</span>
-    <div class="compare">
-      <div class="col-a">
-        <h3>The Suzuki Method</h3>
-        <ul>
-          <li>A methodology and philosophy, including the Suzuki triangle of parent, teacher and student</li>
-          <li>Progressive repertoire — building blocks, step-by-step sequential work</li>
-          <li>Teachers must have Suzuki teacher training, are encouraged to continue professional development, and must be a member in good standing with the SAA</li>
-          <li>Group lessons are essential</li>
-          <li>Serves beginner to advanced students</li>
-          <li>Has a series of books based on a step-by-step progression of development</li>
-          <li>No official certification program</li>
-          <li>Has a central association (the SAA) with branches all over the world, running annual institutes taught by certified teacher trainers</li>
-          <li>Taught as a methodology in post-secondary institutions — a Master's degree in Suzuki pedagogy is possible</li>
-        </ul>
-      </div>
-      <div class="col-b">
-        <h3>Royal Conservatory of Music (RCM)</h3>
-        <ul>
-          <li>No specific methodology</li>
-          <li>Progressive repertoire in groupings of skill level</li>
-          <li>Anyone can teach with an RCM exam as the goal — no equivalent teacher-training requirement</li>
-          <li>Group lessons are not applicable</li>
-          <li>Serves beginner to advanced students</li>
-          <li>Has a series of level books grouped by era-based listings</li>
-          <li>Main role is certification, including external high school credits</li>
-          <li>Has a central location (Toronto) and services all of Canada and the US</li>
-          <li>Has an "RCM Certified Teacher" designation based on number of students sent to exams and their marks</li>
-        </ul>
+    <div class="accordion">
+      <div class="acc-item">
+        <button type="button" class="acc-head"><span>View the Suzuki Method vs. RCM comparison</span><span class="plus">+</span></button>
+        <div class="acc-body">
+          <div class="acc-body-inner" style="max-width:none;">
+            <div class="compare">
+              <div class="col-a">
+                <h3>The Suzuki Method</h3>
+                <ul>
+                  <li>A methodology and philosophy, including the Suzuki triangle of parent, teacher and student</li>
+                  <li>Progressive repertoire — building blocks, step-by-step sequential work</li>
+                  <li>Teachers must have Suzuki teacher training, are encouraged to continue professional development, and must be a member in good standing with the SAA</li>
+                  <li>Group lessons are essential</li>
+                  <li>Serves beginner to advanced students</li>
+                  <li>Has a series of books based on a step-by-step progression of development</li>
+                  <li>No official certification program</li>
+                  <li>Has a central association (the SAA) with branches all over the world, running annual institutes taught by certified teacher trainers</li>
+                  <li>Taught as a methodology in post-secondary institutions — a Master's degree in Suzuki pedagogy is possible</li>
+                </ul>
+              </div>
+              <div class="col-b">
+                <h3>Royal Conservatory of Music (RCM)</h3>
+                <ul>
+                  <li>No specific methodology</li>
+                  <li>Progressive repertoire in groupings of skill level</li>
+                  <li>Anyone can teach with an RCM exam as the goal — no equivalent teacher-training requirement</li>
+                  <li>Group lessons are not applicable</li>
+                  <li>Serves beginner to advanced students</li>
+                  <li>Has a series of level books grouped by era-based listings</li>
+                  <li>Main role is certification, including external high school credits</li>
+                  <li>Has a central location (Toronto) and services all of Canada and the US</li>
+                  <li>Has an "RCM Certified Teacher" designation based on number of students sent to exams and their marks</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <span class="eyebrow" style="margin-top:70px;">Appendix B: Comparison per levels</span>
@@ -1359,7 +1369,7 @@ Bethany has been teaching violin for 26 years with some of her students have win
 
       <!-- ---- STEP 1: registration form ---- -->
       <div id="registrationFormStep">
-        <form id="registrationForm" class="reg-form" action="https://formspree.io/f/xwvgwazd" method="POST">
+        <form id="registrationForm" class="reg-form" action="https://formspree.io/f/mnjerdel" method="POST">
           <input type="hidden" name="_subject" value="New OSM Registration">
           <input type="hidden" name="_replyto" id="r-replyto">
 
@@ -1503,11 +1513,11 @@ Bethany has been teaching violin for 26 years with some of her students have win
         <div class="map-embed">
           <iframe src="https://maps.google.com/maps?q=Oakville%2C%20Ontario%2C%20Canada&z=12&output=embed" loading="lazy" title="Map placeholder — Oakville, Ontario"></iframe>
         </div>
-        <div class="contact-detail"><span class="k">Email</span><span>info@oakvillesuzukimusic.ca</span></div>
+        <div class="contact-detail"><span class="k">Email</span><span><button type="button" id="quickEmailTrigger" style="background:none; border:none; padding:0; margin:0; font:inherit; color:var(--green-dark); text-decoration:underline; cursor:pointer;">info@oakvillesuzukimusic.ca</button></span></div>
         <div class="contact-detail"><span class="k">Location</span><span>Oakville, Ontario, Canada</span></div>
       </div>
 
-      <form id="contactForm" action="https://formspree.io/f/xwvgwazd" method="POST">
+      <form id="contactForm" action="https://formspree.io/f/mnjerdel" method="POST">
         <input type="hidden" name="_subject" value="New OSM Contact Form Message">
         <input type="hidden" name="_replyto" id="c-replyto">
         <div class="form-row">
@@ -1582,7 +1592,7 @@ Bethany has been teaching violin for 26 years with some of her students have win
   </div>
 </div>
 
-<!-- ============ GROUP CLASSES POPUP MODAL (placeholder) ============ -->
+<!-- ============ GROUP CLASSES POPUP MODAL ============ -->
 <div class="legal-modal-overlay" id="groupClassesModal">
   <div class="legal-modal-box" style="max-width:640px;">
     <div class="legal-modal-header">
@@ -1590,13 +1600,15 @@ Bethany has been teaching violin for 26 years with some of her students have win
       <button type="button" class="legal-modal-close" id="groupClassesModalClose" aria-label="Close">&times;</button>
     </div>
     <div class="legal-modal-body">
-      <p style="font-family:'Space Mono',monospace; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.06em; color:var(--coral-dark); margin-bottom:16px;">Placeholder — page in progress</p>
-      <h4>Group Classes at OSM</h4>
-      <p>This is a placeholder for the full Group Classes page. Here we'll outline class levels, weekly schedules, locations, and what to expect at a first group class.</p>
-      <h4>What will go here</h4>
-      <p>Age &amp; level groupings, term dates and calendar, instruments offered per group, registration steps, and photos/video from recent classes.</p>
-      <h4>Next steps</h4>
-      <p>Share the real schedule and copy for Group Classes and this placeholder will be replaced with the finished page.</p>
+      <p><strong style="color:#111; font-weight:700;">Group classes are a cornerstone of Suzuki teaching.</strong> They foster community with the children all working towards a common goal. Children learn from each other; they watch the others in the group as well as the teacher and it can help them overcome obstacles.</p>
+      <ul>
+        <li>They feel less vulnerable when they realize &ldquo;Johnny&rdquo; has the same difficulty or &ldquo;Janice&rdquo; can&rsquo;t play the new song all the way through yet either. They are not alone.</li>
+        <li>They learn new strategies, new repertoire and make friends. All of a sudden &ldquo;working&rdquo; on a piece becomes less like work and more like fun.</li>
+        <li>They develop performance skills and musicianship.</li>
+        <li>They develop ensemble skills and how to work with others.</li>
+        <li>They develop discipline and concentration skills.</li>
+      </ul>
+      <p style="background:rgba(232,104,63,0.1); border-left:3px solid var(--coral, #E8683F); padding:10px 14px; border-radius:4px;"><strong style="color:var(--coral-dark, #C24E2A); font-weight:700;">Humans are social beings and we need to foster safe and real places for non-screen interaction and proper, respectful social skills.</strong></p>
     </div>
   </div>
 </div>
@@ -1629,14 +1641,13 @@ Bethany has been teaching violin for 26 years with some of her students have win
     </div>
     <div class="legal-modal-body">
       <div class="calendar-upcoming" id="calendarUpcoming">
-        <p class="calendar-upcoming-title">Upcoming events</p>
-        <ul class="calendar-upcoming-list" id="calendarUpcomingList"></ul>
-      </div>
-      <div class="calendar-embed-wrap">
-        <iframe src="https://calendar.google.com/calendar/embed?src=info%40oakvillesuzukimusic.ca&amp;ctz=America%2FToronto" width="800" height="600" frameborder="0" scrolling="no" title="Oakville Suzuki Music Calendar"></iframe>
+        <p class="calendar-upcoming-title">Coming soon</p>
+        <ul class="calendar-upcoming-list" id="calendarUpcomingList">
+          <li class="calendar-upcoming-empty" id="calendarUpcomingEmpty">Check back soon — upcoming event dates will be posted here.</li>
+        </ul>
       </div>
       <div class="calendar-modal-footer">
-        <a href="https://calendar.google.com/calendar/embed?src=info%40oakvillesuzukimusic.ca&amp;ctz=America%2FToronto" target="_blank" rel="noopener" class="btn btn-outline" id="viewFullCalendarBtn">View the Full OSM Calendar →</a>
+        <a href="https://calendar.google.com/calendar/embed?src=info%40oakvillesuzukimusic.ca&amp;ctz=America%2FToronto" target="_blank" rel="noopener" class="btn btn-outline" id="viewFullCalendarBtn">See the Full Calendar →</a>
       </div>
     </div>
   </div>
@@ -1699,6 +1710,27 @@ Bethany has been teaching violin for 26 years with some of her students have win
   </div>
 </div>
 
+<!-- ============ QUICK EMAIL POPUP MODAL ============ -->
+<div class="legal-modal-overlay" id="quickEmailModal">
+  <div class="legal-modal-box" style="max-width:440px;">
+    <div class="legal-modal-header">
+      <h3>Email OSM</h3>
+      <button type="button" class="legal-modal-close" id="quickEmailModalClose" aria-label="Close">&times;</button>
+    </div>
+    <div class="legal-modal-body">
+      <p id="quickEmailIntro" style="margin-bottom:16px;">Send a quick note to <strong>info@oakvillesuzukimusic.ca</strong> and we'll get back to you within 2 business days.</p>
+      <form id="quickEmailForm" action="https://formspree.io/f/mnjerdel" method="POST">
+        <input type="hidden" name="_subject" value="New Quick Email — OSM Contact Page">
+        <input type="hidden" name="_replyto" id="qe-replyto">
+        <div class="field"><label for="qe-email">Your Email</label><input id="qe-email" name="Email" type="email" placeholder="you@example.com" required></div>
+        <div class="field"><label for="qe-msg">Message</label><textarea id="qe-msg" name="Message" placeholder="Type your message here..." required></textarea></div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Send Email</button>
+      </form>
+      <p id="quickEmailSuccess" style="display:none; margin-top:4px;">Thanks! Your message has been sent to OSM. You should hear back within 2 business days.</p>
+    </div>
+  </div>
+</div>
+
 <!-- ============ LEGAL DOCUMENT POPUP MODAL ============ -->
 <div class="legal-modal-overlay" id="legalModal">
   <div class="legal-modal-box">
@@ -1733,7 +1765,7 @@ Bethany has been teaching violin for 26 years with some of her students have win
     <button type="button" class="bio-modal-close" id="bioModalClose" aria-label="Close bio">&times;</button>
     <h3 id="bioModalName"></h3>
     <span class="instr" id="bioModalInstr"></span>
-    <p id="bioModalText"></p>
+    <div id="bioModalText" class="bio-modal-text"></div>
   </div>
 </div>
 
@@ -1773,7 +1805,7 @@ Bethany has been teaching violin for 26 years with some of her students have win
   // campaign page exists, replace the placeholder below and both the
   // "Pay via Zeffy" button and the automatic post-registration redirect
   // will point to it.
-  const ZEFFY_OSA_CAMPAIGN_URL = 'https://www.zeffy.com/en-CA/donation-form/REPLACE-WITH-OSA-ZEFFY-CAMPAIGN-LINK';
+  const ZEFFY_OSA_CAMPAIGN_URL = 'https://www.zeffy.com/en-CA/ticketing/oakville-suzuki-music-membership';
 
   // ---------------------------------------------------------------------
   // MEMBERS-ONLY RESOURCES AREA
@@ -1963,7 +1995,7 @@ Bethany has been teaching violin for 26 years with some of her students have win
   }
 
   // Contact form submission + confirmation popup
-  // Submits the form data to Formspree (https://formspree.io/f/xwvgwazd) via
+  // Submits the form data to Formspree (https://formspree.io/f/mnjerdel) via
   // the shared submitToFormspree() helper above — on success the existing
   // "Message Sent" confirmation modal is shown.
   const contactForm = document.getElementById('contactForm');
@@ -1991,6 +2023,50 @@ Bethany has been teaching violin for 26 years with some of her students have win
   contactConfirmModalClose.addEventListener('click', closeContactConfirmModal);
   contactConfirmModal.addEventListener('click', (e) => { if(e.target === contactConfirmModal) closeContactConfirmModal(); });
   document.addEventListener('keydown', (e) => { if(e.key === 'Escape' && contactConfirmModal.classList.contains('open')) closeContactConfirmModal(); });
+
+  // ---------------------------------------------------------------------
+  // Quick Email popup — opened by clicking the email address on the
+  // Contact page. Submits to the same Formspree endpoint
+  // (https://formspree.io/f/mnjerdel) via the shared submitToFormspree()
+  // helper above, and shows an inline "sent" confirmation in the popup
+  // itself rather than a separate modal.
+  // ---------------------------------------------------------------------
+  const quickEmailTrigger = document.getElementById('quickEmailTrigger');
+  const quickEmailModal = document.getElementById('quickEmailModal');
+  const quickEmailModalClose = document.getElementById('quickEmailModalClose');
+  const quickEmailForm = document.getElementById('quickEmailForm');
+  const quickEmailSuccess = document.getElementById('quickEmailSuccess');
+
+  function openQuickEmailModal(){
+    quickEmailForm.style.display = '';
+    quickEmailSuccess.style.display = 'none';
+    quickEmailModal.classList.add('open');
+  }
+  function closeQuickEmailModal(){
+    quickEmailModal.classList.remove('open');
+  }
+
+  if(quickEmailTrigger){
+    quickEmailTrigger.addEventListener('click', openQuickEmailModal);
+  }
+  if(quickEmailModalClose){
+    quickEmailModalClose.addEventListener('click', closeQuickEmailModal);
+  }
+  quickEmailModal.addEventListener('click', (e) => { if(e.target === quickEmailModal) closeQuickEmailModal(); });
+  document.addEventListener('keydown', (e) => { if(e.key === 'Escape' && quickEmailModal.classList.contains('open')) closeQuickEmailModal(); });
+
+  if(quickEmailForm){
+    quickEmailForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const replyTo = document.getElementById('qe-replyto');
+      if(replyTo) replyTo.value = document.getElementById('qe-email').value;
+      submitToFormspree(quickEmailForm, () => {
+        quickEmailForm.style.display = 'none';
+        quickEmailSuccess.style.display = '';
+        quickEmailForm.reset();
+      });
+    });
+  }
 
   // ---------------------------------------------------------------------
   // Member Passcode modal + Exclusive Resources unlock
@@ -2280,9 +2356,10 @@ Bethany has been teaching violin for 26 years with some of her students have win
         registrationForm.reset();
         if(additionalStudentsContainer) additionalStudentsContainer.innerHTML = '';
         updateRegFeeDisplays(); // reset the form step's total back to CAN$135 for the next registration
-        // Give the family a moment to read the confirmation, then send them
-        // on to the OSA's Zeffy campaign to pay the membership fee.
-        setTimeout(() => { window.location.href = ZEFFY_OSA_CAMPAIGN_URL; }, 4000);
+        // Give the family a moment to read the confirmation, then open the
+        // OSA's Zeffy membership campaign in a new tab so they can pay while
+        // keeping the OSM site open in this tab.
+        setTimeout(() => { window.open(ZEFFY_OSA_CAMPAIGN_URL, '_blank', 'noopener'); }, 4000);
       });
     });
   }
@@ -2314,13 +2391,14 @@ Bethany has been teaching violin for 26 years with some of her students have win
   let upcomingEventsLoaded = false;
   function loadUpcomingEvents(){
     if(upcomingEventsLoaded) return;
+    const upcomingList = document.getElementById('calendarUpcomingList');
+    if(!upcomingList) return;
+    // API key not configured yet — leave the friendly "check back soon"
+    // placeholder that's already in the markup in place.
     if(!GOOGLE_CALENDAR_API_KEY || GOOGLE_CALENDAR_API_KEY.indexOf('REPLACE-WITH') === 0){
-      return; // API key not configured yet — keep the section hidden
+      return;
     }
     upcomingEventsLoaded = true;
-    const upcomingWrap = document.getElementById('calendarUpcoming');
-    const upcomingList = document.getElementById('calendarUpcomingList');
-    if(!upcomingWrap || !upcomingList) return;
     const timeMin = new Date().toISOString();
     const url = 'https://www.googleapis.com/calendar/v3/calendars/'
       + encodeURIComponent(CALENDAR_ID) + '/events'
@@ -2333,7 +2411,7 @@ Bethany has been teaching violin for 26 years with some of her students have win
       .then(res => { if(!res.ok) throw new Error('Calendar request failed'); return res.json(); })
       .then(data => {
         const items = (data.items || []).filter(ev => ev.start && (ev.start.dateTime || ev.start.date));
-        if(items.length === 0) return; // nothing upcoming — leave the section hidden
+        if(items.length === 0) return; // nothing upcoming — keep the placeholder message
         const now = new Date();
         const dateFmt = new Intl.DateTimeFormat('en-CA', { weekday:'short', month:'short', day:'numeric' });
         upcomingList.innerHTML = items.map(ev => {
@@ -2342,14 +2420,15 @@ Bethany has been teaching violin for 26 years with some of her students have win
           const soon = daysUntil >= 0 && daysUntil <= UPCOMING_EVENTS_SOON_DAYS;
           const name = (ev.summary || 'OSM Event').replace(/</g,'&lt;').replace(/>/g,'&gt;');
           return '<li class="calendar-upcoming-item">'
-            + '<span class="calendar-upcoming-date">' + dateFmt.format(start) + '</span>'
+            + '<span class="calendar-upcoming-top">'
+              + '<span class="calendar-upcoming-date">' + dateFmt.format(start) + '</span>'
+              + (soon ? '<span class="calendar-soon-badge">Coming soon</span>' : '')
+            + '</span>'
             + '<span class="calendar-upcoming-name">' + name + '</span>'
-            + (soon ? '<span class="calendar-soon-badge">Coming soon</span>' : '')
             + '</li>';
         }).join('');
-        upcomingWrap.classList.add('is-ready');
       })
-      .catch(() => { /* stay quiet — the embed below still works fine on its own */ });
+      .catch(() => { /* stay quiet — the placeholder message stays in place */ });
   }
 
   document.querySelectorAll('.event-popup-btn').forEach(btn => {
@@ -2402,10 +2481,13 @@ Bethany has been teaching violin for 26 years with some of her students have win
   const bioModalText = document.getElementById('bioModalText');
   const bioModalClose = document.getElementById('bioModalClose');
 
-  function openBioModal(name, instr, text){
+  function escapeBioText(str){
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+  function openBioModal(name, instr, paragraphs){
     bioModalName.textContent = name;
     bioModalInstr.textContent = instr;
-    bioModalText.textContent = text;
+    bioModalText.innerHTML = paragraphs.map(p => '<p>' + escapeBioText(p) + '</p>').join('');
     bioModal.classList.add('open');
   }
   function closeBioModal(){
@@ -2420,7 +2502,15 @@ Bethany has been teaching violin for 26 years with some of her students have win
     if(bioEl.scrollHeight <= bioEl.clientHeight + 1){
       btn.style.display = 'none';
     }
-    btn.addEventListener('click', () => openBioModal(btn.dataset.bioName, btn.dataset.bioInstr, bioEl.textContent.trim()));
+    btn.addEventListener('click', () => {
+      // Full bios are stored pre-split into paragraphs (separated by "|||")
+      // in data-bio-paragraphs so the modal reads as short paragraphs rather
+      // than one big block of text. Falls back to the clamped text (as a
+      // single paragraph) if a bio hasn't been given paragraph breaks yet.
+      const raw = btn.dataset.bioParagraphs || bioEl.textContent.trim();
+      const paragraphs = raw.split('|||').map(p => p.trim()).filter(Boolean);
+      openBioModal(btn.dataset.bioName, btn.dataset.bioInstr, paragraphs);
+    });
   });
 
   bioModalClose.addEventListener('click', closeBioModal);
