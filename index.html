@@ -209,10 +209,11 @@
   .hero-actions{
     background:#fff;
     padding:20px 48px;
-    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;
+    display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:16px;
     flex-shrink:0;
   }
-  .hero-ctas{display:flex; flex-wrap:wrap; gap:16px;}
+  .hero-ctas{display:flex; flex-wrap:wrap; justify-content:center; gap:16px;}
+  .hero-ctas .btn{border-radius:10px;}
   .hero-note{font-family:'Space Mono',monospace; font-size:0.72rem; letter-spacing:0.08em; color:var(--ink-soft);}
 
   /* ---------- GENERIC SECTION ---------- */
@@ -416,6 +417,53 @@
   .register-modal-box{max-width:920px;}
   .register-modal-box .legal-modal-body{padding:28px 40px 40px;}
   @media(max-width:640px){ .register-modal-box .legal-modal-body{padding:22px 20px 30px;} }
+
+  /* Calendar popup: embedded Google Calendar + footer CTA */
+  .calendar-modal-box{max-width:860px;}
+  .calendar-modal-box .legal-modal-body{padding:0;}
+  .calendar-embed-wrap{
+    position:relative; width:100%; padding-top:75%; /* 800x600 aspect ratio */
+    background:var(--cream,#faf6f0);
+  }
+  .calendar-embed-wrap iframe{
+    position:absolute; inset:0; width:100%; height:100%; border:0;
+  }
+  .calendar-modal-footer{
+    display:flex; justify-content:center; align-items:center;
+    padding:20px 26px 26px; border-top:1px solid var(--line);
+  }
+  @media(max-width:640px){
+    .calendar-embed-wrap{padding-top:125%;}
+    .calendar-modal-footer{padding:18px 20px 24px;}
+  }
+  /* Upcoming-events reminder strip, shown above the calendar embed */
+  .calendar-upcoming{
+    padding:22px 26px 4px; border-bottom:1px solid var(--line); display:none;
+  }
+  .calendar-upcoming.is-ready{display:block;}
+  .calendar-upcoming-title{
+    font-family:'Space Mono',monospace; font-size:0.72rem; text-transform:uppercase;
+    letter-spacing:0.06em; color:var(--ink-soft); margin-bottom:12px;
+  }
+  .calendar-upcoming-list{list-style:none; margin:0 0 18px; padding:0; display:flex; flex-direction:column; gap:8px;}
+  .calendar-upcoming-item{
+    display:flex; align-items:center; flex-wrap:wrap; gap:10px;
+    font-size:0.9rem; color:var(--ink);
+  }
+  .calendar-upcoming-date{font-weight:600; color:var(--green-dark); white-space:nowrap;}
+  .calendar-upcoming-name{color:var(--ink-soft);}
+  .calendar-soon-badge{
+    display:inline-flex; align-items:center; gap:5px;
+    background:var(--coral); color:#fff; font-weight:600; font-size:0.72rem;
+    padding:3px 10px; border-radius:999px; white-space:nowrap;
+  }
+  .calendar-soon-badge::before{
+    content:"⏰"; font-size:0.8em; animation:calendarSoonPulse 1.6s ease-in-out infinite;
+  }
+  @keyframes calendarSoonPulse{
+    0%,100%{transform:scale(1); opacity:1;}
+    50%{transform:scale(1.2); opacity:0.75;}
+  }
 
   /* ---------- SUZUKI vs RCM ---------- */
   .rcm-intro{display:grid; grid-template-columns:1.35fr 1fr; gap:56px; align-items:start; margin-bottom:60px;}
@@ -864,10 +912,7 @@
         <div class="hero-ctas">
           <a href="#check-us-out" class="btn btn-primary">Check Us Out!</a>
           <a href="#register" class="btn btn-outline">Register Now!</a>
-          <!-- Events to Come: href is set from EVENTS_CALENDAR_URL near the
-               top of the script at the bottom of this file — edit the URL
-               there (not here) once the external calendar is ready. -->
-          <a href="#" id="eventsToComeBtn" class="btn btn-navy" target="_blank" rel="noopener">Events to Come</a>
+          <button type="button" id="eventsToComeBtn" class="btn btn-navy event-popup-btn" data-event="calendar">Events to Come</button>
         </div>
       </div>
     </div>
@@ -1575,21 +1620,24 @@ Bethany has been teaching violin for 26 years with some of her students have win
   </div>
 </div>
 
-<!-- ============ OSM CALENDAR POPUP MODAL (placeholder) ============ -->
+<!-- ============ OSM CALENDAR POPUP MODAL ============ -->
 <div class="legal-modal-overlay" id="eventCalendarModal">
-  <div class="legal-modal-box" style="max-width:640px;">
+  <div class="legal-modal-box calendar-modal-box">
     <div class="legal-modal-header">
       <h3>OSM Calendar</h3>
       <a href="#events" class="legal-modal-close" id="eventCalendarModalClose" aria-label="Close and return to Events">&times;</a>
     </div>
     <div class="legal-modal-body">
-      <p style="font-family:'Space Mono',monospace; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.06em; color:var(--coral-dark); margin-bottom:16px;">Placeholder — page in progress</p>
-      <h4>Theme: A live, shared calendar</h4>
-      <p>This is a placeholder for the OSM Calendar page. It will embed a live, always-current calendar of recitals, group class dates, and studio closures.</p>
-      <h4>What will go here</h4>
-      <p>An embedded Google Calendar (or similar) feed, filterable by event type, with the option to add dates directly to a visitor's own calendar.</p>
-      <h4>Next steps</h4>
-      <p>Share the calendar feed/service to embed and this placeholder will be replaced with the finished page.</p>
+      <div class="calendar-upcoming" id="calendarUpcoming">
+        <p class="calendar-upcoming-title">Upcoming events</p>
+        <ul class="calendar-upcoming-list" id="calendarUpcomingList"></ul>
+      </div>
+      <div class="calendar-embed-wrap">
+        <iframe src="https://calendar.google.com/calendar/embed?src=info%40oakvillesuzukimusic.ca&amp;ctz=America%2FToronto" width="800" height="600" frameborder="0" scrolling="no" title="Oakville Suzuki Music Calendar"></iframe>
+      </div>
+      <div class="calendar-modal-footer">
+        <a href="https://calendar.google.com/calendar/embed?src=info%40oakvillesuzukimusic.ca&amp;ctz=America%2FToronto" target="_blank" rel="noopener" class="btn btn-outline" id="viewFullCalendarBtn">View the Full OSM Calendar →</a>
+      </div>
     </div>
   </div>
 </div>
@@ -1714,14 +1762,11 @@ Bethany has been teaching violin for 26 years with some of her students have win
   const HERO_ROTATE_MS = 7500; // time each slide stays on screen before the next one starts fading in
 
   // ============================================================
-  // "EVENTS TO COME" BUTTON — EXTERNAL CALENDAR LINK
-  // Replace this with your live calendar link once it's ready, e.g:
-  //   'https://cal.com/oakville-suzuki-music'
-  //   'https://calendar.google.com/calendar/u/0/embed?src=your-calendar-id'
-  // That's the only line that needs to change — the button in the HTML
-  // already points at #eventsToComeBtn and will pick this URL up below.
+  // "EVENTS TO COME" BUTTON — now opens the same OSM Calendar popup as the
+  // "View Full Calendar" button on the Events section (see the
+  // .event-popup-btn wiring further down, which picks this button up
+  // automatically via its data-event="calendar" attribute).
   // ============================================================
-  const EVENTS_CALENDAR_URL = 'https://cal.com/oakville-suzuki-music';
 
   // Zeffy OSA (Oakville Suzuki Association) membership-fee campaign — this is
   // the ONLY place this URL needs to be edited. Once the OSA's real Zeffy
@@ -1745,8 +1790,26 @@ Bethany has been teaching violin for 26 years with some of her students have win
   // passcode was already verified, so the Exclusive Resources button stays
   // unlocked while browsing the site and resources.html doesn't ask again.
   const MEMBER_SESSION_KEY = 'osmMemberPasscode';
-  const eventsToComeBtn = document.getElementById('eventsToComeBtn');
-  if(eventsToComeBtn) eventsToComeBtn.href = EVENTS_CALENDAR_URL;
+
+  // ---------------------------------------------------------------------
+  // CALENDAR POPUP — "UPCOMING EVENTS" REMINDER STRIP
+  // ---------------------------------------------------------------------
+  // Pulls the next few events straight from the same public Google Calendar
+  // that's embedded below, and shows a "coming soon" ⏰ badge next to any
+  // event happening within 3 weeks. This calls the Google Calendar API
+  // (read-only, public calendar) rather than scraping the embed.
+  // To turn it on:
+  //   1. In Google Cloud Console, enable the "Google Calendar API" and
+  //      create an API key restricted to that API (and, ideally, to this
+  //      site's domain).
+  //   2. Paste that key below, replacing the placeholder.
+  // Until a real key is added, this section simply stays hidden and the
+  // popup still works fine with just the calendar embed.
+  const GOOGLE_CALENDAR_API_KEY = 'REPLACE-WITH-YOUR-GOOGLE-CALENDAR-API-KEY';
+  const CALENDAR_ID = 'info@oakvillesuzukimusic.ca';
+  const UPCOMING_EVENTS_MAX = 4;
+  const UPCOMING_EVENTS_SOON_DAYS = 21; // "coming soon" badge threshold
+
 
   (function initHeroSlider(){
     const container = document.getElementById('heroSlides');
@@ -2237,9 +2300,56 @@ Bethany has been teaching violin for 26 years with some of her students have win
     const modal = eventModals[key];
     if(!modal) return;
     modal.classList.add('open');
+    if(key === 'calendar') loadUpcomingEvents();
   }
   function closeEventModal(modal){
     modal.classList.remove('open');
+  }
+
+  // Fetches the next few events from the public Google Calendar and renders
+  // them as a short reminder list above the embed, with a "coming soon" ⏰
+  // badge on anything within UPCOMING_EVENTS_SOON_DAYS. Runs once per page
+  // load (cached), and fails silently — leaving just the calendar embed —
+  // if the API key hasn't been set up yet or the request fails.
+  let upcomingEventsLoaded = false;
+  function loadUpcomingEvents(){
+    if(upcomingEventsLoaded) return;
+    if(!GOOGLE_CALENDAR_API_KEY || GOOGLE_CALENDAR_API_KEY.indexOf('REPLACE-WITH') === 0){
+      return; // API key not configured yet — keep the section hidden
+    }
+    upcomingEventsLoaded = true;
+    const upcomingWrap = document.getElementById('calendarUpcoming');
+    const upcomingList = document.getElementById('calendarUpcomingList');
+    if(!upcomingWrap || !upcomingList) return;
+    const timeMin = new Date().toISOString();
+    const url = 'https://www.googleapis.com/calendar/v3/calendars/'
+      + encodeURIComponent(CALENDAR_ID) + '/events'
+      + '?key=' + encodeURIComponent(GOOGLE_CALENDAR_API_KEY)
+      + '&timeMin=' + encodeURIComponent(timeMin)
+      + '&maxResults=' + UPCOMING_EVENTS_MAX
+      + '&singleEvents=true&orderBy=startTime';
+
+    fetch(url)
+      .then(res => { if(!res.ok) throw new Error('Calendar request failed'); return res.json(); })
+      .then(data => {
+        const items = (data.items || []).filter(ev => ev.start && (ev.start.dateTime || ev.start.date));
+        if(items.length === 0) return; // nothing upcoming — leave the section hidden
+        const now = new Date();
+        const dateFmt = new Intl.DateTimeFormat('en-CA', { weekday:'short', month:'short', day:'numeric' });
+        upcomingList.innerHTML = items.map(ev => {
+          const start = new Date(ev.start.dateTime || ev.start.date);
+          const daysUntil = Math.ceil((start - now) / 86400000);
+          const soon = daysUntil >= 0 && daysUntil <= UPCOMING_EVENTS_SOON_DAYS;
+          const name = (ev.summary || 'OSM Event').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+          return '<li class="calendar-upcoming-item">'
+            + '<span class="calendar-upcoming-date">' + dateFmt.format(start) + '</span>'
+            + '<span class="calendar-upcoming-name">' + name + '</span>'
+            + (soon ? '<span class="calendar-soon-badge">Coming soon</span>' : '')
+            + '</li>';
+        }).join('');
+        upcomingWrap.classList.add('is-ready');
+      })
+      .catch(() => { /* stay quiet — the embed below still works fine on its own */ });
   }
 
   document.querySelectorAll('.event-popup-btn').forEach(btn => {
@@ -2251,6 +2361,13 @@ Bethany has been teaching violin for 26 years with some of her students have win
     modal.addEventListener('click', (e) => { if(e.target === modal) closeEventModal(modal); });
     document.addEventListener('keydown', (e) => { if(e.key === 'Escape' && modal.classList.contains('open')) closeEventModal(modal); });
   });
+
+  // "View the Full OSM Calendar" footer link: opens the public calendar in a
+  // new tab (visitor view only, no admin access) and closes the popup behind it.
+  const viewFullCalendarBtn = document.getElementById('viewFullCalendarBtn');
+  if(viewFullCalendarBtn){
+    viewFullCalendarBtn.addEventListener('click', () => closeEventModal(eventModals['calendar']));
+  }
 
   // legal documents popup (Privacy Policy / OSM Bylaws / Refund Policy)
   const legalData = JSON.parse(document.getElementById('legalContent').textContent);
