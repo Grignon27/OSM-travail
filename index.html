@@ -748,6 +748,32 @@
     font-family:'Work Sans',sans-serif; font-size:0.95rem; color:var(--ink);
   }
   .field textarea{min-height:130px; resize:vertical;}
+  /* ---- Fix: date inputs rendering blank on phones/tablets ----
+     The global -webkit-appearance:none reset strips the native date control
+     on iOS/iPadOS Safari (and some Android browsers), which collapses the
+     value area to zero height so the field looks like an empty blank box on
+     touch devices. The rules below restore a stable height, left-align the
+     value, and show a "Select date" hint while the field is still empty. */
+  .field input[type="date"]{
+    display:block;
+    min-height:49px;              /* match the rendered height of the text inputs */
+    line-height:1.3;
+    -webkit-min-logical-height:49px;
+  }
+  .field input[type="date"]::-webkit-date-and-time-value{
+    text-align:left;              /* iOS centers the chosen date by default */
+    min-height:1.3em;             /* stops the value area collapsing to 0 height */
+    margin:0;
+  }
+  /* iOS/iPadOS only: show a hint while no date has been chosen yet
+     (the fields are `required`, so an empty date input is :invalid) */
+  @supports (-webkit-touch-callout: none){
+    .field input[type="date"]:not(:focus):invalid::before{
+      content:"Select date";
+      color:var(--ink-soft);
+      opacity:0.65;
+    }
+  }
   .map-embed{border-radius:10px; overflow:hidden; border:1px solid var(--line); aspect-ratio:4/3; margin-bottom:24px;}
   .map-embed iframe{width:100%; height:100%; border:0;}
   .contact-detail{display:flex; gap:14px; margin-bottom:16px; align-items:flex-start;}
