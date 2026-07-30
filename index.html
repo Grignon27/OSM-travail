@@ -421,7 +421,7 @@
 
   /* Calendar popup: headline-style "coming soon" events + footer CTA to the
      full external calendar (no embedded iframe) */
-  .calendar-modal-box{max-width:600px;}
+  .calendar-modal-box{max-width:880px;}
   .calendar-modal-box .legal-modal-body{padding:0;}
   .calendar-modal-footer{
     display:flex; justify-content:center; align-items:center;
@@ -430,43 +430,52 @@
   @media(max-width:640px){
     .calendar-modal-footer{padding:18px 20px 24px;}
   }
-  /* Upcoming-events headline list */
-  .calendar-upcoming{ padding:30px 32px 6px; }
+  /* Upcoming-events headline list — a single, large green "Coming soon"
+     eyebrow icon up top, then each event rendered as a bold black headline
+     (name + date). Sits with a tight 10px gap above the embedded calendar. */
+  .calendar-upcoming{ padding:30px 32px 0; }
   .calendar-upcoming-title{
-    font-family:'Space Mono',monospace; font-size:0.72rem; text-transform:uppercase;
-    letter-spacing:0.06em; color:var(--ink-soft); margin-bottom:16px;
+    display:flex; align-items:center; gap:10px;
+    font-family:'Space Mono',monospace; font-size:1.35rem; font-weight:700; text-transform:uppercase;
+    letter-spacing:0.06em; color:var(--green-dark); margin-bottom:18px;
+  }
+  .calendar-upcoming-title::before{
+    content:""; width:26px; height:26px; flex:0 0 auto; border-radius:50%;
+    background:var(--green);
+    -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15-5-5 1.41-1.41L11 14.17l7.59-7.59L20 8l-9 9z'/%3E%3C/svg%3E") center/18px no-repeat;
+    mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15-5-5 1.41-1.41L11 14.17l7.59-7.59L20 8l-9 9z'/%3E%3C/svg%3E") center/18px no-repeat;
   }
   .calendar-upcoming-list{list-style:none; margin:0; padding:0; display:flex; flex-direction:column;}
   .calendar-upcoming-item{
-    display:flex; flex-direction:column; gap:6px;
-    padding:18px 0; border-bottom:1px solid var(--line);
+    display:flex; flex-direction:column; gap:4px;
+    padding:16px 0; border-bottom:1px solid var(--line);
   }
   .calendar-upcoming-item:last-child{border-bottom:none;}
-  .calendar-upcoming-item .calendar-upcoming-top{display:flex; align-items:center; flex-wrap:wrap; gap:10px;}
-  .calendar-upcoming-date{
-    font-family:'Space Mono',monospace; font-size:0.75rem; text-transform:uppercase;
-    letter-spacing:0.04em; color:var(--green-dark); white-space:nowrap;
-  }
   .calendar-upcoming-name{
-    font-family:'Fraunces',serif; font-size:1.2rem; font-weight:600; color:var(--ink);
+    font-family:'Fraunces',serif; font-size:1.32rem; font-weight:800; color:var(--ink);
+    line-height:1.25;
   }
-  .calendar-soon-badge{
-    display:inline-flex; align-items:center; gap:5px;
-    background:var(--green-soft); color:var(--green-dark); font-weight:600; font-size:0.72rem;
-    padding:3px 10px; border-radius:999px; white-space:nowrap;
-    border:1px solid rgba(0,168,104,0.35);
+  .calendar-upcoming-date{
+    font-family:'Space Mono',monospace; font-size:0.8rem; font-weight:700;
+    letter-spacing:0.03em; color:var(--ink);
   }
-  .calendar-soon-badge::before{
-    content:"⏰"; font-size:0.8em; animation:calendarSoonPulse 1.6s ease-in-out infinite;
+  /* Inline calendar embed — framed with the site palette. Google's embed
+     view only accepts a small preset list of event colors, so we pick the
+     two closest built-in swatches to our brand: "Tangerine" (#F4511E) for
+     coral and "Basil" (#0B8043) for green — set via the &color= param on
+     the iframe src below. */
+  .calendar-embed-wrap{
+    margin:10px 32px 28px; border-radius:14px; overflow:hidden;
+    border:2px solid var(--coral); box-shadow:0 8px 24px rgba(0,0,0,0.08);
   }
-  .calendar-upcoming-empty{
-    padding:14px 0 24px; color:var(--ink-soft); font-size:0.92rem;
+  .calendar-embed-bar{
+    height:6px; background:linear-gradient(90deg, var(--coral) 0%, var(--coral) 50%, var(--green) 50%, var(--green) 100%);
   }
-  @keyframes calendarSoonPulse{
-    0%,100%{transform:scale(1); opacity:1;}
-    50%{transform:scale(1.2); opacity:0.75;}
+  .calendar-embed-wrap iframe{ display:block; width:100%; height:420px; border:0; background:#fff; }
+  @media(max-width:640px){
+    .calendar-embed-wrap{ margin:10px 20px 22px; }
+    .calendar-embed-wrap iframe{ height:360px; }
   }
-
   /* ---------- SUZUKI vs RCM ---------- */
   .rcm-intro{display:grid; grid-template-columns:1.35fr 1fr; gap:56px; align-items:start; margin-bottom:60px;}
   .rcm-intro .rcm-copy p{color:var(--ink-soft); margin-bottom:16px;}
@@ -1642,12 +1651,17 @@ Bethany has been teaching violin for 26 years with some of her students have win
     <div class="legal-modal-body">
       <div class="calendar-upcoming" id="calendarUpcoming">
         <p class="calendar-upcoming-title">Coming soon</p>
-        <ul class="calendar-upcoming-list" id="calendarUpcomingList">
-          <li class="calendar-upcoming-empty" id="calendarUpcomingEmpty">Check back soon — upcoming event dates will be posted here.</li>
-        </ul>
+        <ul class="calendar-upcoming-list" id="calendarUpcomingList"></ul>
+      </div>
+      <div class="calendar-embed-wrap">
+        <div class="calendar-embed-bar"></div>
+        <iframe
+          src="https://calendar.google.com/calendar/embed?src=info%40oakvillesuzukimusic.ca&amp;ctz=America%2FToronto&amp;mode=AGENDA&amp;showTitle=0&amp;showPrint=0&amp;showTabs=0&amp;showCalendars=0&amp;showTz=0&amp;wkst=1&amp;color=%230B8043"
+          title="OSM Calendar"
+          loading="lazy"></iframe>
       </div>
       <div class="calendar-modal-footer">
-        <a href="https://calendar.google.com/calendar/embed?src=info%40oakvillesuzukimusic.ca&amp;ctz=America%2FToronto" target="_blank" rel="noopener" class="btn btn-outline" id="viewFullCalendarBtn">See the Full Calendar →</a>
+        <a href="https://calendar.google.com/calendar/embed?src=info%40oakvillesuzukimusic.ca&amp;ctz=America%2FToronto&amp;color=%230B8043" target="_blank" rel="noopener" class="btn btn-outline" id="viewFullCalendarBtn">See the Full Calendar →</a>
       </div>
     </div>
   </div>
@@ -1837,7 +1851,7 @@ Bethany has been teaching violin for 26 years with some of her students have win
   //   2. Paste that key below, replacing the placeholder.
   // Until a real key is added, this section simply stays hidden and the
   // popup still works fine with just the calendar embed.
-  const GOOGLE_CALENDAR_API_KEY = 'REPLACE-WITH-YOUR-GOOGLE-CALENDAR-API-KEY';
+  const GOOGLE_CALENDAR_API_KEY = 'AIzaSyAjDSso3I38KkMSZHdpUZTVxPnIBMiGhiY';
   const CALENDAR_ID = 'info@oakvillesuzukimusic.ca';
   const UPCOMING_EVENTS_MAX = 4;
   const UPCOMING_EVENTS_SOON_DAYS = 21; // "coming soon" badge threshold
@@ -2384,10 +2398,14 @@ Bethany has been teaching violin for 26 years with some of her students have win
   }
 
   // Fetches the next few events from the public Google Calendar and renders
-  // them as a short reminder list above the embed, with a "coming soon" ⏰
-  // badge on anything within UPCOMING_EVENTS_SOON_DAYS. Runs once per page
-  // load (cached), and fails silently — leaving just the calendar embed —
-  // if the API key hasn't been set up yet or the request fails.
+  // them as a "Coming soon" headline list. Runs once per page load (cached).
+  // If nothing shows up, open the browser console (F12) — common causes are
+  // logged there: (1) the calendar isn't set to public, (2) the API key's
+  // website restriction is blocking the current origin (this includes
+  // testing by double-clicking the file open as file:// — restricted keys
+  // need a real http/https origin, so either add "http://localhost/*" to
+  // the key's allowed sites while testing, or temporarily unrestrict it),
+  // or (3) the Calendar API isn't enabled on the Google Cloud project.
   let upcomingEventsLoaded = false;
   function loadUpcomingEvents(){
     if(upcomingEventsLoaded) return;
@@ -2399,36 +2417,51 @@ Bethany has been teaching violin for 26 years with some of her students have win
       return;
     }
     upcomingEventsLoaded = true;
-    const timeMin = new Date().toISOString();
+    // Start from midnight today (not "this exact second") so an all-day or
+    // earlier-today event doesn't get cut out of the results.
+    const startOfToday = new Date();
+    startOfToday.setHours(0,0,0,0);
     const url = 'https://www.googleapis.com/calendar/v3/calendars/'
       + encodeURIComponent(CALENDAR_ID) + '/events'
       + '?key=' + encodeURIComponent(GOOGLE_CALENDAR_API_KEY)
-      + '&timeMin=' + encodeURIComponent(timeMin)
+      + '&timeMin=' + encodeURIComponent(startOfToday.toISOString())
       + '&maxResults=' + UPCOMING_EVENTS_MAX
       + '&singleEvents=true&orderBy=startTime';
 
     fetch(url)
-      .then(res => { if(!res.ok) throw new Error('Calendar request failed'); return res.json(); })
+      .then(res => {
+        if(!res.ok){
+          return res.json().catch(() => ({})).then(body => {
+            console.error(
+              'OSM Calendar: request failed (' + res.status + '). ' +
+              (body && body.error && body.error.message ? body.error.message : '') +
+              ' — check that the calendar is public and the API key\'s website restriction allows this origin.'
+            );
+            throw new Error('Calendar request failed');
+          });
+        }
+        return res.json();
+      })
       .then(data => {
         const items = (data.items || []).filter(ev => ev.start && (ev.start.dateTime || ev.start.date));
-        if(items.length === 0) return; // nothing upcoming — keep the placeholder message
-        const now = new Date();
+        if(items.length === 0){
+          console.warn('OSM Calendar: request succeeded but returned no upcoming events.');
+          return; // nothing upcoming — keep the placeholder message
+        }
         const dateFmt = new Intl.DateTimeFormat('en-CA', { weekday:'short', month:'short', day:'numeric' });
+        const timeFmt = new Intl.DateTimeFormat('en-CA', { hour:'numeric', minute:'2-digit' });
         upcomingList.innerHTML = items.map(ev => {
-          const start = new Date(ev.start.dateTime || ev.start.date);
-          const daysUntil = Math.ceil((start - now) / 86400000);
-          const soon = daysUntil >= 0 && daysUntil <= UPCOMING_EVENTS_SOON_DAYS;
+          const isAllDay = !ev.start.dateTime;
+          const start = new Date(ev.start.dateTime || ev.start.date + 'T00:00:00');
           const name = (ev.summary || 'OSM Event').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+          const when = dateFmt.format(start) + (isAllDay ? '' : ' · ' + timeFmt.format(start));
           return '<li class="calendar-upcoming-item">'
-            + '<span class="calendar-upcoming-top">'
-              + '<span class="calendar-upcoming-date">' + dateFmt.format(start) + '</span>'
-              + (soon ? '<span class="calendar-soon-badge">Coming soon</span>' : '')
-            + '</span>'
             + '<span class="calendar-upcoming-name">' + name + '</span>'
+            + '<span class="calendar-upcoming-date">' + when + '</span>'
             + '</li>';
         }).join('');
       })
-      .catch(() => { /* stay quiet — the placeholder message stays in place */ });
+      .catch(() => { /* diagnostic already logged above — UI stays on the placeholder */ });
   }
 
   document.querySelectorAll('.event-popup-btn').forEach(btn => {
