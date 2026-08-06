@@ -4,233 +4,890 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Members' Resources | Oakville Suzuki Music</title>
+<meta name="description" content="Members-only resources for Oakville Suzuki Music families.">
+<!-- Members' area: deliberately kept out of search results -->
 <meta name="robots" content="noindex, nofollow">
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" sizes="180x180" href="Images/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="Images/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="Images/favicon-16x16.png">
+<link rel="manifest" href="Images/site.webmanifest">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,450;0,9..144,600;1,9..144,400;1,9..144,500&family=Work+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
+  /* ===================================================================
+     Same design tokens as index.html — keep these in sync if the main
+     site's palette or fonts ever change.
+     =================================================================== */
   :root{
-    --cream:#FBF6EE; --bg:#F4EEDF; --paper:#F2E9D8; --ink:#221D18; --ink-soft:#5B5148;
-    --coral:#E8683F; --coral-dark:#C24E2A; --green:#00A868; --green-dark:#00754A;
-    --green-soft: rgba(0,168,104,0.14); --navy:var(--green-dark); --navy-dark:#00532F;
-    --line: rgba(34,29,24,0.12); --radius:4px; --maxw:960px;
+    --cream:#FBF6EE;
+    --bg:#F4EEDF;
+    --paper:#F2E9D8;
+    --ink:#221D18;
+    --ink-soft:#5B5148;
+    --coral:#E8683F;
+    --coral-dark:#C24E2A;
+    --green:#00A868;
+    --green-dark:#00754A;
+    --green-soft: rgba(0,168,104,0.14);
+    --navy:var(--green-dark);
+    --navy-dark:#00532F;
+    --line: rgba(34,29,24,0.12);
+    --radius: 4px;
+    --maxw: 1180px;
+    --header-h: 97px;
   }
   *{box-sizing:border-box;}
-  body{margin:0; background:var(--bg); color:var(--ink); font-family:'Work Sans',sans-serif; line-height:1.6;}
-  h1,h2,h3{font-family:'Fraunces',serif; font-weight:450; line-height:1.1; margin:0 0 0.4em; letter-spacing:-0.01em;}
-  a{color:inherit;}
+  html{scroll-behavior:smooth; scroll-padding-top:var(--header-h); height:100%; -webkit-text-size-adjust:100%; text-size-adjust:100%;}
+  body{
+    margin:0; min-height:100%;
+    background:var(--bg); color:var(--ink);
+    font-family:'Work Sans', sans-serif; font-weight:400; line-height:1.6;
+    -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+    -webkit-tap-highlight-color:transparent;
+  }
+  button, input, textarea, select{font-family:inherit; font-size:100%; color:inherit; -webkit-appearance:none; -moz-appearance:none; appearance:none; border-radius:0;}
+  button{background:none; border:none; cursor:pointer;}
+  h1,h2,h3,h4{font-family:'Fraunces', serif; font-weight:450; line-height:1.08; margin:0 0 0.4em; color:var(--ink); letter-spacing:-0.01em;}
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+  a:focus-visible, button:focus-visible, .btn:focus-visible{outline:2px solid var(--green); outline-offset:3px; border-radius:4px;}
+  .field input:focus, .field textarea:focus, .field select:focus, .gate-box input:focus{outline:none; border-color:var(--green); box-shadow:0 0 0 3px var(--green-soft);}
   .wrap{max-width:var(--maxw); margin:0 auto; padding:0 28px;}
-  header{padding:22px 0; border-bottom:1px solid var(--line); background:#fff;}
-  header .wrap{display:flex; align-items:center; justify-content:space-between; gap:16px;}
-  .brand{font-family:'Space Mono',monospace; font-size:0.82rem; letter-spacing:0.06em; text-transform:uppercase; color:var(--coral-dark); text-decoration:none;}
-  .back-link{font-size:0.86rem; text-decoration:underline; text-underline-offset:3px; color:var(--ink-soft);}
   .eyebrow{
     font-family:'Space Mono', monospace; font-size:0.72rem; letter-spacing:0.14em; text-transform:uppercase;
     color:var(--coral-dark); display:inline-flex; align-items:center; gap:10px; margin-bottom:14px;
   }
   .eyebrow::before{content:""; width:22px; height:1px; background:var(--coral-dark); display:inline-block;}
-  main{padding:64px 0 100px;}
   .btn{
-    display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:14px 30px;
-    border-radius:999px; font-weight:600; font-size:0.95rem; cursor:pointer; border:1.5px solid transparent;
-    text-decoration:none; transition:transform .15s ease, box-shadow .15s ease;
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    padding:14px 30px; border-radius:999px;
+    font-family:'Work Sans', sans-serif; font-weight:600; font-size:0.95rem; cursor:pointer;
+    border:1.5px solid transparent;
+    transition: transform .18s ease, box-shadow .18s ease, background .18s ease, color .18s ease;
   }
   .btn-primary{background:var(--coral); color:#fff;}
-  .btn-primary:hover{background:var(--coral-dark);}
+  .btn-primary:hover{background:var(--coral-dark); transform:translateY(-2px); box-shadow:0 10px 24px rgba(200,78,42,0.28);}
+  .btn-outline{background:transparent; border-color:var(--ink); color:var(--ink);}
+  .btn-outline:hover{background:var(--ink); color:var(--cream);}
+  .btn-navy{background:var(--navy); color:#fff;}
+  .btn-navy:hover{background:var(--navy-dark); transform:translateY(-2px); box-shadow:0 10px 24px rgba(0,117,74,0.35);}
 
-  /* ---- Gate (shown before a passcode is verified) ---- */
-  #gate{max-width:440px; margin:0 auto; text-align:center;}
-  #gate p{color:var(--ink-soft);}
-  .passcode-field{margin:22px 0 6px; text-align:left;}
-  .passcode-field label{display:block; font-size:0.78rem; font-family:'Space Mono',monospace; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:8px;}
-  .passcode-field input{
-    width:100%; padding:14px 16px; border:1px solid var(--line); border-radius:8px; background:#fff;
-    font-family:'Space Mono',monospace; letter-spacing:0.12em; font-size:1rem; color:var(--ink); text-transform:uppercase;
+  /* ---------- HEADER ---------- */
+  header{
+    position:sticky; top:0; z-index:500;
+    background:rgba(251,246,238,0.92);
+    -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
   }
-  .passcode-error{
-    display:none; align-items:center; gap:8px; margin-top:14px; padding:10px 14px; text-align:left;
-    background:rgba(232,104,63,0.1); border:1px solid rgba(232,104,63,0.35); border-radius:8px;
-    color:var(--coral-dark); font-size:0.85rem;
+  .nav-inner{max-width:var(--maxw); margin:0 auto; padding:8px 28px; display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:24px;}
+  .brand{display:flex; align-items:center; gap:12px; justify-self:start;}
+  .brand img{height:108px; width:auto; object-fit:contain;}
+  nav.primary{display:flex; align-items:center; justify-content:center; gap:2px; width:100%;}
+  nav.primary > a{
+    font-size:0.86rem; font-weight:500; padding:10px 14px; border-radius:999px;
+    color:var(--ink); transition: background .15s ease, color .15s ease; text-align:center;
   }
-  .passcode-error.show{display:flex;}
-  #gate .btn{width:100%; margin-top:18px;}
-  .passcode-hint{font-size:0.82rem; color:var(--ink-soft); margin-top:18px;}
+  nav.primary > a:hover{background:var(--paper); color:var(--green-dark);}
+  .nav-cta{display:flex; align-items:center; gap:10px; justify-self:end;}
+  .member-pill{
+    display:inline-flex; align-items:center; gap:6px; padding:9px 13px;
+    border-radius:var(--radius); background:none; color:var(--green-dark); font-size:0.8rem; font-weight:600;
+    border:1.5px solid var(--green);
+  }
+  .lock-pill{display:inline-flex; align-items:center; gap:6px; padding:9px 13px; border-radius:var(--radius); background:var(--navy); color:#fff; font-size:0.8rem; font-weight:600;}
+  .hamburger{display:none; padding:6px;}
+  .hamburger span{display:block; width:24px; height:2px; background:var(--ink); margin:5px 0;}
 
-  /* ---- Unlocked content ---- */
-  #resourcesContent{display:none;}
-  .res-grid{display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:40px;}
-  .res-card{background:#fff; border:1px solid var(--line); border-radius:10px; padding:26px; display:flex; flex-direction:column;}
-  .res-card h3{font-size:1.05rem; margin-bottom:8px;}
-  .res-card p{color:var(--ink-soft); font-size:0.92rem; margin:0 0 18px; flex:1;}
-  .res-card a{font-size:0.88rem; font-weight:600; color:var(--green-dark); text-decoration:underline; text-underline-offset:3px;}
-  #loadingMsg{text-align:center; color:var(--ink-soft); padding:40px 0; display:none;}
-  #signOutRow{margin-top:56px; padding-top:24px; border-top:1px solid var(--line); text-align:center;}
-  #signOutBtn{background:none; border:none; text-decoration:underline; color:var(--ink-soft); cursor:pointer; font:inherit; font-size:0.85rem;}
-  @media (max-width:640px){ .res-grid{grid-template-columns:1fr;} }
+  /* ---------- PAGE INTRO ---------- */
+  section{padding:30px 0 104px;}
+  .page-intro{
+    background:var(--navy); color:#fff; padding:52px 0 46px;
+  }
+  .page-intro .eyebrow{color:#fff; opacity:0.85;}
+  .page-intro .eyebrow::before{background:#fff;}
+  .page-intro h1{color:#fff; font-size:clamp(1.9rem, 3.4vw, 2.7rem); margin-bottom:14px;}
+  .page-intro p{color:rgba(255,255,255,0.85); max-width:640px; margin:0;}
+  .string-divider{width:100%; overflow:hidden; line-height:0;}
+  .string-divider svg{width:100%; height:34px; display:block;}
+
+  /* ---------- ACCORDION (matches index.html, but items open independently) ---------- */
+  .accordion{border-top:1px solid var(--line);}
+  .acc-item{border-bottom:1px solid var(--line);}
+  .acc-head{
+    width:100%; text-align:left;
+    display:flex; justify-content:space-between; align-items:center; gap:20px;
+    padding:24px 4px; font-family:'Fraunces',serif; font-size:1.15rem; color:var(--ink);
+  }
+  .acc-head .acc-title{display:flex; align-items:baseline; gap:14px;}
+  .acc-head .plus{font-family:'Space Mono',monospace; font-size:1.1rem; color:var(--coral-dark); transition:transform .2s ease;}
+  .acc-item.open .plus{transform:rotate(45deg);}
+  .acc-item:nth-child(even) .plus{color:var(--green-dark);}
+  .acc-body{max-height:0; overflow:hidden; transition:max-height .3s ease;}
+  .acc-body-inner{padding:0 4px 30px; color:var(--ink-soft); max-width:820px;}
+  .acc-body-inner > p:first-child{margin-top:0;}
+  .acc-item.open .acc-head{color:var(--green-dark);}
+  .acc-item:nth-child(even).open .acc-head{color:var(--coral-dark);}
+  /* small count/label chip beside a section title */
+  .acc-chip{
+    font-family:'Space Mono',monospace; font-size:0.62rem; letter-spacing:0.08em; text-transform:uppercase;
+    color:#fff; background:var(--green); padding:4px 9px; border-radius:4px; white-space:nowrap;
+  }
+  .acc-chip.coral{background:var(--coral);}
+
+  /* ---------- RESOURCE LINK ROWS ---------- */
+  .res-links{list-style:none; margin:14px 0 0; padding:0;}
+  .res-links li{border-top:1px solid var(--line);}
+  .res-links li:last-child{border-bottom:1px solid var(--line);}
+  .res-link{
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+    padding:15px 6px; color:var(--ink); font-size:0.95rem;
+    transition:background .15s ease, padding-left .15s ease;
+  }
+  .res-link:hover{background:rgba(0,168,104,0.06); padding-left:12px; color:var(--green-dark);}
+  .res-link .res-link-main{display:flex; flex-direction:column; gap:3px;}
+  .res-link .res-link-note{font-size:0.8rem; color:var(--ink-soft);}
+  .res-link .res-arrow{font-family:'Space Mono',monospace; color:var(--coral-dark); flex-shrink:0;}
+  .res-tag{
+    font-family:'Space Mono',monospace; font-size:0.6rem; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--ink-soft); border:1px solid var(--line); padding:3px 7px; border-radius:3px; flex-shrink:0;
+  }
+
+  /* ---------- SUB-HEADINGS INSIDE AN ACCORDION ---------- */
+  .res-subhead{
+    font-family:'Space Mono',monospace; font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--green-dark); margin:28px 0 4px; display:flex; align-items:center; gap:10px;
+  }
+  .res-subhead::before{content:""; width:18px; height:1px; background:var(--green-dark);}
+  .res-subhead:first-child{margin-top:8px;}
+  .res-subhead.coral{color:var(--coral-dark);}
+  .res-subhead.coral::before{background:var(--coral-dark);}
+
+  /* ---------- WEEKLY POSTS ("Hidden Treasures") ---------- */
+  .post-list{display:flex; flex-direction:column; gap:18px; margin-top:18px;}
+  .post-card{
+    background:#fff; border:1px solid var(--line); border-left:4px solid var(--coral);
+    border-radius:10px; padding:24px 26px;
+  }
+  .post-card:nth-child(even){border-left-color:var(--green);}
+  .post-meta{display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:10px;}
+  .post-date{font-family:'Space Mono',monospace; font-size:0.68rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-soft);}
+  .post-badge{
+    font-family:'Space Mono',monospace; font-size:0.6rem; letter-spacing:0.08em; text-transform:uppercase;
+    background:var(--coral); color:#fff; padding:4px 9px; border-radius:4px;
+  }
+  .post-card h4{font-family:'Fraunces',serif; font-size:1.15rem; margin:0 0 8px; color:var(--ink);}
+  .post-card p{margin:0 0 16px; font-size:0.94rem; color:var(--ink-soft);}
+  .post-actions{display:flex; flex-wrap:wrap; gap:10px;}
+  .post-actions .btn{padding:10px 20px; font-size:0.85rem;}
+
+  /* ---------- ASK A TEACHER ---------- */
+  .qa-item{border-left:3px solid var(--green); padding:2px 0 2px 16px; margin:16px 0;}
+  .qa-item .qa-q{font-family:'Fraunces',serif; font-size:1rem; color:var(--ink); margin:0 0 6px;}
+  .qa-item .qa-a{font-size:0.92rem; margin:0;}
+  .qa-item .qa-by{font-family:'Space Mono',monospace; font-size:0.66rem; letter-spacing:0.06em; text-transform:uppercase; color:var(--green-dark); display:block; margin-top:8px;}
+  .ask-box{background:#fff; border:1px solid var(--line); border-radius:12px; padding:26px 28px; margin-top:22px;}
+  .ask-box h4{font-size:1.05rem; margin-bottom:6px;}
+  .ask-box > p{font-size:0.9rem; margin:0 0 18px;}
+  .field{margin-bottom:16px;}
+  .field label{display:block; font-size:0.78rem; font-family:'Space Mono',monospace; letter-spacing:0.06em; text-transform:uppercase; color:var(--green-dark); margin-bottom:8px;}
+  .field input, .field textarea, .field select{
+    width:100%; padding:13px 15px; border:1px solid var(--line); border-radius:8px; background:#fff;
+    font-family:'Work Sans',sans-serif; font-size:0.94rem; color:var(--ink);
+  }
+  .field textarea{min-height:120px; resize:vertical;}
+  .form-row{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  .form-note{font-size:0.8rem; color:var(--ink-soft); margin:12px 0 0;}
+  .form-success{
+    display:none; align-items:flex-start; gap:10px; margin-top:14px; padding:14px 16px;
+    background:var(--green-soft); border:1px solid rgba(0,168,104,0.35); border-radius:8px;
+    color:var(--green-dark); font-size:0.9rem;
+  }
+  .form-success.show{display:flex;}
+
+  /* ---------- PLACEHOLDER CALLOUT ---------- */
+  .placeholder-note{
+    font-family:'Space Mono',monospace; font-size:0.7rem; letter-spacing:0.05em;
+    color:var(--ink-soft); background:rgba(34,29,24,0.04); border:1px dashed var(--line);
+    border-radius:6px; padding:10px 14px; margin-top:18px;
+  }
+
+  /* ---------- GATE / LOCK SCREEN ---------- */
+  .gate{
+    position:fixed; inset:0; z-index:3000; background:var(--navy);
+    display:flex; align-items:center; justify-content:center; padding:28px;
+  }
+  .gate.hidden{display:none;}
+  .gate-box{width:100%; max-width:440px; text-align:center;}
+  .gate-box img{height:96px; width:auto; margin:0 auto 22px;}
+  .gate-box h1{color:#fff; font-size:1.6rem; margin-bottom:10px;}
+  .gate-box p{color:rgba(255,255,255,0.8); font-size:0.94rem; margin:0 0 24px;}
+  .gate-box input{
+    width:100%; padding:14px 16px; margin-bottom:14px; border-radius:8px;
+    border:1px solid rgba(255,255,255,0.28); background:rgba(255,255,255,0.1); color:#fff;
+    font-family:'Work Sans',sans-serif; font-size:0.95rem; text-align:center;
+  }
+  .gate-box input::placeholder{color:rgba(255,255,255,0.55);}
+  .gate-box .btn{width:100%;}
+  .gate-error{
+    display:none; margin:0 0 14px; padding:11px 14px; border-radius:8px;
+    background:rgba(232,104,63,0.18); border:1px solid var(--coral); color:#fff; font-size:0.86rem;
+  }
+  .gate-error.show{display:block;}
+  .gate-back{display:inline-block; margin-top:20px; color:rgba(255,255,255,0.75); font-size:0.85rem; text-decoration:underline; text-underline-offset:4px;}
+  .gate-back:hover{color:#fff;}
+
+  /* ---------- ADMIN PREVIEW BANNER (TEMPORARY) ---------- */
+  .admin-banner{
+    display:none; align-items:center; justify-content:center; gap:16px; flex-wrap:wrap;
+    background:var(--coral); color:#fff; padding:10px 20px; text-align:center;
+    font-family:'Space Mono',monospace; font-size:0.72rem; letter-spacing:0.06em; text-transform:uppercase;
+  }
+  .admin-banner.show{display:flex;}
+  .admin-banner button{color:#fff; text-decoration:underline; text-underline-offset:3px; font:inherit;}
+
+  /* ---------- VIDEO MODAL ---------- */
+  .video-modal-overlay{position:fixed; inset:0; z-index:2000; background:rgba(0,117,74,0.88); display:none; align-items:center; justify-content:center; padding:32px;}
+  .video-modal-overlay.open{display:flex;}
+  .video-modal-box{position:relative; width:100%; max-width:960px;}
+  .video-modal-frame{position:relative; width:100%; padding-top:56.25%; border-radius:10px; overflow:hidden; background:#000;}
+  .video-modal-frame iframe{position:absolute; inset:0; width:100%; height:100%; border:0; display:block;}
+  .video-modal-empty{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center;
+    padding:30px; color:rgba(255,255,255,0.85); font-family:'Space Mono',monospace; font-size:0.85rem; line-height:1.7;
+  }
+  .video-modal-close{position:absolute; top:-46px; right:0; color:#fff; font-size:1.6rem; line-height:1; padding:6px 10px;}
+  .video-modal-close:hover{color:var(--coral);}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:#666666; color:rgba(255,255,255,0.75); padding:60px 0 30px;}
+  .footer-top{display:flex; justify-content:space-between; align-items:flex-start; gap:40px; flex-wrap:wrap; padding-bottom:40px; border-bottom:1px solid rgba(255,255,255,0.2); margin-bottom:26px;}
+  .footer-brand{display:flex; align-items:center; gap:14px;}
+  .footer-brand img{height:50px; border-radius:8px;}
+  .footer-cols{display:flex; gap:64px; flex-wrap:wrap;}
+  .footer-col h4{color:#fff; font-size:0.78rem; font-family:'Space Mono',monospace; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:14px;}
+  .footer-col a{display:block; font-size:0.88rem; color:rgba(255,255,255,0.85); margin-bottom:10px;}
+  .footer-col a:hover{color:var(--green);}
+  .footer-bottom{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; font-size:0.8rem;}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media(max-width:980px){
+    nav.primary{display:none;}
+    .hamburger{display:block;}
+    .form-row{grid-template-columns:1fr;}
+  }
+  @media(max-width:600px){
+    section{padding:30px 0 72px;}
+    .brand img{height:74px;}
+    .acc-head{font-size:1.02rem; padding:20px 2px;}
+    .acc-head .acc-title{flex-direction:column; gap:6px;}
+    .post-card{padding:20px;}
+    .ask-box{padding:22px 20px;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .acc-body{transition:none;}
+    .btn{transition:none;}
+  }
 </style>
 </head>
 <body>
 
-<header>
-  <div class="wrap">
-    <a href="index.html" class="brand">Oakville Suzuki Music</a>
-    <a href="index.html#information" class="back-link">← Back to site</a>
-  </div>
-</header>
-
-<main class="wrap">
-
-  <!-- ============ PASSCODE GATE ============ -->
-  <!-- This is what appears if someone opens resources.html directly without
-       having verified a passcode. No resource content or links exist
-       anywhere in this file's HTML/JS — they only get fetched from the
-       server-side endpoint after a passcode is confirmed valid, and are
-       inserted into #resourcesContent below at runtime. Viewing this page's
-       source before unlocking reveals nothing about what the resources are. -->
-  <div id="gate">
-    <span class="eyebrow">Members Only</span>
-    <h1>Exclusive Resources</h1>
-    <p>This area is restricted to registered OSM members. Enter the personal passcode you received from OSM to continue.</p>
+<!-- ===================================================================
+     GATE / LOCK SCREEN
+     Shown until either (a) a valid member passcode is entered or found in
+     this tab's session, or (b) the temporary admin code is used.
+     =================================================================== -->
+<div class="gate" id="gate">
+  <div class="gate-box">
+    <img src="Images/Logo-OSM.png" alt="Oakville Suzuki Music logo">
+    <h1>Members' Resources</h1>
+    <p>Enter your personal member passcode to open this area.</p>
+    <div class="gate-error" id="gateError">That passcode wasn't recognized. Please check it and try again, or contact OSM for help.</div>
     <form id="gateForm">
-      <div class="passcode-field">
-        <label for="gatePasscodeInput">Personal passcode</label>
-        <input type="text" id="gatePasscodeInput" autocomplete="off" spellcheck="false" placeholder="e.g. OSM-4821" required>
-      </div>
-      <div class="passcode-error" id="gateError">Sorry, that passcode wasn't recognized. Please check it and try again, or contact OSM if you need help.</div>
-      <button type="submit" class="btn btn-primary" id="gateSubmitBtn">Unlock Resources</button>
+      <input type="text" id="gateInput" autocomplete="off" spellcheck="false" placeholder="Your passcode" aria-label="Member passcode" required>
+      <button type="submit" class="btn btn-primary" id="gateSubmit">Unlock</button>
     </form>
-    <p class="passcode-hint">Don't have a passcode? Members receive one by email from OSM after registering. <a href="index.html#register" style="color:var(--coral-dark);">Register here</a> or contact OSM if you haven't received yours.</p>
+    <a class="gate-back" href="index.html">← Back to the main site</a>
+  </div>
+</div>
+
+<!-- ===================================================================
+     MEMBERS' AREA
+     =================================================================== -->
+<div id="memberContent" style="display:none;">
+
+  <!-- TEMPORARY: shown only when the page was opened with the admin code -->
+  <div class="admin-banner" id="adminBanner">
+    <span>Admin preview — design mode</span>
+    <button type="button" id="adminExitBtn">Exit preview</button>
   </div>
 
-  <div id="loadingMsg">Loading your resources…</div>
+  <header>
+    <div class="nav-inner">
+      <a class="brand" href="index.html" aria-label="Oakville Suzuki Music — home">
+        <img src="Images/Logo-OSM.png" alt="Oakville Suzuki Music logo">
+      </a>
+      <nav class="primary">
+        <a href="index.html#information">Information</a>
+        <a href="index.html#teachers">Our Teachers</a>
+        <a href="index.html#events">Events</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+      <div class="nav-cta">
+        <span class="member-pill"><span aria-hidden="true">🔓</span> Member Portal</span>
+        <a href="index.html" class="lock-pill">← Main Site</a>
+        <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+    <nav id="mobileNav" style="display:none; flex-direction:column; padding:10px 28px 22px; border-top:1px solid var(--line);">
+      <a href="index.html#information" style="padding:12px 0;">Information</a>
+      <a href="index.html#teachers" style="padding:12px 0;">Our Teachers</a>
+      <a href="index.html#events" style="padding:12px 0;">Events</a>
+      <a href="index.html#contact" style="padding:12px 0;">Contact</a>
+      <a href="index.html" style="padding:12px 0;">← Main Site</a>
+    </nav>
+  </header>
 
-  <!-- ============ UNLOCKED CONTENT ============ -->
-  <!-- The cards below are placeholders showing the intended layout; the
-       actual list (and its links) is populated by populateResources() from
-       whatever the server-side endpoint returns, so this markup is really
-       just a template. Feel free to hard-code entries here too if you'd
-       rather manage the list by editing this file instead of the sheet —
-       see MEMBERS-AREA-SETUP.md for both options. -->
-  <div id="resourcesContent">
-    <span class="eyebrow">Members Only</span>
-    <h1>Welcome back!</h1>
-    <p>Here are OSM's current member-only resources. Bookmarks won't work for this page (it re-checks your passcode each visit) — just come back through the Information page and unlock again.</p>
-    <div class="res-grid" id="resourcesGrid"><!-- populated at runtime --></div>
-    <div id="signOutRow"><button type="button" id="signOutBtn">Sign out of the members area on this device</button></div>
+  <!-- ============ PAGE INTRO ============ -->
+  <div class="page-intro">
+    <div class="wrap">
+      <span class="eyebrow">Members Only</span>
+      <h1>Resources for OSM Families</h1>
+      <p>Everything in one place: handbooks, theory practice, weekly discoveries, listening lists, celebrations and a direct line to our teachers. New material is added regularly — check back often.</p>
+    </div>
+  </div>
+  <div class="string-divider" aria-hidden="true">
+    <svg viewBox="0 0 1200 34" preserveAspectRatio="none"><path d="M0 17 Q 150 32, 300 17 T 600 17 T 900 17 T 1200 17" fill="none" stroke="rgba(0,168,104,0.3)" stroke-width="1.5"/></svg>
   </div>
 
-</main>
+  <!-- ============ RESOURCE SECTIONS ============ -->
+  <section>
+    <div class="wrap">
+
+      <div class="accordion" id="resourcesAccordion">
+
+        <!-- ---------- 1. PARENT HANDBOOK ---------- -->
+        <div class="acc-item">
+          <button type="button" class="acc-head">
+            <span class="acc-title">Parent Handbook</span>
+            <span class="plus">+</span>
+          </button>
+          <div class="acc-body">
+            <div class="acc-body-inner">
+              <p>Your guide to the OSM year — how lessons and group classes work, what to expect at recitals, and how to make practice a happy part of family life.</p>
+              <ul class="res-links">
+                <li><a class="res-link" href="#" target="_blank" rel="noopener">
+                  <span class="res-link-main"><span>OSM Parent Handbook 2026&ndash;27</span><span class="res-link-note">The full guide — policies, calendar, expectations</span></span>
+                  <span class="res-tag">PDF</span><span class="res-arrow">↗</span></a></li>
+                <li><a class="res-link" href="#" target="_blank" rel="noopener">
+                  <span class="res-link-main"><span>Welcome letter for new families</span><span class="res-link-note">Start here if this is your first year with us</span></span>
+                  <span class="res-tag">PDF</span><span class="res-arrow">↗</span></a></li>
+              </ul>
+              <p class="placeholder-note">Placeholder links — replace the href="#" with the real file or page address.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ---------- 2. THEORY RESOURCES ---------- -->
+        <div class="acc-item">
+          <button type="button" class="acc-head">
+            <span class="acc-title">Theory Resources</span>
+            <span class="plus">+</span>
+          </button>
+          <div class="acc-body">
+            <div class="acc-body-inner">
+              <p>Printable worksheets and short video lessons that follow the RCM curriculum, organized by level.</p>
+              <ul class="res-links">
+                <li><a class="res-link" href="#" target="_blank" rel="noopener">
+                  <span class="res-link-main"><span>Level 1 — Rhythm &amp; note values</span><span class="res-link-note">Worksheet pack with answer key</span></span>
+                  <span class="res-tag">PDF</span><span class="res-arrow">↗</span></a></li>
+                <li><a class="res-link" href="#" target="_blank" rel="noopener">
+                  <span class="res-link-main"><span>Reading the treble clef</span><span class="res-link-note">Short video lesson, about 6 minutes</span></span>
+                  <span class="res-tag">Video</span><span class="res-arrow">↗</span></a></li>
+              </ul>
+              <p class="placeholder-note">Placeholder links — add one group per RCM level as the material is ready.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ---------- 3. HIDDEN TREASURES & WELL-KNOWN GEMS ---------- -->
+        <div class="acc-item">
+          <button type="button" class="acc-head">
+            <span class="acc-title">Hidden Treasures &amp; Well-Known Gems <span class="acc-chip coral">New every week</span></span>
+            <span class="plus">+</span>
+          </button>
+          <div class="acc-body">
+            <div class="acc-body-inner">
+              <p>A new discovery every week — sometimes a piece everybody knows, sometimes something wonderful you've never heard. A little to read, and always something to watch.</p>
+
+              <div class="post-list" id="postList">
+
+                <!-- ======================================================
+                     COPY THE BLOCK BELOW TO ADD A NEW WEEKLY POST.
+                     Paste the new copy at the TOP of this list so the
+                     newest post appears first, and remove the "This week"
+                     badge from the previous post.
+                     For the video: put the YouTube embed address in
+                     data-video, e.g.
+                     data-video="https://www.youtube.com/embed/abc123XYZ"
+                     ====================================================== -->
+                <div class="post-card">
+                  <div class="post-meta">
+                    <span class="post-badge">This week</span>
+                    <span class="post-date">Week of September 8, 2026</span>
+                  </div>
+                  <h4>Saint-Saëns — <em>The Swan</em></h4>
+                  <p>A cello melody floating over rippling piano — one of the most beloved pieces ever written for the instrument. Listen for how the two hands of the piano paint the water while the cello simply sings above it. Ask your child: is the swan moving quickly or slowly? What do they hear underneath?</p>
+                  <div class="post-actions">
+                    <button type="button" class="btn btn-navy video-btn" data-video="https://www.youtube.com/embed/VIDEO_ID_HERE">▶ Watch the video</button>
+                  </div>
+                </div>
+                <!-- ============ END OF COPYABLE POST BLOCK ============ -->
+
+                <div class="post-card">
+                  <div class="post-meta">
+                    <span class="post-date">Week of September 1, 2026</span>
+                  </div>
+                  <h4>Florence Price — <em>Adoration</em></h4>
+                  <p>A short, warm piece by a composer whose music sat unplayed for decades before being rediscovered. It works beautifully on violin, viola or cello, and many of our students grow into it around Book 4.</p>
+                  <div class="post-actions">
+                    <button type="button" class="btn btn-navy video-btn" data-video="https://www.youtube.com/embed/VIDEO_ID_HERE">▶ Watch the video</button>
+                  </div>
+                </div>
+
+              </div>
+
+              <p class="placeholder-note">Two sample posts. Copy the marked block in the code to add each new week, and paste the YouTube embed address into data-video.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ---------- 4. ASK A TEACHER ---------- -->
+        <div class="acc-item">
+          <button type="button" class="acc-head">
+            <span class="acc-title">Ask a Teacher</span>
+            <span class="plus">+</span>
+          </button>
+          <div class="acc-body">
+            <div class="acc-body-inner">
+              <p>Stuck on something at home? Send your question and one of our teachers will answer it. Questions of general interest are answered here for everyone (first names only).</p>
+
+              <div class="res-subhead">Recently answered</div>
+              <div class="qa-item">
+                <p class="qa-q">My daughter rushes through her review pieces. How do I slow her down without a fight?</p>
+                <p class="qa-a">Try giving the review a job: play it for a stuffed audience, play it as slowly as a turtle, or play it while you clap the beat. When review has a game attached to it, speed stops being the point.</p>
+                <span class="qa-by">Answered by an OSM teacher</span>
+              </div>
+              <div class="qa-item">
+                <p class="qa-q">How much daily listening is enough?</p>
+                <p class="qa-a">Little and often beats one long session. Breakfast and the car ride to school are usually enough to cover the current piece plus the next one.</p>
+                <span class="qa-by">Answered by an OSM teacher</span>
+              </div>
+
+              <div class="ask-box">
+                <h4>Ask your question</h4>
+                <p>We usually reply within a few days.</p>
+                <form id="askTeacherForm" action="https://formspree.io/f/xaqrkjjv" method="POST">
+                  <input type="hidden" name="_subject" value="Ask a Teacher — members' resources page">
+                  <input type="hidden" name="_replyto" id="ask-replyto">
+                  <div class="form-row">
+                    <div class="field">
+                      <label for="ask-name">Your name</label>
+                      <input id="ask-name" name="Name" type="text" placeholder="First and last name" required>
+                    </div>
+                    <div class="field">
+                      <label for="ask-email">Email</label>
+                      <input id="ask-email" name="Email" type="email" placeholder="you@example.com" required>
+                    </div>
+                  </div>
+                  <div class="field">
+                    <label for="ask-student">Student's name and instrument</label>
+                    <input id="ask-student" name="Student and instrument" type="text" placeholder="e.g. Maya — violin, Book 2">
+                  </div>
+                  <div class="field">
+                    <label for="ask-question">Your question</label>
+                    <textarea id="ask-question" name="Question" placeholder="Type your question here..." required></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-primary" id="askSubmitBtn">Send question</button>
+                  <div class="form-success" id="askSuccess">Thank you — your question is on its way to our teachers.</div>
+                  <p class="form-note">Questions go to info@oakvillesuzukimusic.ca. Let us know if you'd rather your question wasn't published here.</p>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ---------- 5. CELEBRATIONS ---------- -->
+        <div class="acc-item">
+          <button type="button" class="acc-head">
+            <span class="acc-title">Celebrations</span>
+            <span class="plus">+</span>
+          </button>
+          <div class="acc-body">
+            <div class="acc-body-inner">
+              <p>Every milestone counts — the ones earned in the wider music world, and the ones earned right here.</p>
+
+              <div class="res-subhead">Outside Celebrations</div>
+              <p style="font-size:0.9rem; margin:6px 0 0;">Festivals, exams, competitions and performances beyond OSM.</p>
+              <ul class="res-links">
+                <li><a class="res-link" href="#" target="_blank" rel="noopener">
+                  <span class="res-link-main"><span>Kiwanis Music Festival results</span><span class="res-link-note">Spring 2026 — our students' placements</span></span>
+                  <span class="res-arrow">↗</span></a></li>
+                <li><a class="res-link" href="#" target="_blank" rel="noopener">
+                  <span class="res-link-main"><span>RCM exam successes</span><span class="res-link-note">Congratulations to everyone who wrote this session</span></span>
+                  <span class="res-arrow">↗</span></a></li>
+              </ul>
+
+              <div class="res-subhead coral">Studio Superstars</div>
+              <p style="font-size:0.9rem; margin:6px 0 0;">Practice streaks, book graduations, first recitals and the quiet wins we don't want to miss.</p>
+              <ul class="res-links">
+                <li><a class="res-link" href="#" target="_blank" rel="noopener">
+                  <span class="res-link-main"><span>Book graduations this term</span><span class="res-link-note">Who has moved up, and to what</span></span>
+                  <span class="res-arrow">↗</span></a></li>
+                <li><a class="res-link" href="#" target="_blank" rel="noopener">
+                  <span class="res-link-main"><span>100-day practice club</span><span class="res-link-note">Our current streak-holders</span></span>
+                  <span class="res-arrow">↗</span></a></li>
+              </ul>
+              <p class="placeholder-note">Placeholder links in both sub-sections.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ---------- 6. CURATED LISTENING ---------- -->
+        <div class="acc-item">
+          <button type="button" class="acc-head">
+            <span class="acc-title">Curated Listening — find beautiful music here!</span>
+            <span class="plus">+</span>
+          </button>
+          <div class="acc-body">
+            <div class="acc-body-inner">
+              <p>Listening is half the method. These lists are built to live in the kitchen and the car — press play and let them run.</p>
+              <ul class="res-links">
+                <li><a class="res-link" href="#" target="_blank" rel="noopener">
+                  <span class="res-link-main"><span>Suzuki Book 1 &amp; 2 — the full listening list</span><span class="res-link-note">Every piece, in order</span></span>
+                  <span class="res-tag">Playlist</span><span class="res-arrow">↗</span></a></li>
+                <li><a class="res-link" href="#" target="_blank" rel="noopener">
+                  <span class="res-link-main"><span>Beautiful music for quiet mornings</span><span class="res-link-note">Gentle pieces to grow up with</span></span>
+                  <span class="res-tag">Playlist</span><span class="res-arrow">↗</span></a></li>
+              </ul>
+              <p class="placeholder-note">Placeholder links — paste your Spotify, Apple Music or YouTube playlist addresses here.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ---------- 7. SPECIAL EVENTS ---------- -->
+        <div class="acc-item">
+          <button type="button" class="acc-head">
+            <span class="acc-title">Special Events</span>
+            <span class="plus">+</span>
+          </button>
+          <div class="acc-body">
+            <div class="acc-body-inner">
+              <p>Workshops, guest teachers, group performances and the dates worth putting on the fridge.</p>
+              <ul class="res-links">
+                <li><a class="res-link" href="#" target="_blank" rel="noopener">
+                  <span class="res-link-main"><span>Fall workshop weekend</span><span class="res-link-note">Schedule and sign-up</span></span>
+                  <span class="res-arrow">↗</span></a></li>
+                <li><a class="res-link" href="index.html#calendar">
+                  <span class="res-link-main"><span>Full OSM calendar</span><span class="res-link-note">Everything coming up, on the main site</span></span>
+                  <span class="res-arrow">↗</span></a></li>
+              </ul>
+              <p class="placeholder-note">First link is a placeholder; the second already points at the calendar on the main site.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ---------- 8. CHALLENGES & FUN STUFF ---------- -->
+        <div class="acc-item">
+          <button type="button" class="acc-head">
+            <span class="acc-title">Challenges, Scavenger Hunts, Tournaments &amp; Fun Stuff!</span>
+            <span class="plus">+</span>
+          </button>
+          <div class="acc-body">
+            <div class="acc-body-inner">
+              <p>Games that make practice disappear. New challenges are posted through the year — some for a week, some for a whole term.</p>
+              <ul class="res-links">
+                <li><a class="res-link" href="#" target="_blank" rel="noopener">
+                  <span class="res-link-main"><span>The 100-day practice challenge</span><span class="res-link-note">Printable tracker chart</span></span>
+                  <span class="res-tag">PDF</span><span class="res-arrow">↗</span></a></li>
+                <li><a class="res-link" href="#" target="_blank" rel="noopener">
+                  <span class="res-link-main"><span>Listening scavenger hunt</span><span class="res-link-note">Find the instruments hiding in each piece</span></span>
+                  <span class="res-tag">PDF</span><span class="res-arrow">↗</span></a></li>
+              </ul>
+              <p class="placeholder-note">Placeholder links — this section can hold the same weekly-post layout as Hidden Treasures if you'd like to run timed challenges.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ---------- 9. PRACTISING TIPS ---------- -->
+        <div class="acc-item">
+          <button type="button" class="acc-head">
+            <span class="acc-title">Practising Tips</span>
+            <span class="plus">+</span>
+          </button>
+          <div class="acc-body">
+            <div class="acc-body-inner">
+              <p>Practical help for the hardest part of the week — the twenty minutes at home. Written for parents, not just students.</p>
+              <ul class="res-links">
+                <li><a class="res-link" href="#" target="_blank" rel="noopener">
+                  <span class="res-link-main"><span>Making practice a habit</span><span class="res-link-note">Building a routine that survives a busy week</span></span>
+                  <span class="res-arrow">↗</span></a></li>
+                <li><a class="res-link" href="#" target="_blank" rel="noopener">
+                  <span class="res-link-main"><span>What to do when practice goes wrong</span><span class="res-link-note">Resetting a difficult session</span></span>
+                  <span class="res-arrow">↗</span></a></li>
+              </ul>
+              <p class="placeholder-note">Placeholder links.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer>
+    <div class="wrap">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="Images/Logo-OSM.png" alt="Oakville Suzuki Music logo">
+          <div>
+            <div style="font-family:'Fraunces',serif; font-size:1.05rem; color:#fff;">Oakville Suzuki Music</div>
+            <div style="font-size:0.82rem; color:rgba(255,255,255,0.7);">Oakville, Ontario, Canada</div>
+          </div>
+        </div>
+        <div class="footer-cols">
+          <div class="footer-col">
+            <h4>Main Site</h4>
+            <a href="index.html#information">Information</a>
+            <a href="index.html#teachers">Our Teachers</a>
+            <a href="index.html#events">Events</a>
+            <a href="index.html#contact">Contact</a>
+          </div>
+          <div class="footer-col">
+            <h4>Members</h4>
+            <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Back to top</a>
+            <a href="index.html">Leave the members' area</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Oakville Suzuki Music. All rights reserved.</span>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- ============ VIDEO MODAL ============ -->
+<div class="video-modal-overlay" id="videoModal">
+  <div class="video-modal-box">
+    <button type="button" class="video-modal-close" id="videoModalClose" aria-label="Close video">&times;</button>
+    <div class="video-modal-frame">
+      <iframe id="videoModalPlayer" title="Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <div class="video-modal-empty" id="videoModalEmpty" style="display:none;">No video has been attached to this post yet.<br>Add a YouTube embed address to its data-video attribute.</div>
+    </div>
+  </div>
+</div>
 
 <script>
-  // Must match MEMBER_CHECK_ENDPOINT / MEMBER_SESSION_KEY in index.html.
+(function(){
+  'use strict';
+
+  // ===================================================================
+  // CONFIG — must match index.html
+  // ===================================================================
+  // Same Apps Script endpoint as the main site. Replace the placeholder
+  // in BOTH files when the real deployment URL is ready.
   const MEMBER_CHECK_ENDPOINT = 'https://script.google.com/macros/s/REPLACE-WITH-YOUR-APPS-SCRIPT-DEPLOYMENT-ID/exec';
   const MEMBER_SESSION_KEY = 'osmMemberPasscode';
 
+  // TEMPORARY — admin design preview. Same code as the hidden dot on the
+  // Information section of index.html. Delete these two lines, the
+  // adminBanner markup, and the admin branches below before launch.
+  const ADMIN_PREVIEW_CODE = '2727';
+  const ADMIN_SESSION_KEY  = 'osmAdminPreview';
+
+  // ===================================================================
+  // GATE
+  // ===================================================================
   const gate = document.getElementById('gate');
   const gateForm = document.getElementById('gateForm');
-  const gatePasscodeInput = document.getElementById('gatePasscodeInput');
+  const gateInput = document.getElementById('gateInput');
   const gateError = document.getElementById('gateError');
-  const gateSubmitBtn = document.getElementById('gateSubmitBtn');
-  const loadingMsg = document.getElementById('loadingMsg');
-  const resourcesContent = document.getElementById('resourcesContent');
-  const resourcesGrid = document.getElementById('resourcesGrid');
-  const signOutBtn = document.getElementById('signOutBtn');
+  const gateSubmit = document.getElementById('gateSubmit');
+  const memberContent = document.getElementById('memberContent');
+  const adminBanner = document.getElementById('adminBanner');
 
-  // Asks the server-side endpoint to validate a passcode. On success the
-  // endpoint also returns the current resource list (name/description/url),
-  // which is only ever transmitted AFTER validation — it's never sitting in
-  // this page's source.
-  function checkPasscode(code){
+  function verifyMemberPasscode(code){
     const url = MEMBER_CHECK_ENDPOINT + '?code=' + encodeURIComponent(code);
-    return fetch(url).then((r) => r.json());
+    return fetch(url).then(r => r.json()).then(data => !!(data && data.valid)).catch(() => false);
   }
 
-  function populateResources(resources){
-    resourcesGrid.innerHTML = '';
-    (resources || []).forEach((item) => {
-      const card = document.createElement('div');
-      card.className = 'res-card';
-      const h3 = document.createElement('h3');
-      h3.textContent = item.name || 'Resource';
-      const p = document.createElement('p');
-      p.textContent = item.description || '';
-      const a = document.createElement('a');
-      a.href = item.url || '#';
-      a.target = '_blank';
-      a.rel = 'noopener';
-      a.textContent = 'Open →';
-      card.appendChild(h3); card.appendChild(p); card.appendChild(a);
-      resourcesGrid.appendChild(card);
-    });
-    if(!resources || !resources.length){
-      resourcesGrid.innerHTML = '<p style="color:var(--ink-soft);">No resources are published yet — check back soon.</p>';
+  function showContent(isAdmin){
+    gate.classList.add('hidden');
+    memberContent.style.display = 'block';
+    if(isAdmin && adminBanner) adminBanner.classList.add('show');
+  }
+
+  // On load: admin preview first, then a passcode already verified in this tab.
+  (function checkAccess(){
+    if(sessionStorage.getItem(ADMIN_SESSION_KEY) === ADMIN_PREVIEW_CODE){
+      showContent(true);
+      return;
     }
-  }
-
-  function showGate(){
-    gate.style.display = '';
-    loadingMsg.style.display = 'none';
-    resourcesContent.style.display = 'none';
-  }
-  function showLoading(){
-    gate.style.display = 'none';
-    loadingMsg.style.display = '';
-    resourcesContent.style.display = 'none';
-  }
-  function showResources(resources){
-    gate.style.display = 'none';
-    loadingMsg.style.display = 'none';
-    resourcesContent.style.display = '';
-    populateResources(resources);
-  }
-
-  function attemptUnlock(code, onFail){
-    showLoading();
-    checkPasscode(code).then((data) => {
-      if(data && data.valid){
-        sessionStorage.setItem(MEMBER_SESSION_KEY, code);
-        showResources(data.resources);
-      } else {
-        sessionStorage.removeItem(MEMBER_SESSION_KEY);
-        showGate();
-        if(onFail) onFail();
-      }
-    }).catch(() => {
-      showGate();
-      if(onFail) onFail();
+    const saved = sessionStorage.getItem(MEMBER_SESSION_KEY);
+    if(!saved) return;
+    verifyMemberPasscode(saved).then(valid => {
+      if(valid){ showContent(false); }
+      else { sessionStorage.removeItem(MEMBER_SESSION_KEY); }
     });
-  }
+  })();
 
-  gateForm.addEventListener('submit', (e) => {
+  gateForm.addEventListener('submit', function(e){
     e.preventDefault();
-    const code = gatePasscodeInput.value.trim();
+    const code = gateInput.value.trim();
     if(!code) return;
     gateError.classList.remove('show');
-    gateSubmitBtn.disabled = true;
-    attemptUnlock(code, () => gateError.classList.add('show'));
-    setTimeout(() => { gateSubmitBtn.disabled = false; }, 400);
-  });
 
-  signOutBtn.addEventListener('click', () => {
-    sessionStorage.removeItem(MEMBER_SESSION_KEY);
-    gatePasscodeInput.value = '';
-    showGate();
-  });
-
-  // On load: if a passcode was already verified earlier in this tab's
-  // session (e.g. the member just unlocked it from the Information page),
-  // re-validate it silently against the server and go straight to the
-  // resources — no re-typing needed. Anyone who reaches this file directly
-  // without ever having verified a code simply sees the gate.
-  (function init(){
-    const savedCode = sessionStorage.getItem(MEMBER_SESSION_KEY);
-    if(savedCode){
-      attemptUnlock(savedCode);
-    } else {
-      showGate();
+    // TEMPORARY admin branch — remove with the rest of the backdoor.
+    if(code === ADMIN_PREVIEW_CODE){
+      sessionStorage.setItem(ADMIN_SESSION_KEY, ADMIN_PREVIEW_CODE);
+      showContent(true);
+      return;
     }
-  })();
-</script>
 
+    gateSubmit.disabled = true;
+    gateSubmit.textContent = 'Checking...';
+    verifyMemberPasscode(code).then(valid => {
+      if(valid){
+        sessionStorage.setItem(MEMBER_SESSION_KEY, code);
+        showContent(false);
+      } else {
+        gateError.classList.add('show');
+      }
+    }).finally(() => {
+      gateSubmit.disabled = false;
+      gateSubmit.textContent = 'Unlock';
+    });
+  });
+
+  const adminExitBtn = document.getElementById('adminExitBtn');
+  if(adminExitBtn){
+    adminExitBtn.addEventListener('click', function(){
+      sessionStorage.removeItem(ADMIN_SESSION_KEY);
+      window.location.href = 'index.html';
+    });
+  }
+
+  // ===================================================================
+  // MOBILE NAV
+  // ===================================================================
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  const mobileNav = document.getElementById('mobileNav');
+  if(hamburgerBtn && mobileNav){
+    hamburgerBtn.addEventListener('click', () => {
+      mobileNav.style.display = mobileNav.style.display === 'flex' ? 'none' : 'flex';
+    });
+    mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileNav.style.display = 'none'));
+  }
+
+  // ===================================================================
+  // ACCORDION
+  // ===================================================================
+  // Sections here open independently (unlike the main site, where opening
+  // one closes the others) so several can be compared side by side.
+  function setBodyHeight(item){
+    const body = item.querySelector('.acc-body');
+    body.style.maxHeight = item.classList.contains('open') ? body.scrollHeight + 'px' : null;
+  }
+
+  document.querySelectorAll('.acc-item').forEach(item => {
+    const head = item.querySelector('.acc-head');
+    head.addEventListener('click', () => {
+      item.classList.toggle('open');
+      setBodyHeight(item);
+    });
+  });
+
+  // Keeps an open section the right height when the window is resized or
+  // when its content grows (e.g. the "question sent" message appears).
+  function refreshOpenAccordions(){
+    document.querySelectorAll('.acc-item.open').forEach(setBodyHeight);
+  }
+  window.addEventListener('resize', refreshOpenAccordions);
+
+  // ===================================================================
+  // VIDEO MODAL
+  // ===================================================================
+  const videoModal = document.getElementById('videoModal');
+  const videoPlayer = document.getElementById('videoModalPlayer');
+  const videoEmpty = document.getElementById('videoModalEmpty');
+  const videoModalClose = document.getElementById('videoModalClose');
+
+  function openVideo(src){
+    // A post whose data-video still holds the placeholder shows a short
+    // note instead of loading a broken player.
+    if(!src || src.indexOf('VIDEO_ID_HERE') !== -1){
+      videoPlayer.style.display = 'none';
+      videoEmpty.style.display = 'flex';
+      videoPlayer.removeAttribute('src');
+    } else {
+      videoEmpty.style.display = 'none';
+      videoPlayer.style.display = 'block';
+      videoPlayer.src = src;
+    }
+    videoModal.classList.add('open');
+  }
+  function closeVideo(){
+    videoModal.classList.remove('open');
+    videoPlayer.removeAttribute('src');
+  }
+
+  document.querySelectorAll('.video-btn').forEach(btn => {
+    btn.addEventListener('click', () => openVideo(btn.getAttribute('data-video')));
+  });
+  videoModalClose.addEventListener('click', closeVideo);
+  videoModal.addEventListener('click', e => { if(e.target === videoModal) closeVideo(); });
+  document.addEventListener('keydown', e => { if(e.key === 'Escape' && videoModal.classList.contains('open')) closeVideo(); });
+
+  // ===================================================================
+  // ASK A TEACHER FORM
+  // ===================================================================
+  const askForm = document.getElementById('askTeacherForm');
+  const askSuccess = document.getElementById('askSuccess');
+  const askSubmitBtn = document.getElementById('askSubmitBtn');
+  const askEmail = document.getElementById('ask-email');
+  const askReplyto = document.getElementById('ask-replyto');
+
+  if(askForm){
+    askForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      if(askReplyto && askEmail) askReplyto.value = askEmail.value;
+      askSubmitBtn.disabled = true;
+      askSubmitBtn.textContent = 'Sending...';
+      fetch(askForm.action, {
+        method: 'POST',
+        body: new FormData(askForm),
+        headers: { 'Accept': 'application/json' }
+      }).then(() => {
+        askForm.reset();
+        askSuccess.classList.add('show');
+        refreshOpenAccordions();
+      }).catch(() => {
+        askSuccess.textContent = "That didn't send. Please email info@oakvillesuzukimusic.ca instead.";
+        askSuccess.classList.add('show');
+        refreshOpenAccordions();
+      }).finally(() => {
+        askSubmitBtn.disabled = false;
+        askSubmitBtn.textContent = 'Send question';
+      });
+    });
+  }
+
+})();
+</script>
 </body>
 </html>

@@ -319,6 +319,29 @@
   .passcode-submit-row .btn{flex:1;}
   .passcode-hint{font-size:0.82rem; color:var(--ink-soft); margin-top:14px;}
 
+  /* ---------- HIDDEN ADMIN DOT (TEMPORARY — DESIGN PREVIEW ONLY) ----------
+     A deliberately near-invisible dot sitting at the bottom-right of the
+     Information section. Clicking it opens the Admin Access modal, which
+     asks for the 4-digit admin code and then jumps straight to
+     resources.html so the members' area can be designed before the real
+     passcode endpoint is live. Delete this block, the .admin-dot button in
+     the Information section, the #adminAccessModal markup and the
+     "ADMIN BACKDOOR" script block before going live. */
+  .admin-dot-row{display:flex; justify-content:flex-end; margin:-46px 0 0; padding:0;}
+  .admin-dot{
+    width:16px; height:16px; padding:0; border:none; background:none; cursor:default;
+    display:flex; align-items:center; justify-content:center;
+    font-size:0.9rem; line-height:1; color:var(--ink);
+    opacity:0.10; transition:opacity .2s ease;
+  }
+  .admin-dot:hover{opacity:0.55;}
+  .admin-dot:focus-visible{opacity:0.8;}
+  .admin-modal-box{max-width:420px;}
+  .admin-preview-note{
+    font-size:0.78rem; color:var(--ink-soft); margin-top:16px; padding-top:14px;
+    border-top:1px solid var(--line);
+  }
+
   /* ---------- TEACHERS ---------- */
   .teacher-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:36px;}
   .teacher-card .ph{aspect-ratio:3/4; margin-bottom:18px;}
@@ -1117,6 +1140,13 @@
       </div>
     </div>
 
+    <!-- TEMPORARY: hidden admin dot — opens the Admin Access modal (code 2727)
+         so the members' resources page can be previewed and designed before
+         the real passcode system is switched on. Remove before launch. -->
+    <div class="admin-dot-row">
+      <button type="button" class="admin-dot" id="adminDotBtn" aria-label="Site admin" tabindex="-1">&bull;</button>
+    </div>
+
 <!-- ============ OUR TEACHERS ============ -->
 <section id="teachers">
   <div class="wrap">
@@ -1820,6 +1850,35 @@ Stephanie lives in Burlington with her husband Mike and children Jeffrey, Jordan
   </div>
 </div>
 
+<!-- ============ ADMIN ACCESS MODAL (TEMPORARY — DESIGN PREVIEW) ============
+     Completely separate from the member passcode system above: it does not
+     touch MEMBER_SESSION_KEY, does not call the Apps Script endpoint, and
+     does not unlock anything for regular visitors. It simply opens
+     resources.html in "admin preview" mode so the members' area can be
+     built and styled. Delete this whole block before launch. -->
+<div class="legal-modal-overlay" id="adminAccessModal">
+  <div class="legal-modal-box admin-modal-box">
+    <div class="legal-modal-header">
+      <h3>Admin Access</h3>
+      <button type="button" class="legal-modal-close" id="adminAccessModalClose" aria-label="Close">&times;</button>
+    </div>
+    <div class="legal-modal-body">
+      <p>Enter the admin code to open the members' resources page in preview mode.</p>
+      <form id="adminAccessForm">
+        <div class="passcode-field">
+          <label for="adminAccessInput">Admin code</label>
+          <input type="password" id="adminAccessInput" name="adminCode" inputmode="numeric" autocomplete="off" spellcheck="false" placeholder="••••" required>
+        </div>
+        <div class="passcode-error" id="adminAccessError">That code isn't right. Please try again.</div>
+        <div class="passcode-submit-row">
+          <button type="submit" class="btn btn-navy">Open Resources Page</button>
+        </div>
+      </form>
+      <p class="admin-preview-note">Preview mode only — for building and reviewing the members' area. Remove this backdoor before the site goes live.</p>
+    </div>
+  </div>
+</div>
+
 <div class="legal-modal-overlay" id="contactConfirmModal">
   <div class="legal-modal-box" style="max-width:480px;">
     <div class="legal-modal-header">
@@ -2292,6 +2351,61 @@ Stephanie lives in Burlington with her husband Mike and children Jeffrey, Jordan
       }
     });
   })();
+
+  // ---------------------------------------------------------------------
+  // ADMIN BACKDOOR (TEMPORARY — DESIGN PREVIEW ONLY)
+  // ---------------------------------------------------------------------
+  // Lets you (and only you) open resources.html while the real member
+  // passcode endpoint is still a placeholder, so the members' area can be
+  // designed and reviewed. Entirely separate from the member passcode code
+  // above — nothing here reads or writes MEMBER_SESSION_KEY.
+  //   • Hidden trigger: the faint dot at the bottom-right of the
+  //     Information section (or press Shift + A anywhere on the page).
+  //   • Code: 2727 — change it on the line below if you'd like.
+  // Delete this block, the .admin-dot button, the #adminAccessModal markup
+  // and the .admin-dot / .admin-modal-box CSS before the site goes live.
+  const ADMIN_PREVIEW_CODE = '2727';
+  const ADMIN_SESSION_KEY  = 'osmAdminPreview';
+
+  const adminDotBtn = document.getElementById('adminDotBtn');
+  const adminAccessModal = document.getElementById('adminAccessModal');
+  const adminAccessModalClose = document.getElementById('adminAccessModalClose');
+  const adminAccessForm = document.getElementById('adminAccessForm');
+  const adminAccessInput = document.getElementById('adminAccessInput');
+  const adminAccessError = document.getElementById('adminAccessError');
+
+  function openAdminAccessModal(){
+    if(!adminAccessModal) return;
+    adminAccessError.classList.remove('show');
+    adminAccessInput.value = '';
+    adminAccessModal.classList.add('open');
+    setTimeout(() => adminAccessInput.focus(), 50);
+  }
+  function closeAdminAccessModal(){
+    if(adminAccessModal) adminAccessModal.classList.remove('open');
+  }
+
+  if(adminDotBtn) adminDotBtn.addEventListener('click', openAdminAccessModal);
+  if(adminAccessModalClose) adminAccessModalClose.addEventListener('click', closeAdminAccessModal);
+  if(adminAccessModal) adminAccessModal.addEventListener('click', (e) => { if(e.target === adminAccessModal) closeAdminAccessModal(); });
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'Escape' && adminAccessModal && adminAccessModal.classList.contains('open')) closeAdminAccessModal();
+    // Shift + A shortcut — ignored while typing in a field
+    const typing = /^(INPUT|TEXTAREA|SELECT)$/.test((e.target && e.target.tagName) || '');
+    if(!typing && e.shiftKey && (e.key === 'A' || e.key === 'a')) openAdminAccessModal();
+  });
+
+  if(adminAccessForm){
+    adminAccessForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if(adminAccessInput.value.trim() === ADMIN_PREVIEW_CODE){
+        sessionStorage.setItem(ADMIN_SESSION_KEY, ADMIN_PREVIEW_CODE);
+        window.location.href = 'resources.html';
+      } else {
+        adminAccessError.classList.add('show');
+      }
+    });
+  }
 
   // Group Classes popup (placeholder page)
   const groupClassesBtn = document.getElementById('openGroupClassesBtn');
