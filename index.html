@@ -51,17 +51,14 @@
     --radius: 4px;
     --maxw: 1180px;
     --header-h: 97px;
-    /* --- Phone/tablet hero tuning (desktop is unaffected by these) ---
+    /* --- Phone/tablet hero tuning (desktop is unaffected by this) ---
        --hero-mobile-ratio : shape of the photo band on phones & portrait
          tablets. On desktop the banner is full-height, which on a narrow
          portrait screen crops the sides of every photo badly. Below 900px
          the banner becomes a fixed-ratio band instead, so far more of each
          picture stays visible. Make it wider (e.g. 16/9) to show even more
-         of a landscape photo, or taller (e.g. 1/1) for a bigger banner.
-       --hero-marquee-speed: how fast the instrument words drift across the
-         banner, in pixels per second. Lower = slower. */
+         of a landscape photo, or taller (e.g. 1/1) for a bigger banner. */
     --hero-mobile-ratio: 4 / 3;
-    --hero-marquee-speed: 55;
   }
   *{box-sizing:border-box;}
   html{
@@ -207,7 +204,7 @@
      so the full-bleed slider look is unaffected. */
   .hero{position:relative; flex:1 1 auto; display:flex; align-items:flex-end; overflow:hidden; color:#fff; background:var(--navy);}
   /* .hero-media groups everything that belongs to the photo itself (the
-     slides, the green wash, the instrument marquee and the dots). On desktop
+     slides, the green wash, the instrument band and the dots). On desktop
      it is absolutely positioned to inset:0, i.e. exactly the full banner —
      so the desktop layout is byte-for-byte what it was before this wrapper
      existed. On phones/portrait tablets it becomes a normal in-flow block
@@ -247,53 +244,47 @@
     transition: background .25s ease, transform .25s ease;
   }
 
-  /* ---------- HERO: INSTRUMENT MARQUEE ----------
-     A slow, endless band of bold white instrument names across the top of
-     the banner. Words fade in at the left edge, drift right, and fade out
-     at the right edge. The word list, the speed and the number of repeats
-     are all handled by initHeroMarquee() in the script at the bottom of
-     this file — edit HERO_MARQUEE_WORDS there to change the wording. */
-  .hero-marquee{
+  /* ---------- HERO: INSTRUMENT BAND ----------
+     A single, static row of bold white instrument names across the top of
+     the banner — one set of words, no repeats, no movement. The row is
+     centred as a group with generous even spacing between the words. The
+     words themselves live directly in the HTML (see .hero-instruments in the
+     HOME section), so there is no script involved: nothing to fail, nothing
+     to wait for. To change the wording, just edit that markup.
+     If you ever want the words pushed right out to both edges instead of
+     sitting centred, change justify-content below to space-between. */
+  .hero-instruments{
     position:absolute; top:0; left:0; right:0; z-index:3;
-    overflow:hidden; pointer-events:none;
-    padding:16px 0 18px;
+    pointer-events:none;
+    padding:16px 24px 18px;
     background:linear-gradient(180deg, rgba(0,83,47,0.55) 0%, rgba(0,83,47,0.20) 62%, rgba(0,83,47,0) 100%);
-    /* soft fade at both ends so words appear/disappear rather than
-       popping in and out at a hard edge */
-    -webkit-mask-image:linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
-    mask-image:linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
   }
-  .hero-marquee-track{
-    display:flex; width:max-content;
-    will-change:transform;
-    -webkit-backface-visibility:hidden; backface-visibility:hidden;
+  .hero-instruments-list{
+    display:flex;
+    flex-wrap:wrap;              /* wraps to a second centred line rather than
+                                    overflowing on very narrow screens */
+    align-items:center;
+    justify-content:center;      /* centred as a block */
+    gap:4px 0;
+    margin:0;
   }
-  .hero-marquee-group{display:flex; align-items:center; flex:0 0 auto;}
-  .hero-marquee-word{
+  .hero-instruments-word{
     font-family:'Work Sans', sans-serif;
     font-weight:700;
-    font-size:clamp(0.78rem, 1.05vw, 1.02rem);
+    font-size:clamp(0.72rem, 1.05vw, 1.02rem);
     letter-spacing:0.2em;
     text-transform:uppercase;
     color:#fff;
     white-space:nowrap;
-    padding:0 0.85em;
+    padding:0 1.05em;
     text-shadow:0 2px 12px rgba(0,0,0,0.45);
   }
-  .hero-marquee-sep{
+  .hero-instruments-sep{
     font-family:'Work Sans', sans-serif;
-    font-size:clamp(0.78rem, 1.05vw, 1.02rem);
+    font-size:clamp(0.72rem, 1.05vw, 1.02rem);
     font-weight:400;
     color:rgba(255,255,255,0.55);
     text-shadow:0 2px 12px rgba(0,0,0,0.45);
-  }
-  /* Moves LEFT to RIGHT: the track starts shifted half its own width to the
-     left and slides back to 0. Because the track is an even number of
-     identical groups, the halfway point is a perfect repeat, so the loop is
-     seamless with no visible jump. */
-  @keyframes heroMarqueeDrift{
-    from{ transform:translate3d(-50%,0,0); }
-    to{ transform:translate3d(0,0,0); }
   }
   .hero-dot:hover{background:rgba(255,255,255,0.7);}
   .hero-dot.active{background:#fff; transform:scale(1.2);}
@@ -1142,10 +1133,17 @@
     .hero h1{font-size:clamp(1.6rem, 5.4vw, 2.15rem); margin-bottom:12px;}
     .hero p.lead{font-size:0.98rem; max-width:none;}
     .hero-actions{padding:18px 24px;}
-    .hero-marquee{padding:12px 0 14px;}
+    .hero-instruments{padding:12px 18px 14px;}
   }
 
   @media(max-width:700px){
+    /* Keep the five instrument names on a single centred line: the words are
+       tightened rather than allowed to wrap, which reads far better in a
+       narrow banner. They will still wrap safely if a longer word is added. */
+    .hero-instruments{padding:12px 10px 14px;}
+    .hero-instruments-word{font-size:0.66rem; letter-spacing:0.13em; padding:0 0.6em;}
+    .hero-instruments-sep{font-size:0.66rem;}
+
     /* ---- popups: on a phone, 24–32px of overlay padding plus 40px of box
        padding leaves almost nothing for the actual content ---- */
     .legal-modal-overlay{padding:12px;}
@@ -1204,9 +1202,20 @@
     #mobileNav{padding:4px 18px 20px;}
   }
 
+  @media(max-width:380px){
+    /* smallest phones still in common use (iPhone SE and similar) */
+    .hero-instruments{padding:11px 8px 13px;}
+    .hero-instruments-word{font-size:0.6rem; letter-spacing:0.09em; padding:0 0.45em;}
+    .hero-instruments-sep{font-size:0.6rem;}
+  }
+
+  /* ---------- "REDUCE MOTION" ----------
+     If the visitor has switched on Reduce Motion in their operating system,
+     the browser reports it here and the remaining animations (the banner
+     photo cross-fade and the hamburger icon) stop. The instrument band is
+     static for everyone, so it isn't affected. */
   @media (prefers-reduced-motion: reduce){
     .hero-slide{transition:none;}
-    .hero-marquee-track{animation:none !important; transform:translate3d(-50%,0,0);}
     .hamburger span{transition:none;}
   }
 </style>
@@ -1314,10 +1323,20 @@
         <div class="hero-media">
           <div class="hero-slides" id="heroSlides"></div>
           <div class="hero-overlay"></div>
-          <!-- Endless left-to-right band of instrument names. The words are
-               filled in by initHeroMarquee() at the bottom of this file. -->
-          <div class="hero-marquee" id="heroMarquee" aria-hidden="true">
-            <div class="hero-marquee-track" id="heroMarqueeTrack"></div>
+          <!-- Static band of instrument names across the top of the banner.
+               One set of words, centred, no movement. Edit the words here. -->
+          <div class="hero-instruments">
+            <p class="hero-instruments-list">
+              <span class="hero-instruments-word">Flute</span>
+              <span class="hero-instruments-sep" aria-hidden="true">|</span>
+              <span class="hero-instruments-word">Piano</span>
+              <span class="hero-instruments-sep" aria-hidden="true">|</span>
+              <span class="hero-instruments-word">Violin</span>
+              <span class="hero-instruments-sep" aria-hidden="true">|</span>
+              <span class="hero-instruments-word">Viola</span>
+              <span class="hero-instruments-sep" aria-hidden="true">|</span>
+              <span class="hero-instruments-word">Theory</span>
+            </p>
           </div>
           <div class="hero-dots" id="heroDots"></div>
         </div>
@@ -2263,17 +2282,9 @@ Stephanie lives in Burlington with her husband Mike and children Jeffrey, Jordan
   ];
   const HERO_ROTATE_MS = 7500; // time each slide stays on screen before the next one starts fading in
 
-  // ============================================================
-  // HERO MARQUEE — the bold white instrument names that drift
-  // slowly left-to-right across the top of the banner.
-  // Add, remove or reorder the words here; the separator between
-  // them and the number of repeats needed to fill the screen are
-  // handled automatically.
-  // The drift speed is set by --hero-marquee-speed (pixels per
-  // second) in the :root block at the top of this file.
-  // ============================================================
-  const HERO_MARQUEE_WORDS = ['Flute', 'Piano', 'Violin', 'Viola', 'Theory'];
-  const HERO_MARQUEE_SEPARATOR = '|';
+  // NOTE: the instrument names across the top of the banner are plain static
+  // markup now (see .hero-instruments in the HOME section above) — there is
+  // no script driving them.
 
   // ============================================================
   // "EVENTS TO COME" BUTTON — now opens the same OSM Calendar popup as the
@@ -2378,70 +2389,6 @@ Stephanie lives in Burlington with her husband Mike and children Jeffrey, Jordan
     startAutoplay();
   })();
 
-  // ---------------------------------------------------------------------
-  // HERO MARQUEE
-  // ---------------------------------------------------------------------
-  // Builds one "group" of words, then repeats it as many times as it takes
-  // to be at least twice the width of the banner. That matters: the CSS
-  // animation slides the strip from -50% back to 0, so the strip has to be
-  // at least two screens wide for there never to be an empty gap, and it
-  // has to be an EVEN number of identical groups for the halfway point to
-  // line up perfectly and loop without a visible jump.
-  //
-  // The duration is worked out from the final width so the words always
-  // drift at the same real-world speed, whether it's a phone or a 4K
-  // monitor.
-  (function initHeroMarquee(){
-    const marquee = document.getElementById('heroMarquee');
-    const track = document.getElementById('heroMarqueeTrack');
-    if(!marquee || !track || !HERO_MARQUEE_WORDS.length) return;
-
-    const groupHTML = HERO_MARQUEE_WORDS.map((word) =>
-      '<span class="hero-marquee-word">' + word + '</span>' +
-      '<span class="hero-marquee-sep">' + HERO_MARQUEE_SEPARATOR + '</span>'
-    ).join('');
-
-    function speed(){
-      const raw = parseFloat(
-        getComputedStyle(document.documentElement).getPropertyValue('--hero-marquee-speed')
-      );
-      return (isFinite(raw) && raw > 0) ? raw : 55; // pixels per second
-    }
-
-    function build(){
-      track.style.animation = 'none';
-      track.innerHTML = '<span class="hero-marquee-group">' + groupHTML + '</span>';
-
-      const groupWidth = track.firstElementChild.getBoundingClientRect().width;
-      const visibleWidth = marquee.clientWidth;
-      if(!groupWidth || !visibleWidth) return; // not laid out yet — try again later
-
-      let copies = Math.ceil((visibleWidth * 2) / groupWidth);
-      if(copies < 2) copies = 2;
-      if(copies % 2) copies += 1; // must be even for a seamless loop
-
-      track.innerHTML = new Array(copies)
-        .fill('<span class="hero-marquee-group">' + groupHTML + '</span>')
-        .join('');
-
-      const duration = (groupWidth * copies / 2) / speed();
-      // force a reflow so the browser restarts the animation cleanly
-      void track.offsetWidth;
-      track.style.animation = 'heroMarqueeDrift ' + duration.toFixed(1) + 's linear infinite';
-    }
-
-    build();
-    // Web fonts change the width of the words, so rebuild once they land.
-    if(document.fonts && document.fonts.ready){ document.fonts.ready.then(build); }
-    window.addEventListener('load', build);
-
-    let resizeTimer = null;
-    window.addEventListener('resize', () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(build, 250);
-    });
-    window.addEventListener('orientationchange', () => setTimeout(build, 300));
-  })();
 
   // keep hero area sized to exactly fill the viewport below the sticky header
   const siteHeader = document.querySelector('header');
