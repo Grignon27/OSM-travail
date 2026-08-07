@@ -51,14 +51,21 @@
     --radius: 4px;
     --maxw: 1180px;
     --header-h: 97px;
-    /* --- Phone/tablet hero tuning (desktop is unaffected by this) ---
-       --hero-mobile-ratio : shape of the photo band on phones & portrait
-         tablets. On desktop the banner is full-height, which on a narrow
-         portrait screen crops the sides of every photo badly. Below 900px
-         the banner becomes a fixed-ratio band instead, so far more of each
-         picture stays visible. Make it wider (e.g. 16/9) to show even more
-         of a landscape photo, or taller (e.g. 1/1) for a bigger banner. */
-    --hero-mobile-ratio: 4 / 3;
+    /* --- Hero banner shape (applies to EVERY screen size) ---
+       --hero-ratio : the width-to-height ratio of the photo band, written as
+         a plain number (1.5 = 3:2, 1.7778 = 16:9, 1 = square).
+         The banner photos are always drawn at 100% of the banner width — the
+         full picture, edge to edge, never cropped left or right — so the
+         banner's HEIGHT has to follow the shape of the photos, otherwise
+         there would be empty bands above and below them.
+         This value is measured automatically from the actual hero photos
+         when the page loads (see HERO_IMAGES / HERO_AUTO_RATIO in the script
+         at the bottom of this file), so if the photos are swapped for ones
+         of a different shape the banner adjusts itself on every device.
+         The number below is only the starting value used for the first
+         instant before the photos report their size — it is also what gets
+         used permanently if HERO_AUTO_RATIO is set to false. */
+    --hero-ratio: 1.5;
   }
   *{box-sizing:border-box;}
   html{
@@ -186,9 +193,17 @@
        row all sit on screen with no scrolling). min-height is only a
        safety floor for very short windows — kept modest on purpose so it
        doesn't push the button row below the fold. */
-    height:calc(100vh - var(--header-h));
-    height:calc(100dvh - var(--header-h));
-    min-height:520px;
+    /* Two limits, whichever is smaller wins:
+         1. the space left under the header (so nothing needs scrolling), and
+         2. the height the photo occupies once it is drawn at full width
+            (100vw / --hero-ratio).
+       Limit 2 is what keeps the promise that the photo runs the full width of
+       the screen with no empty navy bands above or below it on a tall, narrow
+       desktop window. On a normal wide window limit 1 is the smaller of the
+       two, so the banner still fills the screen exactly as before. */
+    height:min(calc(100vh - var(--header-h)), calc(100vw / var(--hero-ratio)));
+    height:min(calc(100dvh - var(--header-h)), calc(100vw / var(--hero-ratio)));
+    min-height:min(520px, calc(100vw / var(--hero-ratio)));
     display:flex; flex-direction:column;
   }
   .hero-card-inner{
@@ -214,7 +229,16 @@
   .hero-slides{position:absolute; inset:0; z-index:0; background:var(--navy);}
   .hero-slide{
     position:absolute; inset:0; width:100%; height:100%;
-    background-size:cover; background-position:center; background-repeat:no-repeat;
+    /* "100% auto" = the picture is always scaled to exactly the full width of
+       the banner, on every device, and its height follows naturally. Nothing
+       is ever shaved off the left or right edge. (The old value, "cover",
+       filled the box by zooming in until the shorter side fitted, which is
+       what used to cut the sides off on phones and narrow windows.)
+       Because the banner's height is tied to --hero-ratio, which is measured
+       from these same photos, there is nothing left over to show above or
+       below either — at most a few pixels off the top and bottom of the
+       taller pictures in the set. */
+    background-size:100% auto; background-position:center; background-repeat:no-repeat;
     background-color:var(--navy);
     opacity:0; z-index:0;
     transition:opacity 2.6s ease-in-out;
@@ -289,6 +313,16 @@
   .hero-dot:hover{background:rgba(255,255,255,0.7);}
   .hero-dot.active{background:#fff; transform:scale(1.2);}
   .hero h1{font-size:clamp(1.9rem, 3.6vw, 3rem); color:#fff; margin-bottom:14px;}
+  /* The coral punchline always starts on its own line, on every screen size,
+     instead of wrapping wherever it happens to run out of room. Making it a
+     block is what forces the break — no <br> needed, and nothing to adjust
+     per device. Set the colour here too, so the headline markup stays clean. */
+  .hero h1 .hero-punch{
+    display:block;
+    color:var(--coral);
+    text-wrap:balance;   /* if the punchline is ever long enough to need two
+                            lines of its own, they break evenly */
+  }
   .hero p.lead{font-size:1.05rem; max-width:620px; color:rgba(255,255,255,0.92); margin-bottom:0;}
   .hero p.lead + p.lead{margin-top:6px;}
   .hero-actions{
@@ -1103,7 +1137,7 @@
      On a narrow, tall screen a full-height banner has to crop a landscape
      photo down to a thin vertical slice, which is why the rotating pictures
      were only ever showing their middle. Below 900px the photo becomes a
-     fixed-ratio band (see --hero-mobile-ratio at the top of this file) and
+     band shaped to match the photos themselves (--hero-ratio, top of file) and
      the headline moves underneath it on solid navy — so the pictures are
      mostly intact and the text is never sitting on a busy background or
      colliding with the slider dots. */
@@ -1114,7 +1148,7 @@
     .hero-media{
       position:relative; inset:auto;
       width:100%; height:auto;
-      aspect-ratio:var(--hero-mobile-ratio);
+      aspect-ratio:var(--hero-ratio);
       overflow:hidden;
     }
     .hero-slide{filter:grayscale(20%) contrast(1.03);}
@@ -1342,7 +1376,7 @@
         </div>
         <div class="hero-content">
           <span class="eyebrow" style="color:#fff;"><span style="width:22px;height:1px;background:#fff;display:inline-block;"></span>Welcome to OSM!</span>
-          <h1>Experienced teachers, <span style="color:var(--coral);">With the Love of Music.</span></h1>
+          <h1>Experienced teachers, <span class="hero-punch">With the Love of Music.</span></h1>
           <p class="lead">Suzuki music lessons in Oakville that keep the whole child in mind, with qualified and experienced teachers, fostering a love of music and building lifelong skills one child at a time.</p>
           <p class="lead"><strong>Students can start as young as age 4</strong></p>
         </div>
@@ -2282,6 +2316,14 @@ Stephanie lives in Burlington with her husband Mike and children Jeffrey, Jordan
   ];
   const HERO_ROTATE_MS = 7500; // time each slide stays on screen before the next one starts fading in
 
+  // Each banner photo is drawn at the full width of the banner on every
+  // device, so the banner's height has to match the shape of the photos.
+  // With this left as true, the page measures the pictures above once they
+  // load and sizes the banner to suit them automatically — swap in photos of
+  // any shape and nothing else needs touching. Set it to false to freeze the
+  // banner at the --hero-ratio value written in the CSS at the top of the file.
+  const HERO_AUTO_RATIO = true;
+
   // NOTE: the instrument names across the top of the banner are plain static
   // markup now (see .hero-instruments in the HOME section above) — there is
   // no script driving them.
@@ -2354,6 +2396,35 @@ Stephanie lives in Burlington with her husband Mike and children Jeffrey, Jordan
       container.appendChild(slide);
       slideEls.push(slide);
     });
+
+    // ---- size the banner to the photos (see HERO_AUTO_RATIO above) ----
+    // Each picture is asked for its true dimensions, and the WIDEST of the
+    // set decides the banner's shape. Picking the widest is deliberate: it
+    // gives the shortest banner, which is the only height at which every
+    // photo in the set still covers the full band. A taller photo simply
+    // loses a sliver off its top and bottom — far better than the narrow
+    // ones sitting in the middle of empty navy bars.
+    if(HERO_AUTO_RATIO && HERO_IMAGES.length){
+      let widest = 0;
+      let pending = HERO_IMAGES.length;
+      const applyRatio = () => {
+        if(widest > 0){
+          document.documentElement.style.setProperty('--hero-ratio', widest.toFixed(4));
+        }
+      };
+      HERO_IMAGES.forEach((img) => {
+        const probe = new Image();
+        const done = () => { if(--pending === 0) applyRatio(); };
+        probe.onload = () => {
+          if(probe.naturalWidth && probe.naturalHeight){
+            widest = Math.max(widest, probe.naturalWidth / probe.naturalHeight);
+          }
+          done();
+        };
+        probe.onerror = done; // a missing file just doesn't get a vote
+        probe.src = img.src;
+      });
+    }
 
     if(dotsContainer){
       slideEls.forEach((_, i) => {
