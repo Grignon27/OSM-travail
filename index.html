@@ -193,16 +193,20 @@
        row all sit on screen with no scrolling). min-height is only a
        safety floor for very short windows — kept modest on purpose so it
        doesn't push the button row below the fold. */
-    /* Two limits, whichever is smaller wins:
-         1. the space left under the header (so nothing needs scrolling), and
-         2. the height the photo occupies once it is drawn at full width
-            (100vw / --hero-ratio).
-       Limit 2 is what keeps the promise that the photo runs the full width of
-       the screen with no empty navy bands above or below it on a tall, narrow
-       desktop window. On a normal wide window limit 1 is the smaller of the
-       two, so the banner still fills the screen exactly as before. */
-    height:min(calc(100vh - var(--header-h)), calc(100vw / var(--hero-ratio)));
-    height:min(calc(100dvh - var(--header-h)), calc(100vw / var(--hero-ratio)));
+    /* HOME always occupies exactly one screen: the full height left under the
+       header, no more and no less. That is what stops the next section from
+       peeking in at the bottom of the banner.
+       The photo itself keeps its own full-width shape — the cap that stops it
+       ever showing empty navy bands lives on .hero (max-height:100vw/ratio) in
+       the "DESKTOP PAGE HEIGHTS" block at the end of this stylesheet. Whatever
+       height is left over after the photo is absorbed by the white button
+       strip underneath it, so the screen is always filled without the picture
+       being stretched or letterboxed.
+       (This used to be a min() of the two limits, which meant that whenever
+       the photo was the shorter of the two the whole card came up short of a
+       screen and the following section showed through underneath.) */
+    height:calc(100vh - var(--header-h));
+    height:calc(100dvh - var(--header-h));
     min-height:min(520px, calc(100vw / var(--hero-ratio)));
     display:flex; flex-direction:column;
   }
@@ -1241,6 +1245,46 @@
     .hero-instruments{padding:11px 8px 13px;}
     .hero-instruments-word{font-size:0.6rem; letter-spacing:0.09em; padding:0 0.45em;}
     .hero-instruments-sep{font-size:0.6rem;}
+  }
+
+  /* ---------- DESKTOP PAGE HEIGHTS — ONE SECTION PER SCREEN ----------
+     On a desktop window the site should read like a set of separate pages:
+     when a nav link scrolls a section up under the header, that section — and
+     only that section — should be on screen. Nothing from the next one should
+     be showing along the bottom edge.
+
+     Two rules do that, and they only apply from 901px up, so the phone and
+     portrait-tablet layout above is untouched:
+
+       1. Every section is at least one screenful tall (the viewport minus the
+          sticky header). Short sections — Information, Contact — used to end
+          part-way down the screen and let the next section and its string
+          divider show underneath; now they simply finish with empty space
+          instead. Sections that are already taller than a screen are not
+          affected at all: min-height can only ever add height, never take it
+          away, so none of the existing layouts move.
+
+       2. Inside HOME, the photo is capped at the height it naturally reaches
+          when drawn at the full width of the window (100vw / --hero-ratio),
+          exactly as before, and the white button strip below it stretches to
+          take up whatever height is left over. That is what lets the section
+          fill the screen without ever putting navy bands above or below the
+          picture, and without cropping or stretching it.
+
+     Note this cannot do anything about sections whose own content is longer
+     than one screen (Suzuki & RCM, Our Teachers): you still reach the next
+     section by scrolling past the end of them, which is normal. The fix is
+     about what is visible when a section is scrolled to the top. */
+  @media (min-width:901px){
+    body > section{
+      min-height:calc(100vh - var(--header-h));
+      min-height:calc(100dvh - var(--header-h));
+    }
+    /* the photo band never grows past its own full-width height … */
+    .hero{max-height:calc(100vw / var(--hero-ratio));}
+    /* … so the white CTA strip is what takes up the slack. Its buttons stay
+       centred, so a taller strip simply reads as a roomier band. */
+    .hero-actions{flex-grow:1;}   /* flex-shrink stays 0, as set above */
   }
 
   /* ---------- "REDUCE MOTION" ----------
