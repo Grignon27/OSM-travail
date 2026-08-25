@@ -400,7 +400,7 @@
           </button>
           <div class="acc-body">
             <div class="acc-body-inner">
-              <p>Your guide to the OSM year — how lessons and group classes work, what to expect at recitals, and how to make practice a happy part of family life.</p>
+              <p>Your parent handbook to help guide you and you child in their musical journey.</p>
               <div class="drive-mount" data-drive-folder="Parent Handbook" data-empty="The handbook for this year hasn't been posted yet."></div>
             </div>
           </div>
@@ -418,6 +418,23 @@
               <p>Theory is an essential part of your child's musical journey, and these resources are here to help with theory work at home.</p>
               <p>The Theory Help Sheet carries a number of important reminders for understanding theory and getting through homework. Theory is the grammar of music, and it is a very visual subject — especially while a student is still meeting all the concepts for the first time.</p>
               <p>Our Flute and Theory teacher also runs a YouTube channel called <em>Theory in a Nutshell</em>, where short videos cover individual theory and harmony concepts, gathered into playlists by RCM level. For younger students there are fun pages to try as well, including matching and word games.</p>
+              <!-- The Theory in a Nutshell playlists, by RCM level. Each opens on
+                   YouTube in a new tab. TO ADD ONE: copy a <li> block and swap in
+                   the playlist's ID (the part after "list=" in its web address). -->
+              <ul class="res-links">
+                <li><a class="res-link" href="https://www.youtube.com/playlist?list=PLJmLGU6uJuHE" target="_blank" rel="noopener">
+                  <span class="res-link-main"><span>Basic Theory up to Level 5</span><span class="res-link-note">Foundations, from the beginning through RCM Level 5</span></span>
+                  <span class="res-tag">Playlist</span><span class="res-arrow">&#8599;</span></a></li>
+                <li><a class="res-link" href="https://www.youtube.com/playlist?list=PLJmOmJ04cklk" target="_blank" rel="noopener">
+                  <span class="res-link-main"><span>Level 5 Theory</span><span class="res-link-note">Concepts for RCM Level 5</span></span>
+                  <span class="res-tag">Playlist</span><span class="res-arrow">&#8599;</span></a></li>
+                <li><a class="res-link" href="https://www.youtube.com/playlist?list=PLCAKvor2cVtU" target="_blank" rel="noopener">
+                  <span class="res-link-main"><span>Level 6 Theory</span><span class="res-link-note">Concepts for RCM Level 6</span></span>
+                  <span class="res-tag">Playlist</span><span class="res-arrow">&#8599;</span></a></li>
+                <li><a class="res-link" href="https://www.youtube.com/playlist?list=PLPoPvfWMTirA" target="_blank" rel="noopener">
+                  <span class="res-link-main"><span>Level 7 &amp; 8 Theory</span><span class="res-link-note">Concepts for RCM Levels 7 and 8</span></span>
+                  <span class="res-tag">Playlist</span><span class="res-arrow">&#8599;</span></a></li>
+              </ul>
               <p>More resources will be added over the coming months.</p>
               <div class="drive-mount" data-drive-folder="Theory Resources" data-empty="Theory material is being prepared and will appear here."></div>
             </div>
@@ -906,13 +923,25 @@
   // It is the address ending in /exec that Apps Script gives you after
   // Deploy > New deployment. Until it's filled in, the sections below
   // simply show their "nothing here yet" line.
-  const DRIVE_ENDPOINT = '';
+  const DRIVE_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyjmkakloWtxdl3qPHNqsEo4Nr-67fmZC21zkHB8v6GDSUcJGeeOf8Y5EUy_r5ETHVu/exec';
 
   const accordion = document.getElementById('resourcesAccordion');
 
-  // "Parent Handbook", "parent-handbook" and "Parent  Handbook" all match.
+  // Decides whether a section on this page and a folder on Drive are
+  // "the same name". Punctuation, capitals and extra spaces are ignored,
+  // so "Parent Handbook", "parent-handbook" and "Parent  Handbook" all
+  // match each other. Two further tidy-ups save a lot of head-scratching:
+  //   - "&" is read as the word "and", so a Drive folder called
+  //     "Hidden Treasures & Well-Known Gems" still finds its section here.
+  //   - "practising" is read as "practicing", so either spelling works.
+  // If a Drive folder finds no match it simply becomes its own new tab at
+  // the bottom of the page, so a mismatch is untidy rather than broken.
   function normalize(name){
-    return String(name || '').toLowerCase().replace(/[^a-z0-9]+/g, '');
+    return String(name || '')
+      .toLowerCase()
+      .replace(/&/g, 'and')
+      .replace(/practis/g, 'practic')
+      .replace(/[^a-z0-9]+/g, '');
   }
 
   function escapeHtml(str){
