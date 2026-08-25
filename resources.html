@@ -189,6 +189,22 @@
   .post-card p{margin:0 0 16px; font-size:0.94rem; color:var(--ink-soft);}
   .post-actions{display:flex; flex-wrap:wrap; gap:10px;}
   .post-actions .btn{padding:10px 20px; font-size:0.85rem;}
+  /* Optional portrait or artwork inside a weekly post. Sits to the right on
+     a wide screen and drops above the text on a phone. */
+  .post-figure{float:right; width:190px; margin:0 0 14px 22px;}
+  .post-figure img{
+    width:100%; height:auto; display:block; border-radius:8px;
+    border:1px solid var(--line);
+  }
+  .post-figure figcaption{
+    font-family:'Space Mono',monospace; font-size:0.6rem; line-height:1.5;
+    letter-spacing:0.03em; color:var(--ink-soft); margin-top:7px;
+  }
+  .post-figure figcaption a{color:var(--ink-soft); text-decoration:underline;}
+  .post-card::after{content:''; display:block; clear:both;}
+  @media(max-width:600px){
+    .post-figure{float:none; width:100%; max-width:230px; margin:0 0 16px;}
+  }
 
   /* ---------- ASK A TEACHER ---------- */
   .qa-item{border-left:3px solid var(--green); padding:2px 0 2px 16px; margin:16px 0;}
@@ -332,9 +348,11 @@
 
   <header>
     <div class="nav-inner">
-      <a class="brand" href="index.html" aria-label="Oakville Suzuki Music — home">
+      <!-- On this page the logo is deliberately NOT a link. Members leave
+           via the "← Main Site" button instead. -->
+      <span class="brand">
         <img src="Images/Logo-OSM.png" alt="Oakville Suzuki Music logo">
-      </a>
+      </span>
       <nav class="primary">
         <a href="index.html#information">Information</a>
         <a href="index.html#teachers">Our Teachers</a>
@@ -468,6 +486,16 @@
                     <span class="post-date">Our first hidden treasure</span>
                   </div>
                   <h4>Joseph Bologne, Chevalier de Saint-Georges</h4>
+                  <!-- Public domain portrait (engraving after Mather Brown,
+                       1788) served from Wikimedia Commons. The credit line is
+                       not legally required for a public domain work, but it is
+                       good practice and shows students where it came from. -->
+                  <figure class="post-figure">
+                    <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Saint-George%20(Joseph%20Bologne%20de%20Saint-George)%20in%20blue.png?width=400"
+                         alt="Portrait of Joseph Bologne, Chevalier de Saint-Georges, in a blue coat, holding a violin bow"
+                         loading="lazy" width="400" height="500">
+                    <figcaption>After Mather Brown, 1788. Public domain, via <a href="https://commons.wikimedia.org/wiki/File:Saint-George_(Joseph_Bologne_de_Saint-George)_in_blue.png" target="_blank" rel="noopener">Wikimedia Commons</a>.</figcaption>
+                  </figure>
                   <p>Born on 25 December 1745 in Guadeloupe, then a French colony, Joseph Bologne was the son of a wealthy plantation owner and a young enslaved woman. He was sent to Paris to be educated at the age of seven, and two years later his mother, Nanon, came to Paris as well.</p>
                   <p>He was not only a great musician — playing the violin, composing and conducting — but also a wonderful dancer and an outstanding fencer. He almost certainly met Mozart, and he certainly met Haydn. He composed string quartets, violin concertos, two symphonies, sonatas, operas and vocal music, and his work has become far better known in recent years, helped by the film <em>Chevalier</em>, made about his life. He died in Paris in 1799 after a long illness.</p>
                   <div class="post-actions">
