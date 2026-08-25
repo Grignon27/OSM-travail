@@ -1551,6 +1551,9 @@
         <p>Theory printouts and videos (based on RCM curriculum), music history tutorials, curated listening lists, Ask-A-Teacher columns (for Parents) and more.</p>
         <p id="exclusiveResourcesHint" style="font-size:0.78rem; color:var(--ink-soft); margin-bottom:10px;">Members: click below and enter your personal passcode to unlock.</p>
         <button type="button" id="exclusiveResourcesBtn" class="btn btn-outline info-card-btn info-card-btn-lock is-locked"><span class="lock-icon" aria-hidden="true">🔒</span> Exclusive Resources</button>
+        <!-- Only shown once a passcode has been accepted. Useful on a shared
+             or library computer, where staying signed in isn't wanted. -->
+        <button type="button" id="memberSignOutBtn" style="display:none; margin-top:10px; background:none; border:none; padding:4px 0; font-size:0.74rem; color:var(--ink-soft); text-decoration:underline; cursor:pointer;">Sign out of the members' area</button>
       </div>
     </div>
 
@@ -2431,9 +2434,11 @@ Stephanie lives in Burlington with her husband Mike and children Jeffrey, Jordan
   // deployed Web App URL — see MEMBERS-AREA-SETUP.md for the exact steps
   // and the ready-to-paste Apps Script code.
   const MEMBER_CHECK_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxBZMR8FlRRkyrYvjg5-Yx3FUZviP40KwzwpcgM5ktpHaaAno5amfQpq-4vmaxxWYek/exec';
-  // sessionStorage key used to remember (for this browser tab only) that a
-  // passcode was already verified, so the Exclusive Resources button stays
-  // unlocked while browsing the site and resources.html doesn't ask again.
+  // Storage key used to remember that a passcode was already verified, so
+  // the Exclusive Resources button stays unlocked while browsing the site
+  // and resources.html doesn't ask again. The value is kept in localStorage
+  // (see the helpers further down), which lasts until the member clears
+  // their browsing data. resources.html MUST use the same key.
   const MEMBER_SESSION_KEY = 'osmMemberPasscode';
 
   // ---------------------------------------------------------------------
@@ -2812,9 +2817,22 @@ Stephanie lives in Burlington with her husband Mike and children Jeffrey, Jordan
 
   // Reflects a verified passcode in the Exclusive Resources button on the
   // Information page. Called both right after a successful modal check and
-  // on page load (in case a passcode was already verified earlier in this
-  // browser tab's session).
+  // on page load (in case a passcode was verified on an earlier visit).
+  const memberSignOutBtn = document.getElementById('memberSignOutBtn');
+
+  // Keeps the 🔒 / 🔓 on both Member Portal buttons in step with each other.
+  function setPortalButtons(unlocked){
+    const icon = unlocked ? '🔓' : '🔒';
+    [memberPasscodeBtn, memberPasscodeBtnMobile].forEach((btn) => {
+      if(!btn) return;
+      btn.classList.toggle('is-unlocked', unlocked);
+      btn.innerHTML = '<span class="lock-icon" aria-hidden="true">' + icon + '</span> Member Portal';
+    });
+  }
+
   function unlockExclusiveResources(){
+    setPortalButtons(true);
+    if(memberSignOutBtn) memberSignOutBtn.style.display = 'block';
     if(!exclusiveResourcesBtn) return;
     exclusiveResourcesBtn.classList.remove('is-locked');
     exclusiveResourcesBtn.classList.add('is-unlocked');
@@ -2823,6 +2841,8 @@ Stephanie lives in Burlington with her husband Mike and children Jeffrey, Jordan
     exclusiveResourcesBtn.onclick = () => { window.location.href = 'resources.html'; };
   }
   function lockExclusiveResources(){
+    setPortalButtons(false);
+    if(memberSignOutBtn) memberSignOutBtn.style.display = 'none';
     if(!exclusiveResourcesBtn) return;
     exclusiveResourcesBtn.classList.add('is-locked');
     exclusiveResourcesBtn.classList.remove('is-unlocked');
@@ -2832,12 +2852,62 @@ Stephanie lives in Burlington with her husband Mike and children Jeffrey, Jordan
   }
   lockExclusiveResources();
 
+  // Forgets the saved passcode and puts the page back to its locked state.
+  if(memberSignOutBtn){
+    memberSignOutBtn.addEventListener('click', () => {
+      clearPasscode();
+      lockExclusiveResources();
+      if(exclusiveResourcesHint) exclusiveResourcesHint.textContent = 'Signed out. Enter your passcode again to unlock.';
+    });
+  }
+
   // Verifies a passcode against the server-side endpoint. Returns a Promise
   // that resolves true/false. Kept separate from the modal so resources.html
   // can reuse the exact same check (it has its own copy of this function).
   function verifyMemberPasscode(code){
     const url = MEMBER_CHECK_ENDPOINT + '?code=' + encodeURIComponent(code);
     return fetch(url).then((r) => r.json()).then((data) => !!(data && data.valid)).catch(() => false);
+  }
+
+  // -------------------------------------------------------------------
+  // REMEMBERING THE PASSCODE
+  // -------------------------------------------------------------------
+  // These three helpers are duplicated word-for-word in resources.html.
+  // If one copy changes, the other must change to match, or the two pages
+  // will stop agreeing on who is signed in.
+  //
+  // The accepted passcode is kept in localStorage, which survives closing
+  // the tab and closing the browser. A parent enters their code once and
+  // stays a member until they clear their browsing data. (The older
+  // sessionStorage lasted for one tab only, which is why parents who
+  // unlocked the portal here were asked again on the resources page.)
+  //
+  // A few browsers refuse storage altogether — Safari private windows, for
+  // one — so every call is wrapped. If storage is unavailable the code is
+  // held in memory instead, which still works for the current visit.
+  let memoryPasscode = null;
+
+  function readPasscode(){
+    try {
+      const stored = localStorage.getItem(MEMBER_SESSION_KEY);
+      if(stored) return stored;
+      // Carries over anyone part-way through a visit on the old per-tab
+      // storage, so nobody is asked to sign in again by this change.
+      const previous = sessionStorage.getItem(MEMBER_SESSION_KEY);
+      if(previous){ savePasscode(previous); return previous; }
+    } catch(e){ /* storage blocked — fall through to memory */ }
+    return memoryPasscode;
+  }
+
+  function savePasscode(code){
+    memoryPasscode = code;
+    try { localStorage.setItem(MEMBER_SESSION_KEY, code); } catch(e){}
+  }
+
+  function clearPasscode(){
+    memoryPasscode = null;
+    try { localStorage.removeItem(MEMBER_SESSION_KEY); } catch(e){}
+    try { sessionStorage.removeItem(MEMBER_SESSION_KEY); } catch(e){}
   }
 
   if(memberPasscodeForm){
@@ -2849,10 +2919,9 @@ Stephanie lives in Burlington with her husband Mike and children Jeffrey, Jordan
       memberPasscodeError.classList.remove('show');
       verifyMemberPasscode(code).then((isValid) => {
         if(isValid){
-          sessionStorage.setItem(MEMBER_SESSION_KEY, code);
+          savePasscode(code);
           memberPasscodeSuccess.classList.add('show');
           unlockExclusiveResources();
-          if(memberPasscodeBtn){ memberPasscodeBtn.classList.add('is-unlocked'); memberPasscodeBtn.innerHTML = '<span class="lock-icon" aria-hidden="true">🔓</span> Member Portal'; }
           setTimeout(closeMemberPasscodeModal, 1600);
         } else {
           memberPasscodeError.classList.add('show');
@@ -2861,18 +2930,17 @@ Stephanie lives in Burlington with her husband Mike and children Jeffrey, Jordan
     });
   }
 
-  // On load, if this tab already verified a passcode earlier in the session
-  // (e.g. the member unlocked resources, browsed around, and came back to
-  // this page), silently unlock again without asking a second time.
+  // On load, if a passcode was verified before — on this page or on
+  // resources.html, in this tab or a previous visit — silently unlock
+  // again without asking a second time.
   (function restoreMemberSession(){
-    const savedCode = sessionStorage.getItem(MEMBER_SESSION_KEY);
+    const savedCode = readPasscode();
     if(!savedCode) return;
     verifyMemberPasscode(savedCode).then((isValid) => {
       if(isValid){
         unlockExclusiveResources();
-        if(memberPasscodeBtn){ memberPasscodeBtn.classList.add('is-unlocked'); memberPasscodeBtn.innerHTML = '<span class="lock-icon" aria-hidden="true">🔓</span> Member Portal'; }
       } else {
-        sessionStorage.removeItem(MEMBER_SESSION_KEY);
+        clearPasscode();
       }
     });
   })();

@@ -99,6 +99,12 @@
     border:1.5px solid var(--green);
   }
   .lock-pill{display:inline-flex; align-items:center; gap:6px; padding:9px 13px; border-radius:var(--radius); background:var(--navy); color:#fff; font-size:0.8rem; font-weight:600;}
+  .signout-pill{
+    display:inline-flex; align-items:center; padding:9px 11px; border:none;
+    background:none; color:var(--ink-soft); font-size:0.76rem; font-weight:600;
+    text-decoration:underline; cursor:pointer; font-family:inherit;
+  }
+  .signout-pill:hover{color:var(--ink);}
   .hamburger{display:none; padding:6px;}
   .hamburger span{display:block; width:24px; height:2px; background:var(--ink); margin:5px 0;}
 
@@ -337,6 +343,7 @@
       </nav>
       <div class="nav-cta">
         <span class="member-pill"><span aria-hidden="true">🔓</span> Member Portal</span>
+        <button type="button" class="signout-pill" id="signOutBtn">Sign out</button>
         <a href="index.html" class="lock-pill">← Main Site</a>
         <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu"><span></span><span></span><span></span></button>
       </div>
@@ -347,6 +354,7 @@
       <a href="index.html#events" style="padding:12px 0;">Events</a>
       <a href="index.html#contact" style="padding:12px 0;">Contact</a>
       <a href="index.html" style="padding:12px 0;">← Main Site</a>
+      <button type="button" class="signout-pill" id="signOutBtnMobile" style="padding:12px 0; justify-content:flex-start;">Sign out</button>
     </nav>
   </header>
 
@@ -763,6 +771,43 @@
     return fetch(url).then(r => r.json()).then(data => !!(data && data.valid)).catch(() => false);
   }
 
+  // -------------------------------------------------------------------
+  // REMEMBERING THE PASSCODE
+  // -------------------------------------------------------------------
+  // The accepted passcode is kept in localStorage, which survives closing
+  // the tab and closing the browser. A parent enters their code once and
+  // stays a member until they clear their browsing data. (The older
+  // sessionStorage only lasted for one tab, which is why some parents were
+  // asked for the code a second time on this page.)
+  //
+  // A few browsers refuse storage altogether — Safari private windows, for
+  // one — so every call is wrapped. If storage is unavailable the code is
+  // held in memory instead, which still works for the current visit.
+  let memoryPasscode = null;
+
+  function readPasscode(){
+    try {
+      const stored = localStorage.getItem(MEMBER_SESSION_KEY);
+      if(stored) return stored;
+      // Carries over anyone part-way through a visit on the old per-tab
+      // storage, so nobody is asked to sign in again by this change.
+      const previous = sessionStorage.getItem(MEMBER_SESSION_KEY);
+      if(previous){ savePasscode(previous); return previous; }
+    } catch(e){ /* storage blocked — fall through to memory */ }
+    return memoryPasscode;
+  }
+
+  function savePasscode(code){
+    memoryPasscode = code;
+    try { localStorage.setItem(MEMBER_SESSION_KEY, code); } catch(e){}
+  }
+
+  function clearPasscode(){
+    memoryPasscode = null;
+    try { localStorage.removeItem(MEMBER_SESSION_KEY); } catch(e){}
+    try { sessionStorage.removeItem(MEMBER_SESSION_KEY); } catch(e){}
+  }
+
   // Nothing is fetched from Drive until a passcode has been accepted, and
   // the passcode is handed on to the Drive script so it can check it too.
   function showContent(code){
@@ -771,13 +816,20 @@
     loadDriveResources(code);
   }
 
-  // On load: reuse a passcode already verified earlier in this tab.
+  // On load: reuse a passcode accepted earlier, on this page or on the
+  // member portal on index.html. The passcode form is hidden while the
+  // check runs so returning members don't see it flash up.
   (function checkAccess(){
-    const saved = sessionStorage.getItem(MEMBER_SESSION_KEY);
+    const saved = readPasscode();
     if(!saved) return;
+    gate.classList.add('hidden');
     verifyMemberPasscode(saved).then(valid => {
-      if(valid){ showContent(saved); }
-      else { sessionStorage.removeItem(MEMBER_SESSION_KEY); }
+      if(valid){
+        showContent(saved);
+      } else {
+        clearPasscode();
+        gate.classList.remove('hidden');
+      }
     });
   })();
 
@@ -791,7 +843,7 @@
     gateSubmit.textContent = 'Checking...';
     verifyMemberPasscode(code).then(valid => {
       if(valid){
-        sessionStorage.setItem(MEMBER_SESSION_KEY, code);
+        savePasscode(code);
         showContent(code);
       } else {
         gateError.classList.add('show');
@@ -801,6 +853,21 @@
       gateSubmit.textContent = 'Unlock';
     });
   });
+
+  // Forgets the saved passcode and returns to the passcode form. Handy on a
+  // shared or library computer, where staying signed in isn't wanted.
+  [document.getElementById('signOutBtn'), document.getElementById('signOutBtnMobile')]
+    .forEach(function(btn){
+      if(!btn) return;
+      btn.addEventListener('click', function(){
+        clearPasscode();
+        memberContent.style.display = 'none';
+        gate.classList.remove('hidden');
+        gateInput.value = '';
+        gateError.classList.remove('show');
+        window.scrollTo(0, 0);
+      });
+    });
 
   // ===================================================================
   // MOBILE NAV
