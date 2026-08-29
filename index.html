@@ -2036,10 +2036,10 @@ Stephanie lives in Burlington with her husband Mike and children Jeffrey, Jordan
               <div class="reg-fee-label">Annual OSM Membership Fee</div>
               <div class="reg-fee-amount" id="regFeeAmount">$135</div>
             </div>
-            <span style="font-size:0.82rem; color:var(--ink-soft); max-width:420px;">The membership fee is $135 per student. When you click on “Go to payment to finalize your registration” you will be directed to Zeffy, a Canadian, secured payment website. This service is free for Not-For-Profits but they do ask for an <strong>optional</strong> “tip” with a drop-down menu. You may select “Other” to write in your own amount.</span>
+            <span style="font-size:0.82rem; color:var(--ink-soft); max-width:420px;">The membership fee is $135 per student. When you click on “Submit your registration form” you will be directed to Zeffy, a Canadian, secured payment website. This service is free for Not-For-Profits but they do ask for an <strong>optional</strong> “tip” with a drop-down menu. You may select “Other” to write in your own amount.</span>
           </div>
 
-          <button type="submit" class="btn btn-primary" style="width:100%;">Go to payment to finalize your registration</button>
+          <button type="submit" class="btn btn-primary" style="width:100%;">Submit your registration form</button>
         </form>
       </div>
 
@@ -2047,7 +2047,6 @@ Stephanie lives in Burlington with her husband Mike and children Jeffrey, Jordan
       <div id="registrationPaymentStep" style="display:none;">
         <span class="eyebrow" style="color:var(--coral-dark);">Almost there</span>
         <h3 style="margin-bottom:14px;">Go to payment to complete your registration</h3>
-        <p style="margin-bottom:6px;">Thank you! We've received <strong id="registrationChildName">your</strong> registration.</p>
         <p style="margin-bottom:6px;">The last step is to pay the annual OSM membership fee below. This is handled securely through Zeffy, an external payment platform used by the OSM association — you'll be taken to their site to complete payment.</p>
         <p style="font-weight:700; color:var(--ink);">Your registration will be finalized only once we have received your membership fee payment. Shortly afterwards, you will receive a passcode giving you access to the members-only resources.</p>
         <div class="reg-payment-box">
@@ -2055,7 +2054,7 @@ Stephanie lives in Burlington with her husband Mike and children Jeffrey, Jordan
           <div class="reg-fee-amount" id="regPaymentFeeAmount">$135</div>
           <!-- href is set from ZEFFY_OSA_CAMPAIGN_URL near the top of the script
                at the bottom of this file — edit the URL there (not here). -->
-          <a href="#" id="zeffyPayBtn" target="_blank" rel="noopener" class="btn btn-navy">Pay $135 via Zeffy →</a>
+          <a href="#" id="zeffyPayBtn" target="_blank" rel="noopener" class="btn btn-navy">Pay Here →</a>
           <p id="zeffyRedirectNote" style="margin-top:16px; font-size:0.78rem; color:var(--ink-soft);">You'll be redirected to the OSA's secure Zeffy payment page automatically in a few seconds — or click the button above.</p>
         </div>
       </div>
@@ -3017,8 +3016,6 @@ Stephanie lives in Burlington with her husband Mike and children Jeffrey, Jordan
     if(formAmountEl) formAmountEl.textContent = '$' + total;
     const paymentAmountEl = document.getElementById('regPaymentFeeAmount');
     if(paymentAmountEl) paymentAmountEl.textContent = '$' + total;
-    const zeffyBtn = document.getElementById('zeffyPayBtn');
-    if(zeffyBtn) zeffyBtn.textContent = 'Pay $' + total + ' via Zeffy →';
   }
 
   function buildStudentEntryHTML(n){
@@ -3111,7 +3108,6 @@ Stephanie lives in Burlington with her husband Mike and children Jeffrey, Jordan
   const registrationForm = document.getElementById('registrationForm');
   const registrationFormStep = document.getElementById('registrationFormStep');
   const registrationPaymentStep = document.getElementById('registrationPaymentStep');
-  const registrationChildName = document.getElementById('registrationChildName');
   const zeffyPayBtn = document.getElementById('zeffyPayBtn');
   if(zeffyPayBtn) zeffyPayBtn.href = ZEFFY_OSA_CAMPAIGN_URL;
 
@@ -3121,8 +3117,6 @@ Stephanie lives in Burlington with her husband Mike and children Jeffrey, Jordan
       const replyTo = document.getElementById('r-replyto');
       if(replyTo) replyTo.value = document.getElementById('r-parent1-email').value;
       submitToFormspree(registrationForm, () => {
-        const studentFirstName = registrationForm.querySelector('#r-student-first-name').value.trim();
-        if(registrationChildName) registrationChildName.textContent = studentFirstName ? studentFirstName + "'s" : 'your';
         updateRegFeeDisplays(); // lock in the payment step's total before the student list is cleared below
         registrationFormStep.style.display = 'none';
         registrationPaymentStep.style.display = '';
