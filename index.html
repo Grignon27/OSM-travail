@@ -1544,8 +1544,7 @@
         <p>Private lessons are booked directly with the teacher. Currently, the OSM teachers offer private lessons in flute, piano, violin, viola and theory on a weekly basis.</p>
         <a href="#teachers" class="btn btn-outline info-card-btn">Meet the Teachers</a>
       </div>
-      <div class="info-card" style="position:relative;">
-        <span style="position:absolute; top:16px; right:16px; background:rgba(232,104,63,0.9); color:#fff; font-family:'Space Mono',monospace; font-size:0.68rem; letter-spacing:0.06em; padding:5px 10px; border-radius:4px; text-transform:uppercase;">Coming Soon !</span>
+      <div class="info-card">
         <span class="eyebrow" style="margin-bottom:8px;">Resources</span>
         <h3>EXCLUSIVE RESOURCES</h3>
         <p>Theory printouts and videos (based on RCM curriculum), music history tutorials, curated listening lists, Ask-A-Teacher columns (for Parents) and more.</p>
@@ -1957,14 +1956,31 @@ Stephanie lives in Burlington with her husband Mike and children Jeffrey, Jordan
               </div>
             </div>
             <div class="form-row">
-              <div class="field field-full">
-                <label for="r-teacher">Level on selected instrument</label>
-                <select id="r-teacher" name="Level on selected instrument" required>
+              <div class="field">
+                <label for="r-level">Level on selected instrument</label>
+                <select id="r-level" name="Level on selected instrument" required>
                   <option value="" disabled selected>Select one</option>
                   <option value="New">New</option>
                   <option value="Beginner">Beginner</option>
                   <option value="Intermediate">Intermediate</option>
                   <option value="Advanced">Advanced</option>
+                </select>
+              </div>
+              <!-- TEACHER LIST: this is the only place the teacher names are
+                   written out. The "Add another student" boxes copy their list
+                   straight from here, so adding or removing a teacher below
+                   updates every student on the form automatically. -->
+              <div class="field">
+                <label for="r-teacher-name">Teacher's name</label>
+                <select id="r-teacher-name" name="Teacher's name" required>
+                  <option value="" disabled selected>Select one</option>
+                  <option value="Bethany Goluboff">Bethany Goluboff</option>
+                  <option value="Michelle Coon">Michelle Coon</option>
+                  <option value="Hana Gurtlerova">Hana Gurtlerova</option>
+                  <option value="Angela Lee">Angela Lee</option>
+                  <option value="Catherine Balmer">Catherine Balmer</option>
+                  <option value="Stephanie Sholman">Stephanie Sholman</option>
+                  <option value="Not yet assigned">Not yet assigned</option>
                 </select>
               </div>
             </div>
@@ -3018,6 +3034,14 @@ Stephanie lives in Burlington with her husband Mike and children Jeffrey, Jordan
     if(paymentAmountEl) paymentAmountEl.textContent = '$' + total;
   }
 
+  // Every extra student gets the same teacher list as the first student.
+  // The names live in the HTML above (the select with id "r-teacher-name"),
+  // so they only ever need editing in that one place.
+  function teacherOptionsHTML(){
+    const master = document.getElementById('r-teacher-name');
+    return master ? master.innerHTML : '<option value="" disabled selected>Select one</option>';
+  }
+
   function buildStudentEntryHTML(n){
     return '<div class="student-item">' +
       '<button type="button" class="acc-head student-acc-head">' +
@@ -3044,7 +3068,7 @@ Stephanie lives in Burlington with her husband Mike and children Jeffrey, Jordan
             '</div>' +
           '</div>' +
           '<div class="form-row">' +
-            '<div class="field field-full">' +
+            '<div class="field">' +
               '<label>Level on selected instrument</label>' +
               '<select name="Student ' + n + ' level" required>' +
                 '<option value="" disabled selected>Select one</option>' +
@@ -3053,6 +3077,10 @@ Stephanie lives in Burlington with her husband Mike and children Jeffrey, Jordan
                 '<option value="Intermediate">Intermediate</option>' +
                 '<option value="Advanced">Advanced</option>' +
               '</select>' +
+            '</div>' +
+            '<div class="field">' +
+              '<label>Teacher\'s name</label>' +
+              '<select name="Student ' + n + ' teacher" required>' + teacherOptionsHTML() + '</select>' +
             '</div>' +
           '</div>' +
           '<div class="field field-full"><label>Allergies or medical conditions we should know about</label><textarea name="Student ' + n + ' allergies or medical conditions" style="min-height:80px;" placeholder="Optional — leave blank if none"></textarea></div>' +

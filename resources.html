@@ -411,11 +411,16 @@
                              the Description box. That text shows up as the
                              small grey line under the link.
 
-             MATCHING: the data-drive-folder name on each mount must match the
-             folder name on Drive. Capitals, spaces and punctuation are
-             ignored, so "Parent Handbook" also matches "parent-handbook".
-             If you rename a folder on Drive, either rename it back or change
-             the data-drive-folder line here to match.
+             MATCHING: each mount's data-drive-folder line says which folder
+             on Drive fills it. Capitals, spaces and punctuation are ignored,
+             so "Parent Handbook" also matches "parent-handbook", and a
+             longer Drive name that begins with or contains the same words
+             still lands in the right tab ("Monthly Challenges" goes into
+             the Challenges section rather than making a tab of its own).
+             A mount can also list several acceptable names separated by a
+             vertical bar, e.g. data-drive-folder="Challenges|Fun Stuff".
+             If a Drive folder matches nothing at all it gets its own new
+             tab at the bottom, so a mismatch is untidy rather than broken.
              =================================================================== -->
 
         <!-- ---------- 1. PARENT HANDBOOK ---------- -->
@@ -687,8 +692,8 @@
           </button>
           <div class="acc-body">
             <div class="acc-body-inner">
-              <p>Games that make practice disappear. New challenges are posted through the year — some for a week, some for a whole term.</p>
-              <div class="drive-mount" data-drive-folder="Challenges" data-empty="The first challenge of the year is on its way."></div>
+              <p>Come here at the beginning of each month to find different challenges, games and other fun things we have for the students throughout the year. Some for a week or a month and some for longer. Each challenge, game or tournament will have the specifics on the actual worksheet/tally sheet etc found on this page. All completed sheets/challenges are to be emailed to <a href="mailto:info@oakvillesuzukimusic.ca" style="color:var(--coral-dark); font-weight:600;">info@oakvillesuzukimusic.ca</a> by the date specified. There will always be a winner or two (or maybe three!) and some fun prizes. Winners will be announced both through email directly, and here on this page, first names and initial only. We hope you enjoy these — let us know if you have any feedback. Have fun!</p>
+              <div class="drive-mount" data-drive-folder="Challenges|Challenges, Scavenger Hunts, Tournaments &amp; Fun Stuff|Challenge|Scavenger Hunts|Tournaments|Fun Stuff" data-empty="The first challenge of the year is on its way."></div>
             </div>
           </div>
         </div>
@@ -1039,6 +1044,32 @@
       .replace(/[^a-z0-9]+/g, '');
   }
 
+  // A section can list several acceptable folder names, separated by a
+  // vertical bar, e.g. data-drive-folder="Challenges|Fun Stuff". Any of
+  // them will pull that Drive folder into this section.
+  function mountNames(mount){
+    return String(mount.getAttribute('data-drive-folder') || '')
+      .split('|')
+      .map(normalize)
+      .filter(Boolean);
+  }
+
+  // Folder names are matched in three rounds of decreasing strictness, so
+  // the closest section always gets first claim on a folder:
+  //   1  exact  - "Challenges" for "Challenges"
+  //   2  starts - "Challenges, Scavenger Hunts..." for "Challenges"
+  //   3  inside - "Monthly Challenges" for "Challenges"
+  // Round 3 only uses names of eight letters or more, so a short name
+  // can't sweep up a folder it has nothing to do with.
+  function matchesAtLevel(folder, names, level){
+    const n = normalize(folder.name);
+    return names.some(function(w){
+      if(level === 1) return n === w;
+      if(level === 2) return n.indexOf(w) === 0;
+      return w.length >= 8 && n.indexOf(w) !== -1;
+    });
+  }
+
   function escapeHtml(str){
     return String(str == null ? '' : str)
       .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
@@ -1135,25 +1166,45 @@
         if(!data || !data.ok) throw new Error(data && data.error ? data.error : 'no data');
         const folders = data.folders || [];
 
-        // Tracks which Drive folders already have a section on the page.
-        const claimed = {};
+        // Tracks which Drive folders already have a section on the page,
+        // and which folders belong to each hand-made section.
+        const claimed = [];
+        const picked = mounts.map(function(){ return []; });
 
-        mounts.forEach(function(mount){
-          const wanted = normalize(mount.getAttribute('data-drive-folder'));
-          const match = folders.filter(function(f){ return normalize(f.name) === wanted; })[0];
+        // Three rounds, strictest first. A folder is only ever claimed once.
+        [1, 2, 3].forEach(function(level){
+          mounts.forEach(function(mount, i){
+            const names = mountNames(mount);
+            folders.forEach(function(folder){
+              if(claimed.indexOf(folder) !== -1) return;
+              if(!matchesAtLevel(folder, names, level)) return;
+              claimed.push(folder);
+              picked[i].push(folder);
+            });
+          });
+        });
 
-          if(match) claimed[normalize(match.name)] = true;
+        mounts.forEach(function(mount, i){
+          const withContent = picked[i].filter(hasContent);
 
-          if(match && hasContent(match)){
-            mount.innerHTML = renderFolder(match);
-          } else {
+          if(!withContent.length){
             showMountMessage(mount, 'res-empty', mount.getAttribute('data-empty'));
+            return;
           }
+
+          // Usually one folder. If a section has pulled in more than one,
+          // each gets its name as a small heading so it stays readable.
+          mount.innerHTML = withContent.map(function(folder, index){
+            if(withContent.length === 1) return renderFolder(folder);
+            const tone = index % 2 ? ' coral' : '';
+            return '<div class="res-subhead' + tone + '">' + escapeHtml(folder.name) + '</div>'
+                 + renderFolder(folder);
+          }).join('');
         });
 
         // Anything left over on Drive becomes its own new tab.
         folders.forEach(function(folder){
-          if(claimed[normalize(folder.name)]) return;
+          if(claimed.indexOf(folder) !== -1) return;
           if(!hasContent(folder)) return;
           createTab(folder);
         });
