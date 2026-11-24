@@ -578,62 +578,29 @@
   .register-modal-box .legal-modal-body{padding:28px 40px 40px;}
   @media(max-width:640px){ .register-modal-box .legal-modal-body{padding:22px 20px 30px;} }
 
-  /* Calendar popup: headline-style "coming soon" events + footer CTA to the
-     full external calendar (no embedded iframe) */
-  .calendar-modal-box{max-width:880px;}
+  /* Calendar popup: Teamup calendar embedded inside the popup, framed with
+     the site palette (orange top bar + border, green footer button).
+     The inside of the Teamup iframe is controlled from Teamup itself
+     (sub-calendar colours in its settings) — page CSS can't reach into it. */
+  .calendar-modal-box{max-width:1000px;}
   .calendar-modal-box .legal-modal-body{padding:0;}
-  .calendar-modal-footer{
-    display:flex; justify-content:center; align-items:center;
-    padding:20px 26px 26px; border-top:1px solid var(--line);
-  }
-  @media(max-width:640px){
-    .calendar-modal-footer{padding:18px 20px 24px;}
-  }
-  /* Upcoming-events headline list — a single, large green "Coming soon"
-     eyebrow icon up top, then each event rendered as a bold black headline
-     (name + date). Sits with a tight 10px gap above the embedded calendar. */
-  .calendar-upcoming{ padding:30px 32px 0; }
-  .calendar-upcoming-title{
-    display:flex; align-items:center; gap:10px;
-    font-family:'Space Mono',monospace; font-size:1.35rem; font-weight:700; text-transform:uppercase;
-    letter-spacing:0.06em; color:var(--green-dark); margin-bottom:18px;
-  }
-  .calendar-upcoming-title::before{
-    content:""; width:26px; height:26px; flex:0 0 auto; border-radius:50%;
-    background:var(--green);
-    -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15-5-5 1.41-1.41L11 14.17l7.59-7.59L20 8l-9 9z'/%3E%3C/svg%3E") center/18px no-repeat;
-    mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15-5-5 1.41-1.41L11 14.17l7.59-7.59L20 8l-9 9z'/%3E%3C/svg%3E") center/18px no-repeat;
-  }
-  .calendar-upcoming-list{list-style:none; margin:0; padding:0; display:flex; flex-direction:column;}
-  .calendar-upcoming-item{
-    display:flex; flex-direction:column; gap:4px;
-    padding:16px 0; border-bottom:1px solid var(--line);
-  }
-  .calendar-upcoming-item:last-child{border-bottom:none;}
-  .calendar-upcoming-name{
-    font-family:'Fraunces',serif; font-size:1.32rem; font-weight:800; color:var(--ink);
-    line-height:1.25;
-  }
-  .calendar-upcoming-date{
-    font-family:'Space Mono',monospace; font-size:0.8rem; font-weight:700;
-    letter-spacing:0.03em; color:var(--ink);
-  }
-  /* Inline calendar embed — framed with the site palette. Google's embed
-     view only accepts a small preset list of event colors, so we pick the
-     two closest built-in swatches to our brand: "Tangerine" (#F4511E) for
-     coral and "Basil" (#0B8043) for green — set via the &color= param on
-     the iframe src below. */
   .calendar-embed-wrap{
-    margin:10px 32px 28px; border-radius:14px; overflow:hidden;
-    border:2px solid var(--coral); box-shadow:0 8px 24px rgba(0,0,0,0.08);
+    margin:24px 28px 20px; border-radius:14px; overflow:hidden;
+    border:2px solid var(--coral); background:var(--cream);
+    box-shadow:0 8px 24px rgba(0,0,0,0.08);
   }
   .calendar-embed-bar{
     height:6px; background:linear-gradient(90deg, var(--coral) 0%, var(--coral) 50%, var(--green) 50%, var(--green) 100%);
   }
-  .calendar-embed-wrap iframe{ display:block; width:100%; height:420px; border:0; background:#fff; }
+  .calendar-embed-wrap iframe{ display:block; width:100%; height:600px; border:0; background:#fff; }
+  .calendar-modal-footer{
+    display:flex; justify-content:center; align-items:center;
+    padding:6px 26px 26px;
+  }
   @media(max-width:640px){
-    .calendar-embed-wrap{ margin:10px 20px 22px; }
-    .calendar-embed-wrap iframe{ height:360px; }
+    .calendar-embed-wrap{ margin:16px 14px 16px; }
+    .calendar-embed-wrap iframe{ height:540px; }
+    .calendar-modal-footer{padding:4px 20px 24px;}
   }
   /* ---------- SUZUKI vs RCM ---------- */
   .rcm-intro{display:grid; grid-template-columns:1.35fr 1fr; gap:56px; align-items:start; margin-bottom:60px;}
@@ -1209,10 +1176,6 @@
     .bio-modal-close{top:10px; right:10px;}
     .video-modal-overlay{padding:14px;}
     .video-modal-close{top:-40px; right:-4px;}
-    .calendar-upcoming{padding:22px 20px 0;}
-    .calendar-upcoming-title{font-size:1.05rem;}
-    .calendar-upcoming-name{font-size:1.08rem;}
-    .calendar-modal-box .legal-modal-body{padding:0;}
 
     .acc-head{padding:20px 2px; font-size:1.02rem;}
     .video-row{grid-template-columns:1fr; margin-top:26px;}
@@ -2269,19 +2232,16 @@ Stephanie lives in Burlington with her husband Mike and children Jeffrey, Jordan
       <a href="#events" class="legal-modal-close" id="eventCalendarModalClose" aria-label="Close and return to Events">&times;</a>
     </div>
     <div class="legal-modal-body">
-      <div class="calendar-upcoming" id="calendarUpcoming">
-        <p class="calendar-upcoming-title">Coming soon</p>
-        <ul class="calendar-upcoming-list" id="calendarUpcomingList"></ul>
-      </div>
       <div class="calendar-embed-wrap">
         <div class="calendar-embed-bar"></div>
         <iframe
-          src="https://calendar.google.com/calendar/embed?src=info%40oakvillesuzukimusic.ca&amp;ctz=America%2FToronto&amp;mode=AGENDA&amp;showTitle=0&amp;showPrint=0&amp;showTabs=0&amp;showCalendars=0&amp;showTz=0&amp;wkst=1&amp;color=%230B8043"
-          title="OSM Calendar"
-          loading="lazy"></iframe>
+          src="https://teamup.com/kss1ik5y5n5vp57jmz?title=OSM%20Events&amp;tz=Calendar%20default&amp;showProfileAndInfo=0&amp;showSidepanel=1&amp;showViewHeader=1&amp;showAgendaDetails=0&amp;showDateControls=1&amp;showDateRange=1"
+          title="OSM Events Calendar"
+          loading="lazy"
+          frameborder="0"></iframe>
       </div>
       <div class="calendar-modal-footer">
-        <a href="https://calendar.google.com/calendar/embed?src=info%40oakvillesuzukimusic.ca&amp;ctz=America%2FToronto&amp;color=%230B8043" target="_blank" rel="noopener" class="btn btn-outline" id="viewFullCalendarBtn">See the Full Calendar →</a>
+        <a href="https://teamup.com/kss1ik5y5n5vp57jmz" target="_blank" rel="noopener" class="btn btn-outline" id="viewFullCalendarBtn">Open Calendar in a New Tab →</a>
       </div>
     </div>
   </div>
@@ -2470,25 +2430,6 @@ Stephanie lives in Burlington with her husband Mike and children Jeffrey, Jordan
   // (see the helpers further down), which lasts until the member clears
   // their browsing data. resources.html MUST use the same key.
   const MEMBER_SESSION_KEY = 'osmMemberPasscode';
-
-  // ---------------------------------------------------------------------
-  // CALENDAR POPUP — "UPCOMING EVENTS" REMINDER STRIP
-  // ---------------------------------------------------------------------
-  // Pulls the next few events straight from the same public Google Calendar
-  // that's embedded below, and shows a "coming soon" ⏰ badge next to any
-  // event happening within 3 weeks. This calls the Google Calendar API
-  // (read-only, public calendar) rather than scraping the embed.
-  // To turn it on:
-  //   1. In Google Cloud Console, enable the "Google Calendar API" and
-  //      create an API key restricted to that API (and, ideally, to this
-  //      site's domain).
-  //   2. Paste that key below, replacing the placeholder.
-  // Until a real key is added, this section simply stays hidden and the
-  // popup still works fine with just the calendar embed.
-  const GOOGLE_CALENDAR_API_KEY = 'AIzaSyAjDSso3I38KkMSZHdpUZTVxPnIBMiGhiY';
-  const CALENDAR_ID = 'info@oakvillesuzukimusic.ca';
-  const UPCOMING_EVENTS_MAX = 4;
-  const UPCOMING_EVENTS_SOON_DAYS = 21; // "coming soon" badge threshold
 
 
   (function initHeroSlider(){
@@ -3185,77 +3126,9 @@ Stephanie lives in Burlington with her husband Mike and children Jeffrey, Jordan
     const modal = eventModals[key];
     if(!modal) return;
     modal.classList.add('open');
-    if(key === 'calendar') loadUpcomingEvents();
   }
   function closeEventModal(modal){
     modal.classList.remove('open');
-  }
-
-  // Fetches the next few events from the public Google Calendar and renders
-  // them as a "Coming soon" headline list. Runs once per page load (cached).
-  // If nothing shows up, open the browser console (F12) — common causes are
-  // logged there: (1) the calendar isn't set to public, (2) the API key's
-  // website restriction is blocking the current origin (this includes
-  // testing by double-clicking the file open as file:// — restricted keys
-  // need a real http/https origin, so either add "http://localhost/*" to
-  // the key's allowed sites while testing, or temporarily unrestrict it),
-  // or (3) the Calendar API isn't enabled on the Google Cloud project.
-  let upcomingEventsLoaded = false;
-  function loadUpcomingEvents(){
-    if(upcomingEventsLoaded) return;
-    const upcomingList = document.getElementById('calendarUpcomingList');
-    if(!upcomingList) return;
-    // API key not configured yet — leave the friendly "check back soon"
-    // placeholder that's already in the markup in place.
-    if(!GOOGLE_CALENDAR_API_KEY || GOOGLE_CALENDAR_API_KEY.indexOf('REPLACE-WITH') === 0){
-      return;
-    }
-    upcomingEventsLoaded = true;
-    // Start from midnight today (not "this exact second") so an all-day or
-    // earlier-today event doesn't get cut out of the results.
-    const startOfToday = new Date();
-    startOfToday.setHours(0,0,0,0);
-    const url = 'https://www.googleapis.com/calendar/v3/calendars/'
-      + encodeURIComponent(CALENDAR_ID) + '/events'
-      + '?key=' + encodeURIComponent(GOOGLE_CALENDAR_API_KEY)
-      + '&timeMin=' + encodeURIComponent(startOfToday.toISOString())
-      + '&maxResults=' + UPCOMING_EVENTS_MAX
-      + '&singleEvents=true&orderBy=startTime';
-
-    fetch(url)
-      .then(res => {
-        if(!res.ok){
-          return res.json().catch(() => ({})).then(body => {
-            console.error(
-              'OSM Calendar: request failed (' + res.status + '). ' +
-              (body && body.error && body.error.message ? body.error.message : '') +
-              ' — check that the calendar is public and the API key\'s website restriction allows this origin.'
-            );
-            throw new Error('Calendar request failed');
-          });
-        }
-        return res.json();
-      })
-      .then(data => {
-        const items = (data.items || []).filter(ev => ev.start && (ev.start.dateTime || ev.start.date));
-        if(items.length === 0){
-          console.warn('OSM Calendar: request succeeded but returned no upcoming events.');
-          return; // nothing upcoming — keep the placeholder message
-        }
-        const dateFmt = new Intl.DateTimeFormat('en-CA', { weekday:'short', month:'short', day:'numeric' });
-        const timeFmt = new Intl.DateTimeFormat('en-CA', { hour:'numeric', minute:'2-digit' });
-        upcomingList.innerHTML = items.map(ev => {
-          const isAllDay = !ev.start.dateTime;
-          const start = new Date(ev.start.dateTime || ev.start.date + 'T00:00:00');
-          const name = (ev.summary || 'OSM Event').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-          const when = dateFmt.format(start) + (isAllDay ? '' : ' · ' + timeFmt.format(start));
-          return '<li class="calendar-upcoming-item">'
-            + '<span class="calendar-upcoming-name">' + name + '</span>'
-            + '<span class="calendar-upcoming-date">' + when + '</span>'
-            + '</li>';
-        }).join('');
-      })
-      .catch(() => { /* diagnostic already logged above — UI stays on the placeholder */ });
   }
 
   document.querySelectorAll('.event-popup-btn').forEach(btn => {
@@ -3268,8 +3141,8 @@ Stephanie lives in Burlington with her husband Mike and children Jeffrey, Jordan
     document.addEventListener('keydown', (e) => { if(e.key === 'Escape' && modal.classList.contains('open')) closeEventModal(modal); });
   });
 
-  // "View the Full OSM Calendar" footer link: opens the public calendar in a
-  // new tab (visitor view only, no admin access) and closes the popup behind it.
+  // "Open Calendar in a New Tab" footer link: opens the Teamup calendar in a
+  // new tab (read-only visitor link) and closes the popup behind it.
   const viewFullCalendarBtn = document.getElementById('viewFullCalendarBtn');
   if(viewFullCalendarBtn){
     viewFullCalendarBtn.addEventListener('click', () => closeEventModal(eventModals['calendar']));
